@@ -1,0 +1,1 @@
+function replace(){document.body.classList.toggle("dark-mode")}$(document).ready(function(){$(".sidenav").sidenav(),$(".tooltipped").tooltip(),$('.modal').modal();});
