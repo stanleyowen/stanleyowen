@@ -1,3 +1,3 @@
 <?php
-	$proxy = '';//Your URL Website
+	$proxy = 'http://localhost/stanleyowen';
 ?>

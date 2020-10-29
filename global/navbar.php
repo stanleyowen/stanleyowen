@@ -31,9 +31,13 @@
                     $validate = mysqli_num_rows(mysqli_query($connect, "SELECT * FROM users WHERE token='$token' AND token_id='$token_id'"));
                     if($validate > 0){
                       echo '
+                        <a href="'.$proxy.'/account/" class="bg-black btn tooltipped" data-position="bottom" data-tooltip="Account">
+                          <span class="material-icons">account_circle</span>
+                        </a>
                         <a href="?logout=true" class="bg-black btn tooltipped" data-position="bottom" data-tooltip="Sign Out">
                           <span class="material-icons">power_settings_new</span>
-                        </a>';
+                        </a>
+                        ';
                     }
                   }
                 }

@@ -10,7 +10,7 @@
 				setcookie('loggedin', '', time() - 3600, "/");
 				setcookie('token', '', time() - 3600, "/");
 				setcookie('token_id', '', time() - 3600, "/");
-				echo '<script>alert("Token Mismatch!");document.location="../validate/login/?apps=sha1";</script>';
+				echo '<script>alert("ERROR: TOKEN MISMATCH! This may happen when other devices are trying to logged in into this account. If it is not you, it is recommended to change your password!");document.location="../validate/login/?apps=sha1";</script>';
 			}else {
 				$check_name = mysqli_query($connect, "SELECT username FROM users WHERE token='$token' AND token_id='$token_id'");
 			}
@@ -18,7 +18,7 @@
 			setcookie('loggedin', '', time() - 3600, "/");
 			setcookie('token', '', time() - 3600, "/");
 			setcookie('token_id', '', time() - 3600, "/");
-			echo '<script>alert("Token Mismatch!");document.location="../validate/login/?apps=sha1;</script>';
+			echo '<script>alert("ERROR: TOKEN MISMATCH!");document.location="../validate/login/?apps=sha1;</script>';
 		}
 	}else {
 		header('Location: ../validate/login/?apps=sha1');
@@ -42,7 +42,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Stanley Owen | Todo List</title>
+	<title>Stanley Owen | SHA1 Encryption</title>
 	<?php include('../global/head.php'); ?>
 </head>
 <body>
