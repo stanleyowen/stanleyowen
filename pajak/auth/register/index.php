@@ -29,8 +29,10 @@
 					if($validation == 0){
 						$password = password_hash($password, PASSWORD_DEFAULT);
 						$usr_token = bin2hex(random_bytes(80));
+						$unique_token1 = bin2hex(random_bytes(125));
+						$unique_token2 = bin2hex(random_bytes(125));
 						setcookie('token', $usr_token, time()+(3600*24*3), '/');
-						mysqli_query($connect, "INSERT INTO users (username, email, password, token) VALUES ('$name', '$email', '$password', '$usr_token')");
+						mysqli_query($connect, "INSERT INTO users (username, email, password, unique_id, unique_id2, token) VALUES ('$name', '$email', '$password', '$unique_token1', '$unique_token2', '$usr_token')");
 						header('Location: ../../');
 					}
 					else{
