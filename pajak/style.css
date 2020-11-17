@@ -17,3 +17,4 @@ a:hover { opacity: 1; transition: ease-in-out 0.5s }
 .error { background-color: red; color: white; border-radius: 10px; font-weight: bold; }
 .error h4 { padding: 20px 20px 0px 20px; }
 .error p { padding: 0px 20px 0px 20px; }
+.error .mb-20 { padding-bottom: 10px; }

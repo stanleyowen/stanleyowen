@@ -1,5 +1,47 @@
 <?php
 	include('../../api/index.php');
+	if(isset($_POST['_register-btn'])){
+		$hidden_form	= mysqli_real_escape_string($connect, $_POST['_hidden-form']);
+		$csrf_token_id	= mysqli_real_escape_string($connect, $_COOKIE['csrf-token']);
+		$csrf_token		= mysqli_real_escape_string($connect, $_POST['_csrf-token']);
+		$name 			= mysqli_real_escape_string($connect, $_POST['_name-user']);
+		$email			= mysqli_real_escape_string($connect, $_POST['_email-user']);
+		$password 		= mysqli_real_escape_string($connect, $_POST['_password-user']);
+		$cfpassword		= mysqli_real_escape_string($connect, $_POST['_confirm-password']);
+		$errors			= array();
+		if(empty($hidden_form)){
+			if($csrf_token == $csrf_token_id){
+				if(empty($name)){ array_push($errors, "Name Field is Required"); }
+				if(empty($email)){ array_push($errors, "Email FIeld is Required"); }
+				if(empty($password)){ array_push($errors, "Password Field is Required"); }
+				if(empty($cfpassword)){ array_push($errors, "Confirmation Password Field is Required"); }
+				if($password != $cfpassword){ array_push($errors, "Make sure Password and Confirm Password are Match"); }
+				if(count($errors) == 0){
+					if(strlen($name) < 6){ array_push($errors, "Name is too short"); }
+					if(strlen($name) > 50){ array_push($errors, "Name is too long"); }
+					if(strlen($email) < 10){ array_push($errors, "Email is too short"); }
+					if(strlen($email) > 60){ array_push($errors, "Email is too long"); }
+					if(strlen($password) < 6){ array_push($errors, "Password is too short"); }
+					if(strlen($password) > 50){ array_push($errors, "Password is too long"); }
+				}
+				if(count($errors) == 0){
+					$validation = mysqli_num_rows(mysqli_query($connect, "SELECT email from users WHERE email='$email'"));
+					if($validation == 0){
+						$password = password_hash($password, PASSWORD_DEFAULT);
+						$usr_token = bin2hex(random_bytes(80));
+						setcookie('token', $usr_token, time()+(3600*24*3), '/');
+						mysqli_query($connect, "INSERT INTO users (username, email, password, token) VALUES ('$name', '$email', '$password', '$usr_token')");
+						header('Location: ../../');
+					}
+					else{
+						array_push($errors, "Email Already Exists. Please Choose Another Email");
+					}
+				}
+			}else {
+				echo "<script>alert('ERR CODE : 403\\nMESSAGE  : CSRF TOKEN MISMATCH\\nThis may happen when the form you entered doesn\\'t have the same value of CSRF Token. The second reason is the form\\'s token has expired.'); window.location=''</script>";
+			}
+		}
+	}
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -14,7 +56,8 @@
 				<div class="col-sm-12 col-md-5">
 					<div class="header form-group">
 						<h1><b>Register</b></h1>
-						<form action="">
+						<?php if(isset($errors)) include('../../api/errors.php'); ?>
+						<form method="POST">
 							<input type="text" name="_hidden-form" class="input-hidden">
 							<input type="hidden" name="_csrf-token" value="<?php echo $token ?>">
 							<div class="input-group mb-3 input-form">
@@ -25,7 +68,7 @@
 							</div>
 							<div class="input-group mb-3 input-form">
 							  <div class="input-group-prepend">
-							    <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+							    <span class="input-group-text" id="basic-addon1"><i class="fas fa-envelope"></i></span>
 							  </div>
 							  <input type="email" name="_email-user" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1">
 							</div>

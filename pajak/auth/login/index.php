@@ -16,12 +16,21 @@
 					array_push($errors, "Password Field is Required");
 				}
 				if(count($errors) == 0){
-					$validation = mysqli_num_rows(mysqli_query($connect, "SELECT email, password from users WHERE email='$email' and password='$password'"));
+					$validation = mysqli_num_rows(mysqli_query($connect, "SELECT email from users WHERE email='$email'"));
 					if($validation == 1){
-						$usr_token = bin2hex(random_bytes(80));
-						setcookie('token', $usr_token, time()+(3600*24*3), '/');
-						mysqli_num_rows(mysqli_query($connect, "UPDATE users SET token='$usr_token' WHERE email='$email' AND password='$password'"));
-						header('Location: ../../');
+						$psw_validation = mysqli_query($connect, "SELECT password from users WHERE email='$email'");
+						while ($psw_user_db = mysqli_fetch_assoc($psw_validation)){
+							$psw_user = $psw_user_db['password'];
+						}
+						if(password_verify($password, $psw_user)){
+							$usr_token = bin2hex(random_bytes(80));
+							$usr_password = password_hash($password, PASSWORD_DEFAULT);
+							setcookie('token', $usr_token, time()+(3600*24*3), '/');
+							mysqli_num_rows(mysqli_query($connect, "UPDATE users SET password='$usr_password', token='$usr_token' WHERE email='$email'"));
+							header('Location: ../../');
+						}else {
+							array_push($errors, "Invalid Credentials");
+						}
 					}else {
 						array_push($errors, "Invalid Credentials");
 					}
