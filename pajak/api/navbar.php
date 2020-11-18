@@ -17,9 +17,22 @@
 					  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
 					    <span class="navbar-toggler-icon"></span>
 					  </button>
-
+					  <div class="dropdown collapse navbar-collapse" id="navbarTogglerDemo02">
+					  	<ul class="navbar-nav">
+					      <li class="nav-item nav-link-a">
+							    <a class="btn dropdown-toggle font-weight-bold text-white" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							      Dropdown button
+							    </a>
+							    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							      <a class="dropdown-item" href="#">Action</a>
+							      <a class="dropdown-item" href="#">Another action</a>
+							      <a class="dropdown-item" href="#">Something else here</a>
+							    </div>
+						  </li>
+						</ul>
+					  </div>
 					  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-					    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+					    <ul class="navbar-nav">
 					      <li class="nav-item nav-link-a">
 					        <a class="nav-link font-weight-bold" href="?logout=true"><i class="fas fa-sign-out-alt"></i> Logout</a>
 					      </li>

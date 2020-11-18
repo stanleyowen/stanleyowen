@@ -14,12 +14,12 @@
 	}
 
 	//CSRF Token Configuration
-	if(empty($_COOKIE['csrf-token'])){
+	if(!isset($_COOKIE['csrf-token'])){
 		$token = bin2hex(random_bytes(50));
 		setcookie('csrf-token', $token, time()+300, '/');
 	}
 	if(isset($_COOKIE['csrf-token'])){
-		$token = mysqli_real_escape_string($connect, $_COOKIE['csrf-token']);
-		return $token;
+		$csrf_token = mysqli_real_escape_string($connect, $_COOKIE['csrf-token']);
+		return $csrf_token;
 	}
 ?>

@@ -18,3 +18,8 @@ a:hover { opacity: 1; transition: ease-in-out 0.5s }
 .error h4 { padding: 20px 20px 0px 20px; }
 .error p { padding: 0px 20px 0px 20px; }
 .error .mb-20 { padding-bottom: 10px; }
+.project-null-msg { text-align: center; font-size: 15px; color: gray; font-style: italic; }
+.hover-mode tbody tr { opacity: 1; }
+.hover-mode tbody tr:hover { background-color: #e8ede9; transition: ease-in-out 0.5s; }
+.btn-noborder { border-style: none; background-color: white; }
+.btn-noborder:hover { opacity: 0.8; transition: ease-in-out 0.5s; }

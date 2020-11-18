@@ -1,5 +1,16 @@
 <?php
 	include('../../api/index.php');
+
+	if(isset($_COOKIE['token'])){
+		$token = mysqli_real_escape_string($connect, $_COOKIE['token']);
+		if(strlen($token) == 160){
+			$validation = mysqli_num_rows(mysqli_query($connect, "SELECT token FROM users WHERE token='$token'"));
+			if($validation == 1){
+				header('Location: '.$URL.'');
+			}
+		}
+	};
+
 	if(isset($_POST['_login-btn'])){
 		$hidden_form	= mysqli_real_escape_string($connect, $_POST['_hidden-form']);
 		$csrf_token_id	= mysqli_real_escape_string($connect, $_COOKIE['csrf-token']);
@@ -88,7 +99,7 @@
 						<?php if(isset($errors)){include('../../api/errors.php');} ?>
 						<form method="POST">
 							<input type="text" name="_hidden-form" class="input-hidden">
-							<input type="hidden" name="_csrf-token" value="<?php echo $token ?>">
+							<input type="hidden" name="_csrf-token" value="<?php echo $csrf_token ?>">
 							<div class="input-group mb-3 input-form">
 							  <div class="input-group-prepend">
 							    <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>

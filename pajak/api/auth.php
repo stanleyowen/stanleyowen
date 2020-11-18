@@ -9,7 +9,7 @@
 					$name = $db_data['username'];
 					$unique_id1 = $db_data['unique_id'];
 					$unique_id2 = $db_data['unique_id2'];
-					$unique_token = $unique_id1.$unique_id2;
+					$project_token = $unique_id1.$unique_id2;
 				}
 			}else {
 				setcookie('token', null, time()-3600, '/');
