@@ -1,6 +1,7 @@
 <?php
 	include('./api/index.php');
 	include('./api/auth.php');
+
 	if(isset($_POST['_create-project'])){
 		$hidden_form	= mysqli_real_escape_string($connect, $_POST['_hidden-form']);
 		$csrf_token_id	= mysqli_real_escape_string($connect, $_COOKIE['csrf-token']);
@@ -19,7 +20,8 @@
 				if(count($errors) == 0){
 					$validation = mysqli_num_rows(mysqli_query($connect, "SELECT project_name from projects WHERE project_name='$project_name'"));
 					if($validation == 0){
-						mysqli_query($connect, "INSERT INTO projects (project_name, project_description, project_token) VALUES ('$project_name', '$project_desc', '$project_token')");
+						$token_id = bin2hex(random_bytes(100));
+						mysqli_query($connect, "INSERT INTO projects (project_name, project_description, project_token, token) VALUES ('$project_name', '$project_desc', '$project_token', '$token_id')");
 					}
 					else{
 						array_push($errors, "Project Already Exists. Please Choose Another Projects");
@@ -42,8 +44,13 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-12">
-					<button type="button" class="btn-noborder" data-toggle="modal" data-target="#exampleModal">
-					  <i style="font-size: 48px; color: Dodgerblue;"class="fas fa-plus-circle"></i>
+					<button type="button" class="btn-project btn-add" data-toggle="modal" data-target="#exampleModal">
+						<div class="btn-fa-add">
+					  		<i style="font-size: 48px; color: Dodgerblue;"class="fas fa-plus-circle"></i>
+					  	</div>
+					  	<div class="btn-fa-text">
+					  		New Project
+					  	</div>
 					</button>
 
 					<div class="modal fade" id="exampleModal"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -97,7 +104,7 @@
 									$validation = mysqli_num_rows($project_query);
 									if($validation != 0){
 										while($project = mysqli_fetch_assoc($project_query)){
-											echo"<tr><th scope=\"row\">".$project['project_name']."</th><th>".$project['project_description']."</th></tr>";
+											echo"<tr><th scope=\"row\">".$project['project_name']."</th><th>".$project['project_description']."</th><th><a href=\"$URL/delete/projects/auth/?id=".$project['token']."&uniqueid=".$project['project_token']."\"><i class=\"fas fa-trash-alt\"></i>Trash</a></tr>";
 										}
 									}else {
 										echo "

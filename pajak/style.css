@@ -4,9 +4,11 @@ body, * {
 	margin: 0;
 	padding: 0;
 	font-family: 'Chilanka';
+	outline: none;
 }
 a { opacity: 0.8 }
 a:hover { opacity: 1; transition: ease-in-out 0.5s }
+button { outline: none!important; }
 .input-form { margin-top: 25px; }
 .nav-link-a a{ opacity: 1 }
 .nav-link-a a:hover { opacity: 0.5; transition: ease-in-out 0.5s }
@@ -20,6 +22,19 @@ a:hover { opacity: 1; transition: ease-in-out 0.5s }
 .error .mb-20 { padding-bottom: 10px; }
 .project-null-msg { text-align: center; font-size: 15px; color: gray; font-style: italic; }
 .hover-mode tbody tr { opacity: 1; }
-.hover-mode tbody tr:hover { background-color: #e8ede9; transition: ease-in-out 0.5s; }
-.btn-noborder { border-style: none; background-color: white; }
-.btn-noborder:hover { opacity: 0.8; transition: ease-in-out 0.5s; }
+.hover-mode tbody tr:hover { background-color: #e8ede9; transition: ease-in-out 0.2s; }
+.btn-project {
+	border-style: none;
+	background-color: white;
+	display: inline-block;
+	margin: 20px 10px;
+	font-size: 16px;
+	text-align: center;
+	text-decoration: none;
+	padding: 10px;
+}
+.btn-project:hover { background-color: #e8ede9; transition: ease-in-out 0.2s }
+.btn-project:focus { background-color: #dce0dd; }
+.btn-add { border-radius: 20px; }
+.btn-full { width: 100%; margin: 10px; }
+.mt-20 { margin: 50px; margin-top: 75px; }
