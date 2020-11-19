@@ -118,5 +118,6 @@
 				</div>
 			</div>
 		</div>
+		<?php include('../../api/js.php'); ?>
 	</body>
 </html>

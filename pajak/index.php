@@ -68,11 +68,11 @@
 								<input type="hidden" name="_csrf-token" value="<?php echo $csrf_token ?>">
 								<div class="form-group">
 									<label for="description">Project Name</label>
-									<input type="text" name="_name-project" class="form-control" placeholder="Your Project Name (Max 30 Characters)" maxlength="30" required>
+									<input type="text" name="_name-project" class="form-control" placeholder="Project Name (Max 30 Characters)" maxlength="30" required>
 								</div>
 								<div class="form-group">
 								    <label for="description">Desciption</label>
-								    <textarea class="form-control" name="_desc-project" id="description" rows="3" maxlength="100" placeholder="Your Project Name (Max 30 Characters)"></textarea>
+								    <textarea class="form-control" name="_desc-project" id="description" rows="3" maxlength="100" placeholder="Project Description (Max 100 Characters)"></textarea>
 								</div>
 					      </div>
 					      <div class="modal-footer">
@@ -84,7 +84,6 @@
 					  </div>
 					</div>
 					<div class="form-group">
-						<h1>Project</h1>
 						<?php if(isset($errors)){include('./api/errors.php');} ?>
 					</div>
 				</div>
@@ -104,13 +103,11 @@
 									$validation = mysqli_num_rows($project_query);
 									if($validation != 0){
 										while($project = mysqli_fetch_assoc($project_query)){
-											echo"<tr><th scope=\"row\">".$project['project_name']."</th><th>".$project['project_description']."</th><th><a href=\"$URL/delete/projects/auth/?id=".$project['token']."&uniqueid=".$project['project_token']."\"><i class=\"fas fa-trash-alt\"></i>Trash</a></tr>";
+											echo"<tr><th scope=\"row\">".$project['project_name']."</th><th>".$project['project_description']."</th><th class=\"icons\"><a href=\"#\"><i class=\"fas fa-external-link-alt\"></i></a><a href=\"$URL/projects/edit/auth/?id=".$project['token']."&uniqueid=".$project['project_token']."\"><i class=\"fas fa-edit\" style=\"color: #d48728\"></i></a><a href=\"$URL/projects/delete/auth/?id=".$project['token']."&uniqueid=".$project['project_token']."\"><i class=\"fas fa-trash-alt\" style=\"color:red\"></i></a></th></tr>";
 										}
 									}else {
 										echo "
-										<tr><th colspan=\"3\" scope=\"row\">
-											<p class=\"project-null-msg italic\">No Projects</p>
-										</th></tr>";
+										<tr><th colspan=\"3\" scope=\"row\"><p class=\"project-null-msg italic\">No Projects</p></th></tr>";
 									}
 								?>
 							</tbody>
@@ -119,5 +116,6 @@
 				</div>
 			</div>
 		</div>
+		<?php include('./api/js.php'); ?>
 	</body>
 </html>
