@@ -18,7 +18,7 @@
 					<form method="POST">
 					  <div class="form-group">
 					    <label for="exampleInputPassword1">Please type <b>'.$result_name.'</b> to confirm :</label>
-					    <input type="text" name="_confirm-delete" class="form-control" autofocus>
+					    <input type="text" name="_confirm-delete" class="form-control" autocomplete="off" autocapitalize="none" autofocus>
 					  </div>
 					  <button name="_confirm" type="submit" class="btn btn-full btn-outline-danger">DELETE PERMANENTLY</button><br/>
 					  <button name="_discard" type="submit" class="btn btn-full btn-outline-warning">DISCARD</button>
@@ -37,9 +37,9 @@
 		if($result_name == $cf_code){
 			mysqli_query($connect, "DELETE FROM projects WHERE project_name='$result_name'");
 			mysqli_query($connect, "DELETE FROM data WHERE origin='$result_name'");
-			echo "<script>alert('Project Deleted Successfully');window.location='$URL'</script>";
+			echo "<script>alert('CODE : 200\\nMESSAGE  : PROJECT DELETED SUCCESSFULLY');window.location='$URL'</script>";
 		}else {
-			echo "<script>alert('Confirmation Code Mismatch');</script>";
+			echo "<script>alert('ERR CODE : 400\\nMESSAGE  : CONFIRMATION CODE MISMATCH');</script>";
 		}
 	}else if(isset($_POST['_discard'])){
 		header('Location: '.$URL.'');
