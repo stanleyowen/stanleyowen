@@ -22,7 +22,7 @@ button { outline: none!important; }
 .error .mb-20 { padding-bottom: 10px; }
 .project-null-msg { text-align: center; font-size: 15px; color: gray; font-style: italic; }
 .hover-mode tbody tr { opacity: 1; }
-.hover-mode tbody tr:hover { background-color: #e8ede9; transition: ease-in-out 0.2s; }
+.hover-mode tbody tr:hover { background-color: #e8ede9; }
 .btn-project {
 	border-style: none;
 	background-color: white;
@@ -43,6 +43,7 @@ button { outline: none!important; }
 .btn-cta { display: inline-block; }
 .btn-cta .btn-project { width: 100%; }
 .status { display: inline-block; }
+.required{ color: red; }
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); border-radius: 10px; }
 ::-webkit-scrollbar-thumb { border-radius: 10px; -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); }

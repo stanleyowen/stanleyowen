@@ -41,19 +41,31 @@
 		$code = '<div class="mt-20"><h1>400 - BAD REQUEST</h1></div>';
 	}
 
-	if(isset($_POST['_confirm']) && isset($result_name)){
-		$project_name 			= mysqli_real_escape_string($connect, $_POST['_confirm-pjname']);
-		$project_description 	= mysqli_real_escape_string($connect, $_POST['_confirm-pjdesc']);
-		mysqli_query($connect, "UPDATE projects SET project_name='$project_name', project_description='$project_description'");
-		echo "<script>alert('CODE : 200\\nMESSAGE  : PROJECT UPDATED SUCCESSFULLY');window.location='$URL'</script>";
-	}else if(isset($_POST['_discard'])){
-		header('Location: '.$URL.'');
+	if(isset($_POST['_create-data']) && isset($result_name)){
+		$code 	= mysqli_real_escape_string($connect, $_POST['_code']);
+		$data 	= mysqli_real_escape_string($connect, $_POST['_data']);
+		$date 	= mysqli_real_escape_string($connect, $_POST['_date']);
+		$errors = array();
+		if(empty($code) || empty($data) || empty($date)){
+			array_push($errors, "Make sure to fill out all the required forms");
+		}else {
+			if(is_numeric($code) != 1){
+				array_push($errors, $code." is not an integer");
+			}
+			if(count($errors) == 0) {
+				if(strlen($code) > 9){ array_push($errors, "Code is too long"); }
+				if(strlen($data) > 150){ array_push($errors, "Data is too long"); }
+				if(strlen($date) > 10){ array_push($errors, "Please Provide a Valid Date"); }
+				if(count($errors) == 0) {
+					mysqli_query($connect, "INSERT INTO data(code, data, date, token) VALUES('$code', '$data', '$date', '$id')");
+				}
+			}
+		}
 	}
-
-	if(isset($_POST['_delete-project'])){
+	if(isset($_POST['_delete-project']) && isset($result_name)){
 		header('Location:'.$URL.'/projects/delete/auth/?id='.$id.'&uniqueid='.$uniqueid.'');
 	}
-	if(isset($_POST['_back-btn'])){
+	if(isset($_POST['_back-btn']) && isset($result_name)){
 		header('Location:'.$URL.'');
 	}
 ?>
@@ -89,6 +101,22 @@
 					  	</div>
 					</button>
 
+					<button type="button" class="btn-project btn-add" data-toggle="modal" data-target="#searchData">
+						<div class="btn-fa-add">
+					  		<i style="font-size: 48px; color: Dodgerblue;"class="fas fa-search"></i>
+					  	</div>
+					  	<div class="btn-fa-text">
+					  		Search
+					  	</div>
+					</button>
+					<button type="button" class="btn-project btn-add" data-toggle="modal" data-target="#sortData">
+						<div class="btn-fa-add">
+					  		<i style="font-size: 48px; color: Dodgerblue;"class="fas fa-sort-amount-up"></i>
+					  	</div>
+					  	<div class="btn-fa-text">
+					  		Sort
+					  	</div>
+					</button>
 					<button type="button" class="btn-project btn-add" data-toggle="modal" data-target="#infoData">
 						<div class="btn-fa-add">
 					  		<i style="font-size: 48px; color: Dodgerblue;"class="fas fa-info-circle"></i>
@@ -118,25 +146,76 @@
 					      </div>
 					      <div class="modal-body">
 					        <form method="POST">
+					        	<p class="required">* required</p>
 								<input type="text" name="_hidden-form" class="input-hidden">
-								<input type="hidden" name="_csrf-token" value="<?php echo $csrf_token ?>">
 								<div class="form-group">
-									<label for="description">Date</label>
-									<input type="text" name="_name-project" class="form-control" placeholder="Project Name (Max 30 Characters)" maxlength="30" required>
+									<label for="Code">Code <span class="required">*</span></label>
+									<input type="number" name="_code" class="form-control" placeholder="Input Data (max 9 digits)" max="999999999" min="0" required>
 								</div>
 								<div class="form-group">
-								    <label for="description">Desciption</label>
-								    <textarea class="form-control" name="_desc-project" id="description" rows="3" maxlength="100" placeholder="Project Description (Max 100 Characters)"></textarea>
+									<label for="description">Data <span class="required">*</span></label>
+									<input type="text" name="_data" class="form-control" maxlength="150" placeholder="Input Data (max 150 chars)" required>
+								</div>
+								<div class="form-group">
+									<label for="description">Date <span class="required">*</span></label>
+									<input type="date" name="_date" class="form-control" maxlength="10" required>
 								</div>
 					      </div>
 					      <div class="modal-footer">
 					        <button type="button" class="btn btn-danger" data-dismiss="modal">Discard</button>
-					        <button type="submit" name="_create-project" class="btn btn-primary">Create</button>
+					        <button type="submit" name="_create-data" class="btn btn-primary">Create</button>
 					        </form>
 					      </div>
 					    </div>
 					  </div>
 					</div>
+
+					<div class="modal fade" id="searchData" tabindex="-1" aria-hidden="true">
+					  <div class="modal-dialog">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title" id="exampleModalLabel">Add Data</h5>
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					      </div>
+					      <div class="modal-body">
+					        <form method="POST">
+								<div class="input-group mb-3">
+								  <div class="input-group-prepend">
+								    <span class="input-group-text" style="background-color: white;" id="basic-addon1"><i class="fas fa-search"></i></span>
+								  </div>
+								  <input type="text" name="_search" class="form-control" placeholder="Search Keywords (max 30 chars)">
+								</div>
+								<p>Search By :</p>
+								<div class="form-check">
+								  <input class="form-check-input" type="radio" name="_keywords" id="all-keywords" value="all" checked>
+								  <label class="form-check-label" for="all-keywords">
+								    All Possible Keywords
+								  </label>
+								</div>
+								<div class="form-check">
+								  <input class="form-check-input" type="radio" name="_keywords" id="code-keyword" value="code">
+								  <label class="form-check-label" for="code-keyword">
+								    Code
+								  </label>
+								</div>
+								<div class="form-check">
+								  <input class="form-check-input" type="radio" name="_keywords" id="date-keyword" value="date">
+								  <label class="form-check-label" for="date-keyword">
+								    Date
+								  </label>
+								</div>
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+					        <button type="submit" name="_search" class="btn btn-primary">Search</button>
+					        </form>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+
 					<div class="form-group">
 						<?php if(isset($errors)){include('../../api/errors.php');} ?>
 					</div>
@@ -171,9 +250,6 @@
 					    </div>
 					  </div>
 					</div>
-					<div class="form-group">
-						<?php if(isset($errors)){include('../../api/errors.php');} ?>
-					</div>
 				</div>
 
 				<div class="col-sm-12">
@@ -182,22 +258,23 @@
 							<thead>
 								<tr>
 									<th scope="col">No</th>
-									<th scope="col">Project Name</th>
+									<th scope="col">Code</th>
 									<th scope="col">Description</th>
+									<th scope="col">Date</th>
 								</tr>
 							</thead>
 							<tbody>
 								<?php
-									$data_query = mysqli_query($connect, "SELECT * FROM data WHERE token='$token'");
+									$data_query = mysqli_query($connect, "SELECT * FROM data WHERE token='$id'");
 									$validation = mysqli_num_rows($data_query);
+									$number = 1;
 									if($validation != 0){
-										$number = 1;
-										while($data = mysqli_fetch_assoc($project_query)){
-											echo"<tr><th scope=\"row\">".$number."</th><th>".$data['project_name']."</th><th>".$project['project_description']."</th></tr>";
+										while($data = mysqli_fetch_assoc($data_query)){
+											echo "<tr><th scope=\"row\">".$number++."</th><th>".$data['code']."</th><th>".$data['data']."</th><th>".$data['date']."</th></tr>";
 										}
 									}else {
 										echo "
-										<tr><th colspan=\"3\" scope=\"row\"><p class=\"project-null-msg italic\">No Data</p></th></tr>";
+										<tr><th colspan=\"4\" scope=\"row\"><p class=\"project-null-msg italic\">No Data</p></th></tr>";
 									}
 								?>
 							</tbody>
