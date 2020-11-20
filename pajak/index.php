@@ -44,7 +44,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-12">
-					<button type="button" class="btn-project btn-add" data-toggle="modal" data-target="#exampleModal">
+					<button type="button" class="btn-project btn-add" data-toggle="modal" data-target="#addProject">
 						<div class="btn-fa-add">
 					  		<i style="font-size: 48px; color: Dodgerblue;"class="fas fa-plus-circle"></i>
 					  	</div>
@@ -53,7 +53,7 @@
 					  	</div>
 					</button>
 
-					<div class="modal fade" id="exampleModal"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal fade" id="addProject" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 					  <div class="modal-dialog">
 					    <div class="modal-content">
 					      <div class="modal-header">
@@ -103,7 +103,7 @@
 									$validation = mysqli_num_rows($project_query);
 									if($validation != 0){
 										while($project = mysqli_fetch_assoc($project_query)){
-											echo"<tr><th scope=\"row\">".$project['project_name']."</th><th>".$project['project_description']."</th><th class=\"icons\"><a href=\"#\"><i class=\"fas fa-external-link-alt\"></i></a><a href=\"$URL/projects/edit/auth/?id=".$project['token']."&uniqueid=".$project['project_token']."\"><i class=\"fas fa-edit\" style=\"color: #d48728\"></i></a><a href=\"$URL/projects/delete/auth/?id=".$project['token']."&uniqueid=".$project['project_token']."\"><i class=\"fas fa-trash-alt\" style=\"color:red\"></i></a></th></tr>";
+											echo"<tr><th scope=\"row\">".$project['project_name']."</th><th>".$project['project_description']."</th><th class=\"icons\"><a href=\"$URL/projects/auth/?id=".$project['token']."&uniqueid=".$project['project_token']."\"><i class=\"fas fa-external-link-alt\"></i></a><a href=\"$URL/projects/edit/auth/?id=".$project['token']."&uniqueid=".$project['project_token']."\"><i class=\"fas fa-edit\" style=\"color: #d48728\"></i></a><a href=\"$URL/projects/delete/auth/?id=".$project['token']."&uniqueid=".$project['project_token']."\"><i class=\"fas fa-trash-alt\" style=\"color:red\"></i></a></th></tr>";
 										}
 									}else {
 										echo "
