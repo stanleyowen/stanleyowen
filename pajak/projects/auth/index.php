@@ -68,30 +68,26 @@
 	if(isset($_POST['_back-btn']) && isset($result_name)){
 		header('Location:'.$URL.'');
 	}
-	if(isset($_GET['type']) && isset($_GET['keywords']) && isset($_GET['search']) && isset($result_name)){
-		$type		= mysqli_real_escape_string($connect, urldecode($_GET['type']));
-		$keywords 	= mysqli_real_escape_string($connect, urldecode($_GET['keywords']));
-		$search 	= mysqli_real_escape_string($connect, urldecode($_GET['search']));
+	if(isset($_POST['type']) && isset($_POST['keywords']) && isset($_POST['search']) && isset($result_name)){
+		$type		= mysqli_real_escape_string($connect, $_POST['type']);
+		$keywords 	= mysqli_real_escape_string($connect, $_POST['keywords']);
+		$search 	= mysqli_real_escape_string($connect, $_POST['search']);
 		$errors		= array();
 		if($keywords == "all"){
-			$types = "*";
+			$types = "data";
 		}else if ($keywords == "code"){
 			$types = "code";
 		}else if ($keywords == "date"){
 			$types = "date";
-		}
-		$data_search_query = mysqli_query($connect, "SELECT ".$types." FROM data WHERE code like '%$search%' ");
-		$validation_search = mysqli_num_rows($data_search_query);
-		$number = 1;
-		if($validation_search != 0){
-			while($data_search = mysqli_fetch_assoc($data_search_query)){
-				echo "<tr><th scope=\"row\">".$number++."</th><th>".$data_search['code']."</th><th>".$data_search['data']."</th><th>".$data_search['date']."</th></tr>";
-			}
 		}else {
-			echo "
-			<tr><th colspan=\"4\" scope=\"row\"><p class=\"project-null-msg italic\">No Search Result Found Data</p></th></tr>";
+			array_push($errors, "Error in Displaying Value");
 		}
-		array_push($errors, "SELECT ".$types." FROM data WHERE code like '%$search%' ");
+		if(count($errors) == 0){
+			$data_query = mysqli_query($connect, "SELECT * FROM data WHERE ".$types." like '%$search%' ");
+		}
+	};
+	if(isset($_POST['_show-data'])){
+		unset($data_query);
 	}
 ?>
 
@@ -205,7 +201,7 @@
 					        </button>
 					      </div>
 					      <div class="modal-body">
-					        <form method="GET">
+					        <form method="POST">
 								<div class="input-group mb-3">
 								  <input type="hidden" name="uniqueid" value="<?php echo $uniqueid?>">
 								  <input type="hidden" name="id" value="<?php echo $id ?>">
@@ -243,8 +239,52 @@
 					  </div>
 					</div>
 
-					<div class="form-group">
-						<?php if(isset($errors)){include('../../api/errors.php');} ?>
+					<div class="modal fade" id="sortData" tabindex="-1" aria-hidden="true">
+					  <div class="modal-dialog">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title" id="exampleModalLabel">Search Data</h5>
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					      </div>
+					      <div class="modal-body">
+					        <form method="POST">
+								<div class="input-group mb-3">
+								  <input type="hidden" name="uniqueid" value="<?php echo $uniqueid?>">
+								  <input type="hidden" name="id" value="<?php echo $id ?>">
+								  <div class="input-group-prepend">
+								    <span class="input-group-text" style="background-color: white;" id="basic-addon1"><i class="fas fa-search"></i></span>
+								  </div>
+								  <input type="text" name="search" class="form-control" placeholder="Search Keywords (max 30 chars)">
+								</div>
+								<p>Search By :</p>
+								<div class="form-check">
+								  <input class="form-check-input" type="radio" name="keywords" id="all-keywords" value="all" checked>
+								  <label class="form-check-label" for="all-keywords">
+								    All Possible Keywords
+								  </label>
+								</div>
+								<div class="form-check">
+								  <input class="form-check-input" type="radio" name="keywords" id="code-keyword" value="code">
+								  <label class="form-check-label" for="code-keyword">
+								    Code
+								  </label>
+								</div>
+								<div class="form-check">
+								  <input class="form-check-input" type="radio" name="keywords" id="date-keyword" value="date">
+								  <label class="form-check-label" for="date-keyword">
+								    Date
+								  </label>
+								</div>
+					      </div>
+					      <div class="modal-footer">
+					        <input type="submit" name="type" value="Search" class="btn btn-primary"/>
+					        </form>
+					        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+					      </div>
+					    </div>
+					  </div>
 					</div>
 				</div>
 
@@ -278,7 +318,13 @@
 					  </div>
 					</div>
 				</div>
-
+				<?php
+					if(isset($data_query)){
+						echo "<h5>Search Result for ".$search." :</h5>\n
+						<form method=\"POST\">
+							<input name=\"_show-data\" type=\"submit\" value=\"Show all Data\" />";
+					}
+				?>
 				<div class="col-sm-12">
 					<div class="form-group table-responsive">
 						<table class="table hover-mode">
@@ -292,7 +338,9 @@
 							</thead>
 							<tbody>
 								<?php
-									$data_query = mysqli_query($connect, "SELECT * FROM data WHERE token='$id'");
+									if(!isset($data_query)){
+										$data_query = mysqli_query($connect, "SELECT * FROM data WHERE token='$id'");
+									}
 									$validation = mysqli_num_rows($data_query);
 									$number = 1;
 									if($validation != 0){
@@ -301,7 +349,7 @@
 										}
 									}else {
 										echo "
-										<tr><th colspan=\"4\" scope=\"row\"><p class=\"project-null-msg italic\">No Data</p></th></tr>";
+										<tr><th colspan=\"4\" scope=\"row\"><p class=\"project-null-msg italic\">No Data Found</p></th></tr>";
 									}
 								?>
 							</tbody>
