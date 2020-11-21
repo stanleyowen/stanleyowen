@@ -32,6 +32,10 @@
 			}
 		}
 	}
+	if(isset($_POST['display_project']) || isset($_POST['edit_project']) || isset($_POST['delete_project'])){
+		$location = mysqli_real_escape_string($connect, $_POST['_url-header']);
+		header('Location: '.$location.'');
+	}
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -103,7 +107,23 @@
 									$validation = mysqli_num_rows($project_query);
 									if($validation != 0){
 										while($project = mysqli_fetch_assoc($project_query)){
-											echo"<tr><th scope=\"row\">".$project['project_name']."</th><th>".$project['project_description']."</th><th class=\"icons\"><a href=\"$URL/projects/auth/?id=".$project['token']."&uniqueid=".$project['project_token']."\"><i class=\"fas fa-external-link-alt\"></i></a><a href=\"$URL/projects/edit/auth/?id=".$project['token']."&uniqueid=".$project['project_token']."\"><i class=\"fas fa-edit\" style=\"color: #d48728\"></i></a><a href=\"$URL/projects/delete/auth/?id=".$project['token']."&uniqueid=".$project['project_token']."\"><i class=\"fas fa-trash-alt\" style=\"color:red\"></i></a></th></tr>";
+											echo"
+											<tr><th scope=\"row\">".$project['project_name']."</th>
+											<th>".$project['project_description']."</th>
+											<th class=\"icons\">
+												<form class=\"btn-cta\" method=\"POST\">
+													<input type=\"hidden\" name=\"_url-header\" value=\"$URL/projects/auth/?id=".$project['token']."&uniqueid=".$project['project_token']."\" />
+													<button type=\"submit\" class=\"btn-cta\" name=\"display_project\"><i class=\"fas fa-external-link-alt\"style=\"color: Dodgerblue;\"></i></button>
+												</form>
+												<form class=\"btn-cta\" method=\"POST\">
+													<input type=\"hidden\" name=\"_url-header\" value=\"$URL/projects/edit/auth/?id=".$project['token']."&uniqueid=".$project['project_token']."\" />
+													<button type=\"submit\" class=\"btn-cta\" name=\"edit_project\"><i class=\"fas fa-edit\" style=\"color: #d48728\"></i></button>
+												</form>
+												<form class=\"btn-cta\" method=\"POST\">
+													<input type=\"hidden\" name=\"_url-header\" value=\"$URL/projects/delete/auth/?id=".$project['token']."&uniqueid=".$project['project_token']."\" />
+													<button type=\"submit\" class=\"btn-cta\" name=\"delete_project\"><i class=\"fas fa-trash-alt\" style=\"color:red\"></i></button>
+												</form>
+											</th></tr>";
 										}
 									}else {
 										echo "
