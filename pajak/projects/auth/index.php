@@ -83,11 +83,22 @@
 			array_push($errors, "Error in Displaying Value");
 		}
 		if(count($errors) == 0){
-			$data_query = mysqli_query($connect, "SELECT * FROM data WHERE ".$types." like '%$search%' ");
+			$data_query = mysqli_query($connect, "SELECT * FROM data WHERE token='$id' AND ".$types." like '%$search%' ");
 		}
+		
 	};
 	if(isset($_POST['_show-data'])){
 		unset($data_query);
+	}
+	if(isset($_POST['_add-code'])){
+		$code 			= mysqli_real_escape_string($connect, $_POST['_code-data']);
+		$description 	= mysqli_real_escape_string($connect, $_POST['_code-desc']);
+		$validation 	= mysqli_num_rows(mysqli_query($connect, "SELECT * FROM code_data WHERE code='$code'"));
+		$errors			= array();
+		if($validation == 1){ array_push($errors, "Code had Existed"); }
+		else {
+			mysqli_query($connect, "INSERT INTO code_data(code, description, token) VALUES('$code','$description','$id')");
+		}
 	}
 ?>
 
@@ -119,6 +130,15 @@
 					  	</div>
 					  	<div class="btn-fa-text">
 					  		New Data
+					  	</div>
+					</button>
+
+					<button type="button" class="btn-project btn-add" data-toggle="modal" data-target="#refCode">
+						<div class="btn-fa-add">
+					  		<i style="font-size: 48px; color: Dodgerblue;"class="fas fa-code-branch"></i>
+					  	</div>
+					  	<div class="btn-fa-text">
+					  		Ref. Code
 					  	</div>
 					</button>
 
@@ -179,7 +199,7 @@
 								</div>
 								<div class="form-group">
 									<label for="description">Date <span class="required">*</span></label>
-									<input type="date" name="_date" class="form-control" maxlength="10" required>
+									<input type="date" name="_date" max="9999-99-99" class="form-control" maxlength="10" required>
 								</div>
 					      </div>
 					      <div class="modal-footer">
@@ -233,6 +253,76 @@
 					      <div class="modal-footer">
 					        <input type="submit" name="type" value="Search" class="btn btn-primary"/>
 					        </form>
+					        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+
+					<div class="modal fade" id="refCode" tabindex="-1" aria-hidden="true">
+					  <div class="modal-dialog">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title" id="exampleModalLabel">Code List</h5>
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					      </div>
+					      <div class="modal-body">
+					        <form method="POST">
+								<div class="input-group mb-3">
+								  <input type="hidden" name="uniqueid" value="<?php echo $uniqueid?>">
+								  <input type="hidden" name="id" value="<?php echo $id ?>">
+								  <div class="input-group">
+									  <div class="input-group-prepend">
+									    <span class="input-group-text" style="background-color: white;" id="basic-addon1"><i class="fas fa-plus"></i></span>
+									  </div>
+									  <input type="number" name="_code-data" class="form-control" placeholder="Code (max 5 chars)" max="99999" autocomplete="off" />
+								  </div>
+
+								  <div class="input-group input-form">
+									  <div class="input-group-prepend">
+									    <span class="input-group-text" style="background-color: white;" id="basic-addon1"><i class="fas fa-info"></i></span>
+									  </div>
+									  <input type="text" name="_code-desc" class="form-control" placeholder="Description (max 150 chars)" />
+								  </div>
+								</div>
+								<input type="submit" name="_add-code" value="Add Ref Code" class="btn btn-primary btn-full"/>
+					        </form>
+								<p>Code List</p>
+								<div class="form-group table-responsive">
+									<table class="table hover-mode">
+										<thead>
+											<tr>
+												<th scope="col">Code</th>
+												<th scope="col">Description</th>
+												<th scope="col">Action</th>
+											</tr>
+										</thead>
+										<tbody>
+											<?php
+												$code_query = mysqli_query($connect, "SELECT * FROM code_data WHERE token='$id'");
+												$validation_code = mysqli_num_rows($code_query);
+												if($validation_code == 1){
+													while ($code_data = mysqli_fetch_assoc($code_query)){
+														echo "<tr>
+														<th scope=\"row\">".$code_data['code']."</th>
+														<th>".$code_data['description']."</th>
+														<th>
+															<form method=\"POST\">
+																<input type=\"hidden\" value=\"$URL/projects/delete/auth/?id=".$project['token']."&uniqueid=".$project['project_token']."\"
+															</form>
+														</th></tr>";
+													}
+												}else {
+													echo "<tr><th colspan=\"4\" scope=\"row\"><p class=\"project-null-msg italic\">No Code Data Found</p></th></tr>";
+												}
+											?>
+										</tbody>
+									</table>
+								</div>
+					      </div>
+					      <div class="modal-footer">
 					        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 					      </div>
 					    </div>
