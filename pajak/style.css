@@ -44,6 +44,13 @@ button { outline: none!important; }
 .btn-cta .btn-project { width: 100%; }
 .status { display: inline-block; }
 .required{ color: red; }
+.onhover .btn-on-hover{ opacity: 0; }
+.onhover:hover .btn-on-hover {
+	opacity: 1;
+	background: none;
+	border-style: none;
+}
+.onhover:hover .btn-on-hover:hover { color: red; transition: ease-in-out 0.1s; }
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); border-radius: 10px; }
 ::-webkit-scrollbar-thumb { border-radius: 10px; -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); }

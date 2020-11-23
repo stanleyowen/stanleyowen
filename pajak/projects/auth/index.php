@@ -14,7 +14,7 @@
 					$result_description	= $check_name['project_description'];
 					$result_status		= $check_name['status'];
 				}
-				$code = '
+				$code_php = '
 					<div class="container mt-20">
 						<h2>Edit Projects</h2>
 						<form method="POST">
@@ -32,13 +32,13 @@
 					</div>
 				';
 			}else {
-				$code = '<div class="mt-20"><h1>404 - NOT FOUND</h1></div>';
+				$code_php = '<div class="mt-20"><h1>404 - NOT FOUND</h1></div>';
 			}
 		}else {
-			$code = '<div class="mt-20"><h1>403 - FORBIDDEN</h1></div>';
+			$code_php = '<div class="mt-20"><h1>403 - FORBIDDEN</h1></div>';
 		}
 	}else {
-		$code = '<div class="mt-20"><h1>400 - BAD REQUEST</h1></div>';
+		$code_php = '<div class="mt-20"><h1>400 - BAD REQUEST</h1></div>';
 	}
 
 	if(isset($_POST['_create-data']) && isset($result_name)){
@@ -57,7 +57,16 @@
 				if(strlen($data) > 150){ array_push($errors, "Data is too long"); }
 				if(strlen($date) > 10){ array_push($errors, "Please Provide a Valid Date"); }
 				if(count($errors) == 0) {
-					mysqli_query($connect, "INSERT INTO data(code, data, date, token) VALUES('$code', '$data', '$date', '$id')");
+					$code_value = mysqli_query($connect, "SELECT * FROM code_data WHERE token='$id' AND code='$code'");
+					$validate_code = mysqli_num_rows(mysqli_query($connect, "SELECT * FROM code_data WHERE token='$id' AND code='$code'"));
+					if($validate_code > 0){
+						while ($get_value = mysqli_fetch_assoc($code_value)){
+							$code_description = $get_value['description'];
+						}
+						mysqli_query($connect, "INSERT INTO data(code, code_value, data, date, token) VALUES('$code', '$code_description', '$data', '$date', '$id')");
+					}else {
+						array_push($errors, "Ref Code Not Found");
+					}
 				}
 			}
 		}
@@ -93,11 +102,22 @@
 	if(isset($_POST['_add-code'])){
 		$code 			= mysqli_real_escape_string($connect, $_POST['_code-data']);
 		$description 	= mysqli_real_escape_string($connect, $_POST['_code-desc']);
-		$validation 	= mysqli_num_rows(mysqli_query($connect, "SELECT * FROM code_data WHERE code='$code'"));
+		$validation 	= mysqli_num_rows(mysqli_query($connect, "SELECT * FROM code_data WHERE code='$code' AND token='$id'"));
 		$errors			= array();
 		if($validation == 1){ array_push($errors, "Code had Existed"); }
 		else {
+			$code = 
 			mysqli_query($connect, "INSERT INTO code_data(code, description, token) VALUES('$code','$description','$id')");
+		}
+	}
+	if(isset($_POST['_delete-code'])){
+		$id_code			= mysqli_real_escape_string($connect, $_POST['_id']);
+		$validate_del_id	= mysqli_num_rows(mysqli_query($connect, "SELECT * FROM code_data WHERE token='$id' AND code_id='$id_code'"));
+		$errors 			= array();
+		if($validate_del_id == 1){
+			mysqli_query($connect, "DELETE FROM code_data WHERE token='$id' AND code_id='$id_code'");
+		}else {
+			array_push($errors, "Something Went Wrong, Please Try Again");
 		}
 	}
 ?>
@@ -277,14 +297,14 @@
 									  <div class="input-group-prepend">
 									    <span class="input-group-text" style="background-color: white;" id="basic-addon1"><i class="fas fa-plus"></i></span>
 									  </div>
-									  <input type="number" name="_code-data" class="form-control" placeholder="Code (max 5 chars)" max="99999" autocomplete="off" />
+									  <input type="number" name="_code-data" class="form-control" placeholder="Code (max 5 chars)" max="99999" autocomplete="off" required />
 								  </div>
 
 								  <div class="input-group input-form">
 									  <div class="input-group-prepend">
 									    <span class="input-group-text" style="background-color: white;" id="basic-addon1"><i class="fas fa-info"></i></span>
 									  </div>
-									  <input type="text" name="_code-desc" class="form-control" placeholder="Description (max 150 chars)" />
+									  <input type="text" name="_code-desc" class="form-control" placeholder="Description (max 150 chars)" required />
 								  </div>
 								</div>
 								<input type="submit" name="_add-code" value="Add Ref Code" class="btn btn-primary btn-full"/>
@@ -296,21 +316,23 @@
 											<tr>
 												<th scope="col">Code</th>
 												<th scope="col">Description</th>
-												<th scope="col">Action</th>
+												<th scope="col">&nbsp;</th>
 											</tr>
 										</thead>
-										<tbody>
+										<tbody class="onhover">
 											<?php
 												$code_query = mysqli_query($connect, "SELECT * FROM code_data WHERE token='$id'");
 												$validation_code = mysqli_num_rows($code_query);
-												if($validation_code == 1){
+												if($validation_code > 0){
 													while ($code_data = mysqli_fetch_assoc($code_query)){
+														$message = 'Are you Sure Want to Delete this Data?';
 														echo "<tr>
 														<th scope=\"row\">".$code_data['code']."</th>
 														<th>".$code_data['description']."</th>
 														<th>
 															<form method=\"POST\">
-																<input type=\"hidden\" value=\"$URL/projects/delete/auth/?id=".$project['token']."&uniqueid=".$project['project_token']."\"
+																<input name=\"_id\" type=\"hidden\" value=\"".$code_data['code_id']."\"/>
+																<input type=\"submit\" class=\"btn-on-hover\" name=\"_delete-code\" onClick=\"javascript: return confirm('$message')\" value=\"X\"/>
 															</form>
 														</th></tr>";
 													}
@@ -409,6 +431,7 @@
 					</div>
 				</div>
 				<?php
+					if(isset($errors)){ include('../../api/errors.php'); }
 					if(isset($data_query)){
 						echo "<h5>Search Result for ".$search." :</h5>\n
 						<form method=\"POST\">
@@ -422,6 +445,7 @@
 								<tr>
 									<th scope="col">No</th>
 									<th scope="col">Code</th>
+									<th scope="col">Code Description</th>
 									<th scope="col">Description</th>
 									<th scope="col">Date</th>
 								</tr>
@@ -435,11 +459,11 @@
 									$number = 1;
 									if($validation != 0){
 										while($data = mysqli_fetch_assoc($data_query)){
-											echo "<tr><th scope=\"row\">".$number++."</th><th>".$data['code']."</th><th>".$data['data']."</th><th>".$data['date']."</th></tr>";
+											echo "<tr><th scope=\"row\">".$number++."</th><th>".$data['code']."</th><th>".$data['code_value']."</th><th>".$data['data']."</th><th>".$data['date']."</th></tr>";
 										}
 									}else {
 										echo "
-										<tr><th colspan=\"4\" scope=\"row\"><p class=\"project-null-msg italic\">No Data Found</p></th></tr>";
+										<tr><th colspan=\"5\" scope=\"row\"><p class=\"project-null-msg italic\">No Data Found</p></th></tr>";
 									}
 								?>
 							</tbody>
