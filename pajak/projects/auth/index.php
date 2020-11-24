@@ -53,7 +53,7 @@
 				array_push($errors, $code." is not an integer");
 			}
 			if(count($errors) == 0) {
-				if(strlen($code) > 9){ array_push($errors, "Code is too long"); }
+				if(strlen($code) > 5){ array_push($errors, "Code is too long"); }
 				if(strlen($data) > 150){ array_push($errors, "Data is too long"); }
 				if(strlen($date) > 10){ array_push($errors, "Please Provide a Valid Date"); }
 				if(count($errors) == 0) {
@@ -211,7 +211,7 @@
 								<input type="text" name="_hidden-form" class="input-hidden">
 								<div class="form-group">
 									<label for="Code">Code <span class="required">*</span></label>
-									<input type="number" name="_code" class="form-control" placeholder="Input Data (max 9 digits)" max="999999999" min="0" required>
+									<input type="number" name="_code" class="form-control" placeholder="Input Data (max 5 digits)" max="99999" min="0" required>
 								</div>
 								<div class="form-group">
 									<label for="description">Data <span class="required">*</span></label>
@@ -219,7 +219,7 @@
 								</div>
 								<div class="form-group">
 									<label for="description">Date <span class="required">*</span></label>
-									<input type="date" name="_date" max="9999-99-99" class="form-control" maxlength="10" required>
+									<input type="date" name="_date" max="9999-12-31" class="form-control" required>
 								</div>
 					      </div>
 					      <div class="modal-footer">
@@ -332,7 +332,7 @@
 														<th>
 															<form method=\"POST\">
 																<input name=\"_id\" type=\"hidden\" value=\"".$code_data['code_id']."\"/>
-																<input type=\"submit\" class=\"btn-on-hover\" name=\"_delete-code\" onClick=\"javascript: return confirm('$message')\" value=\"X\"/>
+																<input type=\"submit\" class=\"btn-on-hover\" name=\"_delete-code\" onClick=\"javascript: return confirm('$message')\" value=\"&times;\"/>
 															</form>
 														</th></tr>";
 													}
@@ -372,20 +372,20 @@
 								</div>
 								<p>Search By :</p>
 								<div class="form-check">
-								  <input class="form-check-input" type="radio" name="keywords" id="all-keywords" value="all" checked>
-								  <label class="form-check-label" for="all-keywords">
+								  <input class="form-check-input" type="radio" name="keywords" id="1" value="all" checked>
+								  <label class="form-check-label" for="1">
 								    All Possible Keywords
 								  </label>
 								</div>
 								<div class="form-check">
-								  <input class="form-check-input" type="radio" name="keywords" id="code-keyword" value="code">
-								  <label class="form-check-label" for="code-keyword">
+								  <input class="form-check-input" type="radio" name="keywords" id="2" value="code">
+								  <label class="form-check-label" for="2">
 								    Code
 								  </label>
 								</div>
 								<div class="form-check">
-								  <input class="form-check-input" type="radio" name="keywords" id="date-keyword" value="date">
-								  <label class="form-check-label" for="date-keyword">
+								  <input class="form-check-input" type="radio" name="keywords" id="3" value="date">
+								  <label class="form-check-label" for="3">
 								    Date
 								  </label>
 								</div>
@@ -444,10 +444,18 @@
 							<thead>
 								<tr>
 									<th scope="col">No</th>
-									<th scope="col">Code</th>
-									<th scope="col">Code Description</th>
-									<th scope="col">Description</th>
 									<th scope="col">Date</th>
+									<th scope="col">Account Name</th>
+									<th scope="col">No. Bukti</th>
+									<th scope="col">Description</th>
+									<th scope="col">Blok</th>
+									<th scope="col">Qty</th>
+									<th scope="col">Unit</th>
+									<th scope="col">Price</th>
+									<th scope="col">Code</th>
+									<th scope="col">Debit</th>
+									<th scope="col">Credit</th>
+									<th scope="col">&nbsp;</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -459,7 +467,7 @@
 									$number = 1;
 									if($validation != 0){
 										while($data = mysqli_fetch_assoc($data_query)){
-											echo "<tr><th scope=\"row\">".$number++."</th><th>".$data['code']."</th><th>".$data['code_value']."</th><th>".$data['data']."</th><th>".$data['date']."</th></tr>";
+											echo "<tr class=\"onhover\"><th scope=\"row\">".$number++."</th><th>".$data['date']."</th><th>".$data['code_value']."</th><th>".$data['proof_code']."</th><th>".$data['data']."</th><th>".$data['blok']."</th><th>".$data['qty']."</th><th>".$data['unit']."</th><th>".$data['price']."</th><th>".$data['code']."</th><th>".$data['debit']."</th><th>".$data['credit']."</th><th class=\"btn-on-hover\"><form method=\"POST\"><input type=\"hidden\" name=\"_id-data\" value\"".$data['data_id']."\"><button type=\"submit\" name=\"_delete-data\" class=\"btn-on-hover\"><i class=\"fas fa-times\"></i></button> <button type=\"submit\" name=\"_delete-data\" class=\"btn-on-hover\"><i class=\"fas fa-pencil-alt\"></i></button></form></th></tr>";
 										}
 									}else {
 										echo "

@@ -34,7 +34,7 @@ button { outline: none!important; }
 	padding: 10px;
 	width: 15%;
 }
-.btn-project:hover { background-color: #e8ede9; transition: ease-in-out 0.2s }
+.btn-project:hover { background-color: #e8ede9; }
 .btn-project:focus { background-color: #dce0dd; }
 .btn-add { border-radius: 20px; }
 .btn-full { width: 100%; margin-bottom: 10px; }
