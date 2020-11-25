@@ -42,19 +42,35 @@
 	}
 
 	if(isset($_POST['_create-data']) && isset($result_name)){
-		$code 	= mysqli_real_escape_string($connect, $_POST['_code']);
-		$data 	= mysqli_real_escape_string($connect, $_POST['_data']);
-		$date 	= mysqli_real_escape_string($connect, $_POST['_date']);
+		$code 		= mysqli_real_escape_string($connect, $_POST['_code']);
+		$date 		= mysqli_real_escape_string($connect, $_POST['_date']);
+		$proof_code = mysqli_real_escape_string($connect, $_POST['_proof-code']);
+		$desc_data	= mysqli_real_escape_string($connect, $_POST['_desc-data']);
+		$block		= mysqli_real_escape_string($connect, $_POST['_block']);
+		$qty 		= mysqli_real_escape_string($connect, $_POST['_qty']);
+		$unit 		= mysqli_real_escape_string($connect, $_POST['_unit']);
+		$price 		= mysqli_real_escape_string($connect, $_POST['_price']);
+		$debit 		= mysqli_real_escape_string($connect, $_POST['_debit']);
+		$credit 	= mysqli_real_escape_string($connect, $_POST['_credit']);
 		$errors = array();
-		if(empty($code) || empty($data) || empty($date)){
+		if(empty($code) || empty($desc_data) || empty($date) || empty($price) || empty($debit) || empty($credit)){
 			array_push($errors, "Make sure to fill out all the required forms");
 		}else {
-			if(is_numeric($code) != 1){
-				array_push($errors, $code." is not an integer");
-			}
+			if(is_numeric($code) != 1){ array_push($errors, $code." is not an integer");			}
+			if(is_numeric($qty) != 1){ array_push($errors, $qty." is not an integer");			}
+			if(is_numeric($price) != 1){ array_push($errors, $price." is not an integer");			}
+			if(is_numeric($debit) != 1){ array_push($errors, $debit." is not an integer");			}
+			if(is_numeric($credit) != 1){ array_push($errors, $credit." is not an integer");			}
 			if(count($errors) == 0) {
-				if(strlen($code) > 5){ array_push($errors, "Code is too long"); }
-				if(strlen($data) > 150){ array_push($errors, "Data is too long"); }
+				if($code > 99999){ array_push($errors, "Code is too long"); }
+				if(strlen($proof_code) > 25) { array_push($errors, "Proof Code is too long"); }
+				if(strlen($desc_data) > 100){ array_push($errors, "Description is too long"); }
+				if(strlen($block) > 10) { array_push($errors, "Block is too long"); }
+				if($qty > 9999999999) { array_push($errors, "Quantity is too long"); }
+				if(strlen($unit) > 25) { array_push($errors, "Unit is too long"); }
+				if($price > 99999999999999999999) { array_push($errors, "Price is too long"); }
+				if($debit > 99999999999999999999) { array_push($errors, "Debit is too long"); }
+				if($credit > 99999999999999999999) { array_push($errors, "Credit is too long"); }
 				if(strlen($date) > 10){ array_push($errors, "Please Provide a Valid Date"); }
 				if(count($errors) == 0) {
 					$code_value = mysqli_query($connect, "SELECT * FROM code_data WHERE token='$id' AND code='$code'");
@@ -63,13 +79,32 @@
 						while ($get_value = mysqli_fetch_assoc($code_value)){
 							$code_description = $get_value['description'];
 						}
-						mysqli_query($connect, "INSERT INTO data(code, code_value, data, date, token) VALUES('$code', '$code_description', '$data', '$date', '$id')");
+						mysqli_query($connect, "INSERT INTO data(code, code_value, proof_code, data, block, qty, unit, price, date, debit, credit, token) VALUES('$code', '$code_description', '$proof_code', '$desc_data', '$block', '$qty', '$unit', '$price', '$date', '$debit', '$credit', '$id')");
 					}else {
 						array_push($errors, "Ref Code Not Found");
 					}
 				}
 			}
 		}
+	}
+
+	if(isset($_POST['_delete-data'])){
+		$id_data = mysqli_real_escape_string($connect, $_POST['_id-data']);
+		$validate_del_data	= mysqli_num_rows(mysqli_query($connect, "SELECT * FROM data WHERE token='$id' AND data_id='$id_data'"));
+		$errors = array();
+		if($validate_del_data == 1){
+			mysqli_query($connect, "DELETE FROM data WHERE data_id='$id_data' AND token='$id'");
+		}else {
+			array_push($errors, "Something Went Wrong, Please Try Again");
+		}
+	}
+	if(isset($_POST['_edit-data'])){
+		$id_data 	= mysqli_real_escape_string($connect, $_POST['_id-data']);
+		if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on'){ $url = "https://";  }
+        else { $url = "http://"; }   
+    	$url.= $_SERVER['HTTP_HOST']; 
+    	$url.= $_SERVER['REQUEST_URI'];    
+		header('Location: '.$URL.'/data/edit/auth/?id='.$id.'&uniqueid='.$uniqueid.'&data='.$id_data.'&url='.urlencode($url).'');
 	}
 	if(isset($_POST['_delete-project']) && isset($result_name)){
 		header('Location:'.$URL.'/projects/delete/auth/?id='.$id.'&uniqueid='.$uniqueid.'');
@@ -208,18 +243,45 @@
 					      <div class="modal-body">
 					        <form method="POST">
 					        	<p class="required">* required</p>
-								<input type="text" name="_hidden-form" class="input-hidden">
-								<div class="form-group">
+					        	<div class="form-group">
 									<label for="Code">Code <span class="required">*</span></label>
 									<input type="number" name="_code" class="form-control" placeholder="Input Data (max 5 digits)" max="99999" min="0" required>
 								</div>
 								<div class="form-group">
-									<label for="description">Data <span class="required">*</span></label>
-									<input type="text" name="_data" class="form-control" maxlength="150" placeholder="Input Data (max 150 chars)" required>
-								</div>
-								<div class="form-group">
 									<label for="description">Date <span class="required">*</span></label>
 									<input type="date" name="_date" max="9999-12-31" class="form-control" required>
+								</div>
+								<div class="form-group">
+									<label for="description">Proof Code</label>
+									<input type="text" name="_proof-code" class="form-control" maxlength="50" placeholder="Input Proof Code (max 50 chars)">
+								</div>
+								<div class="form-group">
+									<label for="description">Description <span class="required">*</span></label>
+									<input type="text" name="_desc-data" class="form-control" maxlength="150" placeholder="Input Data (max 150 chars)" required>
+								</div>
+								<div class="form-group">
+									<label for="description">Block</label>
+									<input type="text" name="_block" class="form-control" maxlength="10" placeholder="Input Block (max 10 chars)">
+								</div>
+								<div class="form-group">
+									<label for="description">Quantity</label>
+									<input type="number" name="_qty" class="form-control" maxlength="10" placeholder="Input Quantity (max 10 chars)">
+								</div>
+								<div class="form-group">
+									<label for="description">Unit</label>
+									<input type="text" name="_unit" class="form-control" maxlength="10" placeholder="Input Unit (max 10 chars)">
+								</div>
+								<div class="form-group">
+									<label for="description">Price <span class="required">*</span></label>
+									<input type="number" name="_price" class="form-control" maxlength="20" placeholder="Input Price (max 20 chars)" required>
+								</div>
+								<div class="form-group">
+									<label for="description">Debit <span class="required">*</span></label>
+									<input type="number" name="_debit" class="form-control" maxlength="20" placeholder="Input Debit (max 20 chars)" required>
+								</div>
+								<div class="form-group">
+									<label for="description">Credit <span class="required">*</span></label>
+									<input type="number" name="_credit" class="form-control" maxlength="20" placeholder="Input Credit (max 20 chars)" required>
 								</div>
 					      </div>
 					      <div class="modal-footer">
@@ -325,14 +387,13 @@
 												$validation_code = mysqli_num_rows($code_query);
 												if($validation_code > 0){
 													while ($code_data = mysqli_fetch_assoc($code_query)){
-														$message = 'Are you Sure Want to Delete this Data?';
 														echo "<tr>
 														<th scope=\"row\">".$code_data['code']."</th>
 														<th>".$code_data['description']."</th>
 														<th>
 															<form method=\"POST\">
 																<input name=\"_id\" type=\"hidden\" value=\"".$code_data['code_id']."\"/>
-																<input type=\"submit\" class=\"btn-on-hover\" name=\"_delete-code\" onClick=\"javascript: return confirm('$message')\" value=\"&times;\"/>
+																<button type=\"submit\" class=\"btn-on-hover\" name=\"_delete-code\" onClick=\"javascript: return confirm('Are you Sure Want to Delete this Data?')\"><i class=\"fas fa-times\"></i></button>
 															</form>
 														</th></tr>";
 													}
@@ -446,9 +507,9 @@
 									<th scope="col">No</th>
 									<th scope="col">Date</th>
 									<th scope="col">Account Name</th>
-									<th scope="col">No. Bukti</th>
+									<th scope="col">Proof Code</th>
 									<th scope="col">Description</th>
-									<th scope="col">Blok</th>
+									<th scope="col">Block</th>
 									<th scope="col">Qty</th>
 									<th scope="col">Unit</th>
 									<th scope="col">Price</th>
@@ -467,11 +528,19 @@
 									$number = 1;
 									if($validation != 0){
 										while($data = mysqli_fetch_assoc($data_query)){
-											echo "<tr class=\"onhover\"><th scope=\"row\">".$number++."</th><th>".$data['date']."</th><th>".$data['code_value']."</th><th>".$data['proof_code']."</th><th>".$data['data']."</th><th>".$data['blok']."</th><th>".$data['qty']."</th><th>".$data['unit']."</th><th>".$data['price']."</th><th>".$data['code']."</th><th>".$data['debit']."</th><th>".$data['credit']."</th><th class=\"btn-on-hover\"><form method=\"POST\"><input type=\"hidden\" name=\"_id-data\" value\"".$data['data_id']."\"><button type=\"submit\" name=\"_delete-data\" class=\"btn-on-hover\"><i class=\"fas fa-times\"></i></button> <button type=\"submit\" name=\"_delete-data\" class=\"btn-on-hover\"><i class=\"fas fa-pencil-alt\"></i></button></form></th></tr>";
+											echo "<tr class=\"onhover\"><th scope=\"row\">".$number++."</th><th>".$data['date']."</th><th>".$data['code_value']."</th><th>".$data['proof_code']."</th><th>".$data['data']."</th><th>".$data['block']."</th><th>".$data['qty']."</th><th>".$data['unit']."</th><th>".$data['price']."</th><th>".$data['code']."</th><th>".$data['debit']."</th><th>".$data['credit']."</th><th class=\"btn-on-hover\">
+												<form method=\"POST\">
+													<input name=\"_id-data\" type=\"hidden\" value=\"".$data['data_id']."\"/>
+													<button type=\"submit\" name=\"_delete-data\" onClick=\"javascript: return confirm('Are you Sure Want to Delete this Data?')\"class=\"btn-on-hover\"><i class=\"fas fa-times\"></i></button>
+												</form>
+												<form method=\"POST\">
+													<input type=\"hidden\" name=\"_id-data\" value=\"".$data['data_id']."\"/>
+													<button type=\"submit\" name=\"_edit-data\" class=\"btn-on-hover\"><i class=\"fas fa-pencil-alt\"></i></button>
+												</form>";
 										}
 									}else {
 										echo "
-										<tr><th colspan=\"5\" scope=\"row\"><p class=\"project-null-msg italic\">No Data Found</p></th></tr>";
+										<tr><th colspan=\"13\" scope=\"row\"><p class=\"project-null-msg italic\">No Data Found</p></th></tr>";
 									}
 								?>
 							</tbody>
