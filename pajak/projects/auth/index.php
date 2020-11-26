@@ -63,11 +63,11 @@
 			if(is_numeric($credit) != 1){ array_push($errors, $credit." is not an integer");			}
 			if(count($errors) == 0) {
 				if($code > 99999){ array_push($errors, "Code is too long"); }
-				if(strlen($proof_code) > 25) { array_push($errors, "Proof Code is too long"); }
+				if(strlen($proof_code) > 25 && !empty($proof_code)) { array_push($errors, "Proof Code is too long"); }
 				if(strlen($desc_data) > 100){ array_push($errors, "Description is too long"); }
-				if(strlen($block) > 10) { array_push($errors, "Block is too long"); }
-				if($qty > 9999999999) { array_push($errors, "Quantity is too long"); }
-				if(strlen($unit) > 25) { array_push($errors, "Unit is too long"); }
+				if(strlen($block) > 10 && !empty($block)) { array_push($errors, "Block is too long"); }
+				if($qty > 9999999999 && !empty($qty)) { array_push($errors, "Quantity is too long"); }
+				if(strlen($unit) > 25 && !empty($unit)) { array_push($errors, "Unit is too long"); }
 				if($price > 99999999999999999999) { array_push($errors, "Price is too long"); }
 				if($debit > 99999999999999999999) { array_push($errors, "Debit is too long"); }
 				if($credit > 99999999999999999999) { array_push($errors, "Credit is too long"); }
@@ -99,11 +99,7 @@
 		}
 	}
 	if(isset($_POST['_edit-data'])){
-		$id_data 	= mysqli_real_escape_string($connect, $_POST['_id-data']);
-		if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on'){ $url = "https://";  }
-        else { $url = "http://"; }   
-    	$url.= $_SERVER['HTTP_HOST']; 
-    	$url.= $_SERVER['REQUEST_URI'];    
+		$id_data 	= mysqli_real_escape_string($connect, $_POST['_id-data']);  
 		header('Location: '.$URL.'/data/edit/auth/?id='.$id.'&uniqueid='.$uniqueid.'&data='.$id_data.'&url='.urlencode($url).'');
 	}
 	if(isset($_POST['_delete-project']) && isset($result_name)){
@@ -117,19 +113,22 @@
 		$keywords 	= mysqli_real_escape_string($connect, $_POST['keywords']);
 		$search 	= mysqli_real_escape_string($connect, $_POST['search']);
 		$errors		= array();
-		if($keywords == "all"){
-			$types = "data";
-		}else if ($keywords == "code"){
-			$types = "code";
-		}else if ($keywords == "date"){
-			$types = "date";
-		}else {
-			array_push($errors, "Error in Displaying Value");
-		}
+		if($keywords == "date"){ $types = "date"; }
+		else if($keywords == "account"){ $types = "code_value"; }
+		else if($keywords == "proof-code"){ $types = "proof_code"; }
+		else if($keywords == "description"){ $types = "data"; }
+		else if($keywords == "block"){ $types = "block"; }
+		else if ($keywords == "qty"){ $types = "qty"; }
+		else if ($keywords == "unit"){ $types = "unit"; }
+		else if ($keywords == "price"){ $types = "price"; }
+		else if ($keywords == "code"){ $types = "code"; }
+		else if ($keywords == "date"){ $types = "date"; }
+		else if ($keywords == "debit"){ $types = "debit"; }
+		else if ($keywords == "credit"){ $types = "credit"; }
+		else { array_push($errors, "Error in Displaying Value"); }
 		if(count($errors) == 0){
 			$data_query = mysqli_query($connect, "SELECT * FROM data WHERE token='$id' AND ".$types." like '%$search%' ");
 		}
-		
 	};
 	if(isset($_POST['_show-data'])){
 		unset($data_query);
@@ -153,6 +152,236 @@
 			mysqli_query($connect, "DELETE FROM code_data WHERE token='$id' AND code_id='$id_code'");
 		}else {
 			array_push($errors, "Something Went Wrong, Please Try Again");
+		}
+	}
+	if(isset($_GET['order']) && isset($_GET['sort'])){
+		$order = mysqli_real_escape_string($connect, $_GET['order']);
+		$sort = mysqli_real_escape_string($connect, $_GET['sort']);
+		if($order == "date"){ $order = "date"; }
+		else if($order == "code_value"){ $order = "code_value"; }
+		if($sort == "ASC"){ $sort = "ASC"; }
+		else { $sort = "DESC"; }
+		if(!empty($order) && !empty($sort)){
+			$data_query = mysqli_query($connect, "SELECT * FROM data WHERE token='$id' ORDER BY $order $sort");
+		}
+	}
+	if(isset($_POST['sort-date'])){
+		if(isset($_GET['order']) && isset($_GET['sort']) && isset($_COOKIE['url-session'])){
+			$order 			= mysqli_real_escape_string($connect, urldecode($_GET['order']));
+			$sort 			= mysqli_real_escape_string($connect, urldecode($_GET['sort']));
+			$url_session 	= mysqli_real_escape_string($connect, urldecode($_COOKIE['url-session']));
+			if(!empty($order) && !empty($sort) ){
+				if($order == "date"){
+					if($sort == "DESC"){ header('Location:'.$url_session."&order=date&sort=ASC"); }
+					else { header('Location:'.$url_session."&order=date&sort=DESC"); }
+				}else {
+					header('Location:'.$url_session."&order=date&sort=ASC");
+				}
+			}
+		}else {
+			setcookie('url-session', $url, '/');
+			$current_url = $url."&order=date&sort=DESC";
+			header('Location:'.$current_url);
+		}
+	}
+
+	if(isset($_POST['sort-name'])){
+		if(isset($_GET['order']) && isset($_GET['sort']) && isset($_COOKIE['url-session'])){
+			$order 			= mysqli_real_escape_string($connect, urldecode($_GET['order']));
+			$sort 			= mysqli_real_escape_string($connect, urldecode($_GET['sort']));
+			$url_session 	= mysqli_real_escape_string($connect, urldecode($_COOKIE['url-session']));
+			if(!empty($order) && !empty($sort) ){
+				if($order == "code_value"){
+					if($sort == "DESC"){ header('Location:'.$url_session."&order=code_value&sort=ASC"); }
+					else { header('Location:'.$url_session."&order=code_value&sort=DESC"); }
+				}else {
+					header('Location:'.$url_session."&order=code_value&sort=ASC");
+				}
+			}
+		}else {
+			setcookie('url-session', $url, '/');
+			$current_url = $url."&order=code_value&sort=DESC";
+			header('Location:'.$current_url);
+		}
+	}
+
+	if(isset($_POST['sort-proof'])){
+		if(isset($_GET['order']) && isset($_GET['sort']) && isset($_COOKIE['url-session'])){
+			$order 			= mysqli_real_escape_string($connect, urldecode($_GET['order']));
+			$sort 			= mysqli_real_escape_string($connect, urldecode($_GET['sort']));
+			$url_session 	= mysqli_real_escape_string($connect, urldecode($_COOKIE['url-session']));
+			if(!empty($order) && !empty($sort) ){
+				if($order == "proof_code"){
+					if($sort == "DESC"){ header('Location:'.$url_session."&order=proof_code&sort=ASC"); }
+					else { header('Location:'.$url_session."&order=proof_code&sort=DESC"); }
+				}else {
+					header('Location:'.$url_session."&order=proof_code&sort=ASC");
+				}
+			}
+		}else {
+			setcookie('url-session', $url, '/');
+			$current_url = $url."&order=proof_code&sort=DESC";
+			header('Location:'.$current_url);
+		}
+	}
+
+	if(isset($_POST['sort-desc'])){
+		if(isset($_GET['order']) && isset($_GET['sort']) && isset($_COOKIE['url-session'])){
+			$order 			= mysqli_real_escape_string($connect, urldecode($_GET['order']));
+			$sort 			= mysqli_real_escape_string($connect, urldecode($_GET['sort']));
+			$url_session 	= mysqli_real_escape_string($connect, urldecode($_COOKIE['url-session']));
+			if(!empty($order) && !empty($sort) ){
+				if($order == "data"){
+					if($sort == "DESC"){ header('Location:'.$url_session."&order=data&sort=ASC"); }
+					else { header('Location:'.$url_session."&order=data&sort=DESC"); }
+				}else {
+					header('Location:'.$url_session."&order=data&sort=ASC");
+				}
+			}
+		}else {
+			setcookie('url-session', $url, '/');
+			$current_url = $url."&order=data&sort=DESC";
+			header('Location:'.$current_url);
+		}
+	}
+
+	if(isset($_POST['sort-block'])){
+		if(isset($_GET['order']) && isset($_GET['sort']) && isset($_COOKIE['url-session'])){
+			$order 			= mysqli_real_escape_string($connect, urldecode($_GET['order']));
+			$sort 			= mysqli_real_escape_string($connect, urldecode($_GET['sort']));
+			$url_session 	= mysqli_real_escape_string($connect, urldecode($_COOKIE['url-session']));
+			if(!empty($order) && !empty($sort) ){
+				if($order == "block"){
+					if($sort == "DESC"){ header('Location:'.$url_session."&order=block&sort=ASC"); }
+					else { header('Location:'.$url_session."&order=block&sort=DESC"); }
+				}else {
+					header('Location:'.$url_session."&order=block&sort=ASC");
+				}
+			}
+		}else {
+			setcookie('url-session', $url, '/');
+			$current_url = $url."&order=block&sort=DESC";
+			header('Location:'.$current_url);
+		}
+	}
+
+	if(isset($_POST['sort-qty'])){
+		if(isset($_GET['order']) && isset($_GET['sort']) && isset($_COOKIE['url-session'])){
+			$order 			= mysqli_real_escape_string($connect, urldecode($_GET['order']));
+			$sort 			= mysqli_real_escape_string($connect, urldecode($_GET['sort']));
+			$url_session 	= mysqli_real_escape_string($connect, urldecode($_COOKIE['url-session']));
+			if(!empty($order) && !empty($sort) ){
+				if($order == "qty"){
+					if($sort == "DESC"){ header('Location:'.$url_session."&order=qty&sort=ASC"); }
+					else { header('Location:'.$url_session."&order=qty&sort=DESC"); }
+				}else {
+					header('Location:'.$url_session."&order=qty&sort=ASC");
+				}
+			}
+		}else {
+			setcookie('url-session', $url, '/');
+			$current_url = $url."&order=qty&sort=DESC";
+			header('Location:'.$current_url);
+		}
+	}
+
+	if(isset($_POST['sort-unit'])){
+		if(isset($_GET['order']) && isset($_GET['sort']) && isset($_COOKIE['url-session'])){
+			$order 			= mysqli_real_escape_string($connect, urldecode($_GET['order']));
+			$sort 			= mysqli_real_escape_string($connect, urldecode($_GET['sort']));
+			$url_session 	= mysqli_real_escape_string($connect, urldecode($_COOKIE['url-session']));
+			if(!empty($order) && !empty($sort) ){
+				if($order == "unit"){
+					if($sort == "DESC"){ header('Location:'.$url_session."&order=unit&sort=ASC"); }
+					else { header('Location:'.$url_session."&order=unit&sort=DESC"); }
+				}else {
+					header('Location:'.$url_session."&order=unit&sort=ASC");
+				}
+			}
+		}else {
+			setcookie('url-session', $url, '/');
+			$current_url = $url."&order=unit&sort=DESC";
+			header('Location:'.$current_url);
+		}
+	}
+
+	if(isset($_POST['sort-price'])){
+		if(isset($_GET['order']) && isset($_GET['sort']) && isset($_COOKIE['url-session'])){
+			$order 			= mysqli_real_escape_string($connect, urldecode($_GET['order']));
+			$sort 			= mysqli_real_escape_string($connect, urldecode($_GET['sort']));
+			$url_session 	= mysqli_real_escape_string($connect, urldecode($_COOKIE['url-session']));
+			if(!empty($order) && !empty($sort) ){
+				if($order == "price"){
+					if($sort == "DESC"){ header('Location:'.$url_session."&order=price&sort=ASC"); }
+					else { header('Location:'.$url_session."&order=price&sort=DESC"); }
+				}else {
+					header('Location:'.$url_session."&order=price&sort=ASC");
+				}
+			}
+		}else {
+			setcookie('url-session', $url, '/');
+			$current_url = $url."&order=price&sort=DESC";
+			header('Location:'.$current_url);
+		}
+	}
+
+	if(isset($_POST['sort-code'])){
+		if(isset($_GET['order']) && isset($_GET['sort']) && isset($_COOKIE['url-session'])){
+			$order 			= mysqli_real_escape_string($connect, urldecode($_GET['order']));
+			$sort 			= mysqli_real_escape_string($connect, urldecode($_GET['sort']));
+			$url_session 	= mysqli_real_escape_string($connect, urldecode($_COOKIE['url-session']));
+			if(!empty($order) && !empty($sort) ){
+				if($order == "code"){
+					if($sort == "DESC"){ header('Location:'.$url_session."&order=code&sort=ASC"); }
+					else { header('Location:'.$url_session."&order=code&sort=DESC"); }
+				}else {
+					header('Location:'.$url_session."&order=code&sort=ASC");
+				}
+			}
+		}else {
+			setcookie('url-session', $url, '/');
+			$current_url = $url."&order=code&sort=DESC";
+			header('Location:'.$current_url);
+		}
+	}
+
+	if(isset($_POST['sort-debit'])){
+		if(isset($_GET['order']) && isset($_GET['sort']) && isset($_COOKIE['url-session'])){
+			$order 			= mysqli_real_escape_string($connect, urldecode($_GET['order']));
+			$sort 			= mysqli_real_escape_string($connect, urldecode($_GET['sort']));
+			$url_session 	= mysqli_real_escape_string($connect, urldecode($_COOKIE['url-session']));
+			if(!empty($order) && !empty($sort) ){
+				if($order == "debit"){
+					if($sort == "DESC"){ header('Location:'.$url_session."&order=debit&sort=ASC"); }
+					else { header('Location:'.$url_session."&order=debit&sort=DESC"); }
+				}else {
+					header('Location:'.$url_session."&order=debit&sort=ASC");
+				}
+			}
+		}else {
+			setcookie('url-session', $url, '/');
+			$current_url = $url."&order=debit&sort=DESC";
+			header('Location:'.$current_url);
+		}
+	}
+
+	if(isset($_POST['sort-credit'])){
+		if(isset($_GET['order']) && isset($_GET['sort']) && isset($_COOKIE['url-session'])){
+			$order 			= mysqli_real_escape_string($connect, urldecode($_GET['order']));
+			$sort 			= mysqli_real_escape_string($connect, urldecode($_GET['sort']));
+			$url_session 	= mysqli_real_escape_string($connect, urldecode($_COOKIE['url-session']));
+			if(!empty($order) && !empty($sort) ){
+				if($order == "credit"){
+					if($sort == "DESC"){ header('Location:'.$url_session."&order=credit&sort=ASC"); }
+					else { header('Location:'.$url_session."&order=credit&sort=DESC"); }
+				}else {
+					header('Location:'.$url_session."&order=credit&sort=ASC");
+				}
+			}
+		}else {
+			setcookie('url-session', $url, '/');
+			$current_url = $url."&order=credit&sort=DESC";
+			header('Location:'.$current_url);
 		}
 	}
 ?>
@@ -205,14 +434,6 @@
 					  		Search
 					  	</div>
 					</button>
-					<button type="button" class="btn-project btn-add" data-toggle="modal" data-target="#sortData">
-						<div class="btn-fa-add">
-					  		<i style="font-size: 48px; color: Dodgerblue;"class="fas fa-sort-amount-up"></i>
-					  	</div>
-					  	<div class="btn-fa-text">
-					  		Sort
-					  	</div>
-					</button>
 					<button type="button" class="btn-project btn-add" data-toggle="modal" data-target="#infoData">
 						<div class="btn-fa-add">
 					  		<i style="font-size: 48px; color: Dodgerblue;"class="fas fa-info-circle"></i>
@@ -257,15 +478,15 @@
 								</div>
 								<div class="form-group">
 									<label for="description">Description <span class="required">*</span></label>
-									<input type="text" name="_desc-data" class="form-control" maxlength="150" placeholder="Input Data (max 150 chars)" required>
+									<input type="text" name="_desc-data" class="form-control" maxlength="100" placeholder="Input Data (max 100 chars)" required>
 								</div>
 								<div class="form-group">
 									<label for="description">Block</label>
-									<input type="text" name="_block" class="form-control" maxlength="10" placeholder="Input Block (max 10 chars)">
+									<input type="text" name="_block" class="form-control" maxlength="10" placeholder="Input Block (max 10 digits)">
 								</div>
 								<div class="form-group">
 									<label for="description">Quantity</label>
-									<input type="number" name="_qty" class="form-control" maxlength="10" placeholder="Input Quantity (max 10 chars)">
+									<input type="number" name="_qty" class="form-control" max="9999999999" placeholder="Input Quantity (max 10 digits)">
 								</div>
 								<div class="form-group">
 									<label for="description">Unit</label>
@@ -273,15 +494,15 @@
 								</div>
 								<div class="form-group">
 									<label for="description">Price <span class="required">*</span></label>
-									<input type="number" name="_price" class="form-control" maxlength="20" placeholder="Input Price (max 20 chars)" required>
+									<input type="number" name="_price" class="form-control" max="99999999999999999999" placeholder="Input Price (max 20 digits)" required>
 								</div>
 								<div class="form-group">
 									<label for="description">Debit <span class="required">*</span></label>
-									<input type="number" name="_debit" class="form-control" maxlength="20" placeholder="Input Debit (max 20 chars)" required>
+									<input type="number" name="_debit" class="form-control" max="99999999999999999999" placeholder="Input Debit (max 20 digits)" required>
 								</div>
 								<div class="form-group">
 									<label for="description">Credit <span class="required">*</span></label>
-									<input type="number" name="_credit" class="form-control" maxlength="20" placeholder="Input Credit (max 20 chars)" required>
+									<input type="number" name="_credit" class="form-control" max="99999999999999999999" placeholder="Input Credit (max 20 digits)" required>
 								</div>
 					      </div>
 					      <div class="modal-footer">
@@ -313,23 +534,95 @@
 								  <input type="text" name="search" class="form-control" placeholder="Search Keywords (max 30 chars)">
 								</div>
 								<p>Search By :</p>
-								<div class="form-check">
-								  <input class="form-check-input" type="radio" name="keywords" id="all-keywords" value="all" checked>
-								  <label class="form-check-label" for="all-keywords">
-								    All Possible Keywords
-								  </label>
-								</div>
-								<div class="form-check">
-								  <input class="form-check-input" type="radio" name="keywords" id="code-keyword" value="code">
-								  <label class="form-check-label" for="code-keyword">
-								    Code
-								  </label>
-								</div>
-								<div class="form-check">
-								  <input class="form-check-input" type="radio" name="keywords" id="date-keyword" value="date">
-								  <label class="form-check-label" for="date-keyword">
-								    Date
-								  </label>
+								<div class="container row">
+									<div class="col-md-6 col-sm-12">
+										<div class="form-check">
+										  <input class="form-check-input" type="radio" name="keywords" id="date" value="date">
+										  <label class="form-check-label" for="date">
+										    Date
+										  </label>
+										</div>
+									</div>
+									<div class="col-md-6 col-sm-12">
+										<div class="form-check">
+										  <input class="form-check-input" type="radio" name="keywords" id="acc" value="account">
+										  <label class="form-check-label" for="acc">
+										    Account Name
+										  </label>
+										</div>
+									</div>
+									<div class="col-md-6 col-sm-12">
+										<div class="form-check">
+										  <input class="form-check-input" type="radio" name="keywords" id="proof-code" value="proof-code">
+										  <label class="form-check-label" for="proof-code">
+										    Proof Code
+										  </label>
+										</div>
+									</div>
+									<div class="col-md-6 col-sm-12">
+										<div class="form-check">
+										  <input class="form-check-input" type="radio" name="keywords" id="desc" value="description" checked>
+										  <label class="form-check-label" for="desc">
+										    Description
+										  </label>
+										</div>
+									</div>
+									<div class="col-md-6 col-sm-12">
+										<div class="form-check">
+										  <input class="form-check-input" type="radio" name="keywords" id="block" value="block">
+										  <label class="form-check-label" for="block">
+										    Block
+										  </label>
+										</div>
+									</div>
+									<div class="col-md-6 col-sm-12">
+										<div class="form-check">
+										  <input class="form-check-input" type="radio" name="keywords" id="qty" value="qty">
+										  <label class="form-check-label" for="qty">
+										    Quantity
+										  </label>
+										</div>
+									</div>
+									<div class="col-md-6 col-sm-12">
+										<div class="form-check">
+										  <input class="form-check-input" type="radio" name="keywords" id="unit" value="unit">
+										  <label class="form-check-label" for="unit">
+										    Unit
+										  </label>
+										</div>
+									</div>
+									<div class="col-md-6 col-sm-12">
+										<div class="form-check">
+										  <input class="form-check-input" type="radio" name="keywords" id="price" value="price">
+										  <label class="form-check-label" for="price">
+										    Price
+										  </label>
+										</div>
+									</div>
+									<div class="col-md-6 col-sm-12">
+										<div class="form-check">
+										  <input class="form-check-input" type="radio" name="keywords" id="code" value="code">
+										  <label class="form-check-label" for="code">
+										    Code
+										  </label>
+										</div>
+									</div>
+									<div class="col-md-6 col-sm-12">
+										<div class="form-check">
+										  <input class="form-check-input" type="radio" name="keywords" id="debit" value="debit">
+										  <label class="form-check-label" for="debit">
+										    Debit
+										  </label>
+										</div>
+									</div>
+									<div class="col-md-6 col-sm-12">
+										<div class="form-check">
+										  <input class="form-check-input" type="radio" name="keywords" id="credit" value="credit">
+										  <label class="form-check-label" for="credit">
+										    Credit
+										  </label>
+										</div>
+									</div>
 								</div>
 					      </div>
 					      <div class="modal-footer">
@@ -412,55 +705,6 @@
 					  </div>
 					</div>
 
-					<div class="modal fade" id="sortData" tabindex="-1" aria-hidden="true">
-					  <div class="modal-dialog">
-					    <div class="modal-content">
-					      <div class="modal-header">
-					        <h5 class="modal-title" id="exampleModalLabel">Search Data</h5>
-					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					          <span aria-hidden="true">&times;</span>
-					        </button>
-					      </div>
-					      <div class="modal-body">
-					        <form method="POST">
-								<div class="input-group mb-3">
-								  <input type="hidden" name="uniqueid" value="<?php echo $uniqueid?>">
-								  <input type="hidden" name="id" value="<?php echo $id ?>">
-								  <div class="input-group-prepend">
-								    <span class="input-group-text" style="background-color: white;" id="basic-addon1"><i class="fas fa-search"></i></span>
-								  </div>
-								  <input type="text" name="search" class="form-control" placeholder="Search Keywords (max 30 chars)">
-								</div>
-								<p>Search By :</p>
-								<div class="form-check">
-								  <input class="form-check-input" type="radio" name="keywords" id="1" value="all" checked>
-								  <label class="form-check-label" for="1">
-								    All Possible Keywords
-								  </label>
-								</div>
-								<div class="form-check">
-								  <input class="form-check-input" type="radio" name="keywords" id="2" value="code">
-								  <label class="form-check-label" for="2">
-								    Code
-								  </label>
-								</div>
-								<div class="form-check">
-								  <input class="form-check-input" type="radio" name="keywords" id="3" value="date">
-								  <label class="form-check-label" for="3">
-								    Date
-								  </label>
-								</div>
-					      </div>
-					      <div class="modal-footer">
-					        <input type="submit" name="type" value="Search" class="btn btn-primary"/>
-					        </form>
-					        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-					      </div>
-					    </div>
-					  </div>
-					</div>
-				</div>
-
 				<div class="modal fade" id="infoData" tabindex="-1" aria-hidden="true">
 					  <div class="modal-dialog">
 					    <div class="modal-content">
@@ -485,7 +729,6 @@
 					      </div>
 					      <div class="modal-footer">
 					        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-					        </form>
 					      </div>
 					    </div>
 					  </div>
@@ -494,9 +737,11 @@
 				<?php
 					if(isset($errors)){ include('../../api/errors.php'); }
 					if(isset($data_query)){
-						echo "<h5>Search Result for ".$search." :</h5>\n
-						<form method=\"POST\">
-							<input name=\"_show-data\" type=\"submit\" value=\"Show all Data\" />";
+						if(isset($search)){
+							echo "<h5>Search Result for ".$search." :</h5>\n
+							<form method=\"POST\">
+								<input name=\"_show-data\" type=\"submit\" value=\"Show all Data\" />";
+						}
 					}
 				?>
 				<div class="col-sm-12">
@@ -505,17 +750,67 @@
 							<thead>
 								<tr>
 									<th scope="col">No</th>
-									<th scope="col">Date</th>
-									<th scope="col">Account Name</th>
-									<th scope="col">Proof Code</th>
-									<th scope="col">Description</th>
-									<th scope="col">Block</th>
-									<th scope="col">Qty</th>
-									<th scope="col">Unit</th>
-									<th scope="col">Price</th>
-									<th scope="col">Code</th>
-									<th scope="col">Debit</th>
-									<th scope="col">Credit</th>
+									<th scope="col">
+										Date
+										<form method="POST">
+											<input type="hidden" name="_name" value="date">
+											<input type="hidden" name="_sort" value="ASC">
+											<button type="submit" name="sort-date" class="btn-cta"><i class="fas fa-sort-amount-down-alt"></i></button>
+										</form>
+									</th>
+									<th scope="col">
+										Account Name
+										<form method="POST">
+											<button type="submit" name="sort-name" class="btn-cta"><i class="fas fa-sort-amount-down-alt"></i></button>
+										</form>
+									</th>
+									<th scope="col">
+										Proof Code
+										<form method="POST">
+											<button type="submit" name="sort-proof" class="btn-cta"><i class="fas fa-sort-amount-down-alt"></i></button>
+										</form>
+									</th>
+									<th scope="col">Description
+										<form method="POST">
+											<button type="submit" name="sort-desc" class="btn-cta"><i class="fas fa-sort-amount-down-alt"></i></button>
+										</form>
+									</th>
+									<th scope="col">Block
+										<form method="POST">
+											<button type="submit" name="sort-block" class="btn-cta"><i class="fas fa-sort-amount-down-alt"></i></button>
+										</form>
+									</th>
+									<th scope="col">Qty
+										<form method="POST">
+											<button type="submit" name="sort-qty" class="btn-cta"><i class="fas fa-sort-amount-down-alt"></i></button>
+										</form>
+									</th>
+									<th scope="col">Unit
+										<form method="POST">
+											<button type="submit" name="sort-unit" class="btn-cta"><i class="fas fa-sort-amount-down-alt"></i></button>
+										</form>
+									</th>
+									<th scope="col">Price
+										<form method="POST">
+											<button type="submit" name="sort-price" class="btn-cta"><i class="fas fa-sort-amount-down-alt"></i></button>
+										</form>
+									</th>
+									<th scope="col">Code
+										<form method="POST">
+											<button type="submit" name="sort-code" class="btn-cta"><i class="fas fa-sort-amount-down-alt"></i></button>
+										</form>
+									</th>
+									<th scope="col">Debit
+										<form method="POST">
+											<button type="submit" name="sort-debit" class="btn-cta"><i class="fas fa-sort-amount-down-alt"></i></button>
+										</form>
+									</th>
+									<th scope="col">Credit
+										<form method="POST">
+											<button type="submit" name="sort-credit" class="btn-cta"><i class="fas fa-sort-amount-down-alt"></i></button>
+										</form>
+									</th>
+									<th scope="col">&nbsp;</th>
 									<th scope="col">&nbsp;</th>
 								</tr>
 							</thead>
@@ -530,13 +825,13 @@
 										while($data = mysqli_fetch_assoc($data_query)){
 											echo "<tr class=\"onhover\"><th scope=\"row\">".$number++."</th><th>".$data['date']."</th><th>".$data['code_value']."</th><th>".$data['proof_code']."</th><th>".$data['data']."</th><th>".$data['block']."</th><th>".$data['qty']."</th><th>".$data['unit']."</th><th>".$data['price']."</th><th>".$data['code']."</th><th>".$data['debit']."</th><th>".$data['credit']."</th><th class=\"btn-on-hover\">
 												<form method=\"POST\">
-													<input name=\"_id-data\" type=\"hidden\" value=\"".$data['data_id']."\"/>
-													<button type=\"submit\" name=\"_delete-data\" onClick=\"javascript: return confirm('Are you Sure Want to Delete this Data?')\"class=\"btn-on-hover\"><i class=\"fas fa-times\"></i></button>
-												</form>
-												<form method=\"POST\">
 													<input type=\"hidden\" name=\"_id-data\" value=\"".$data['data_id']."\"/>
 													<button type=\"submit\" name=\"_edit-data\" class=\"btn-on-hover\"><i class=\"fas fa-pencil-alt\"></i></button>
-												</form>";
+												</form></th><th class=\"btn-on-hover\">
+												<form method=\"POST\">
+													<input name=\"_id-data\" type=\"hidden\" value=\"".$data['data_id']."\"/>
+													<button type=\"submit\" name=\"_delete-data\" onClick=\"javascript: return confirm('Are you Sure Want to Delete this Data?')\"class=\"btn-on-hover\"><i class=\"fas fa-times\"></i></button>
+												</form></th></tr>";
 										}
 									}else {
 										echo "

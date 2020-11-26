@@ -32,7 +32,7 @@
 					        <p class="required">* required</p>
 					        	<div class="form-group">
 									<label for="Code">Code <span class="required">*</span></label>
-									<input type="number" name="_code" class="form-control" placeholder="Input Data (max 5 digits)" value="'.$code.'" max="99999" min="0" required>
+									<input type="number" name="_code" value="'.$code.'" class="form-control" placeholder="Input Data (max 5 digits)" max="99999" min="0" required>
 								</div>
 								<div class="form-group">
 									<label for="description">Date <span class="required">*</span></label>
@@ -40,35 +40,35 @@
 								</div>
 								<div class="form-group">
 									<label for="description">Proof Code</label>
-									<input type="text" name="_proof-code" class="form-control" value="'.$proof_code.'"  maxlength="50" placeholder="Input Proof Code (max 50 chars)">
+									<input type="text" name="_proof-code" value="'.$proof_code.'" class="form-control" maxlength="50" placeholder="Input Proof Code (max 50 chars)">
 								</div>
 								<div class="form-group">
 									<label for="description">Description <span class="required">*</span></label>
-									<input type="text" name="_desc-data" class="form-control" value="'.$description.'" maxlength="150" placeholder="Input Data (max 150 chars)" required>
+									<input type="text" name="_desc-data" class="form-control" maxlength="100" value="'.$description.'" placeholder="Input Data (max 100 chars)" required>
 								</div>
 								<div class="form-group">
 									<label for="description">Block</label>
-									<input type="text" name="_block" value="'.$block.'" class="form-control" maxlength="10" placeholder="Input Block (max 10 chars)">
+									<input type="text" name="_block" value="'.$block.'" class="form-control" maxlength="10" placeholder="Input Block (max 10 digits)">
 								</div>
 								<div class="form-group">
 									<label for="description">Quantity</label>
-									<input type="number" name="_qty" class="form-control" maxlength="10" value="'.$qty.'" placeholder="Input Quantity (max 10 chars)">
+									<input type="number" name="_qty" value="'.$qty.'" class="form-control" max="9999999999" placeholder="Input Quantity (max 10 digits)">
 								</div>
 								<div class="form-group">
 									<label for="description">Unit</label>
-									<input type="text" name="_unit" class="form-control" maxlength="10" value="'.$unit.'" placeholder="Input Unit (max 10 chars)">
+									<input type="text" name="_unit" value="'.$unit.'" class="form-control" maxlength="10" placeholder="Input Unit (max 10 chars)">
 								</div>
 								<div class="form-group">
 									<label for="description">Price <span class="required">*</span></label>
-									<input type="number" name="_price" class="form-control" maxlength="20" value="'.$price.'" placeholder="Input Price (max 20 chars)" required>
+									<input type="number" name="_price" value="'.$price.'" class="form-control" max="99999999999999999999" placeholder="Input Price (max 20 digits)" required>
 								</div>
 								<div class="form-group">
 									<label for="description">Debit <span class="required">*</span></label>
-									<input type="number" name="_debit" class="form-control" maxlength="20" value="'.$debit.'" placeholder="Input Debit (max 20 chars)" required>
+									<input type="number" name="_debit" value="'.$debit.'" class="form-control" max="99999999999999999999" placeholder="Input Debit (max 20 digits)" required>
 								</div>
 								<div class="form-group">
 									<label for="description">Credit <span class="required">*</span></label>
-									<input type="number" name="_credit" class="form-control" maxlength="20" value="'.$credit.'" placeholder="Input Credit (max 20 chars)" required>
+									<input type="number" name="_credit" value="'.$credit.'" class="form-control" max="99999999999999999999" placeholder="Input Credit (max 20 digits)" required>
 								</div>
 					      </div>
 						  <button name="_confirm" type="submit" class="btn btn-full btn-outline-primary">UPDATE</button><br/>
@@ -124,7 +124,7 @@
 						while ($get_value = mysqli_fetch_assoc($code_value)){
 							$code_description = $get_value['description'];
 						}
-						mysqli_query($connect, "UPDATE data SET code='$code', code_value='$code_description', proof_code='$proof_code', data='$desc_data', block='$block', qty='$qty', unit='$unit', price='$price', date='$date', debit='$debit', credit='$credit', token='$id'");
+						mysqli_query($connect, "UPDATE data SET code='$code', code_value='$code_description', proof_code='$proof_code', data='$desc_data', block='$block', qty='$qty', unit='$unit', price='$price', date='$date', debit='$debit', credit='$credit', token='$id' WHERE data_id='$data'");
 						header('Location:'.$url.'');
 					}else {
 						array_push($errors, "Ref Code Not Found");

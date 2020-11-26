@@ -7,10 +7,15 @@
 				$query = mysqli_query($connect, "SELECT * FROM users WHERE token='$token'");
 				while ($db_data = mysqli_fetch_assoc($query)) {
 					$name = $db_data['username'];
+					$email = $db_data['email'];
 					$unique_id1 = $db_data['unique_id'];
 					$unique_id2 = $db_data['unique_id2'];
 					$project_token = $unique_id1.$unique_id2;
 				}
+				if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on'){ $url = "https://";  }
+		        else { $url = "http://"; }   
+		    	$url.= $_SERVER['HTTP_HOST']; 
+		    	$url.= $_SERVER['REQUEST_URI'];
 			}else {
 				setcookie('token', null, time()-3600, '/');
 				echo "<script>alert('ERR CODE : 403\\nMESSAGE  : TOKEN MISMATCH\\nThis may happen when we cannot find a match token which is posted, with our system.\\nThe second reason is another devices attempted to login into your account. If it is not you, it is recoomended to change your password as soon as possible'); window.location='$URL/auth/login'</script>";

@@ -18,7 +18,7 @@
 					if(strlen($project_desc) > 100){ array_push($errors, "Project Description is too long"); }
 				}
 				if(count($errors) == 0){
-					$validation = mysqli_num_rows(mysqli_query($connect, "SELECT project_name from projects WHERE project_name='$project_name'"));
+					$validation = mysqli_num_rows(mysqli_query($connect, "SELECT project_name from projects WHERE project_name='$project_name' AND token='$project_token'"));
 					if($validation == 0){
 						$token_id = bin2hex(random_bytes(100));
 						mysqli_query($connect, "INSERT INTO projects (project_name, project_description, project_token, token) VALUES ('$project_name', '$project_desc', '$project_token', '$token_id')");
@@ -32,9 +32,17 @@
 			}
 		}
 	}
-	if(isset($_POST['display_project']) || isset($_POST['edit_project']) || isset($_POST['delete_project'])){
-		$location = mysqli_real_escape_string($connect, $_POST['_url-header']);
-		header('Location: '.$location.'');
+	if(isset($_POST['display_project'])){
+		$get_token = mysqli_real_escape_string($connect, $_POST['_project-token']);
+		header('Location: '.$URl.'/pajak/projects/auth/?id='.$get_token.'&uniqueid='.$project_token.'');
+	}
+	if(isset($_POST['edit_project'])){
+		$get_token = mysqli_real_escape_string($connect, $_POST['_project-token']);
+		header('Location: '.$URl.'/pajak/projects/edit/auth/?id='.$get_token.'&uniqueid='.$project_token.'');
+	}
+	if(isset($_POST['delete_project'])){
+		$get_token = mysqli_real_escape_string($connect, $_POST['_project-token']);
+		header('Location: '.$URl.'/pajak/projects/delete/auth/?id='.$get_token.'&uniqueid='.$project_token.'');
 	}
 ?>
 <!DOCTYPE HTML>
@@ -48,6 +56,14 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-12">
+					<button type="button" class="btn-project btn-add" data-toggle="modal" data-target="#accountInfo">
+						<div class="btn-fa-add">
+					  		<i style="font-size: 48px; color: Dodgerblue;"class="fas fa-user-circle"></i>
+					  	</div>
+					  	<div class="btn-fa-text">
+					  		Account
+					  	</div>
+					</button>
 					<button type="button" class="btn-project btn-add" data-toggle="modal" data-target="#addProject">
 						<div class="btn-fa-add">
 					  		<i style="font-size: 48px; color: Dodgerblue;"class="fas fa-plus-circle"></i>
@@ -87,6 +103,28 @@
 					    </div>
 					  </div>
 					</div>
+					<div class="modal fade" id="accountInfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					  <div class="modal-dialog">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title" id="exampleModalLabel">Account Information</h5>
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					      </div>
+					      <div class="modal-body">
+					        <p>Username &nbsp; &nbsp; : <?php echo $name?></p>
+					        <p>Email &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $email?></p>
+					        <p>Password &nbsp; &nbsp; &nbsp;: ********** <a href="#" class="disabled">Change Password</a></p>
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-danger" data-dismiss="modal">Discard</button>
+					        <button type="submit" name="_create-project" class="btn btn-primary">Create</button>
+					        </form>
+					      </div>
+					    </div>
+					  </div>
+					</div>
 					<div class="form-group">
 						<?php if(isset($errors)){include('./api/errors.php');} ?>
 					</div>
@@ -112,15 +150,15 @@
 											<th>".$project['project_description']."</th>
 											<th class=\"icons\">
 												<form class=\"btn-cta\" method=\"POST\">
-													<input type=\"hidden\" name=\"_url-header\" value=\"$URL/projects/auth/?id=".$project['token']."&uniqueid=".$project['project_token']."\" />
+													<input type=\"hidden\" name=\"_project-token\" value=\"".$project['token']."\" />
 													<button type=\"submit\" class=\"btn-cta\" name=\"display_project\"><i class=\"fas fa-external-link-alt\"style=\"color: Dodgerblue;\"></i></button>
 												</form>
 												<form class=\"btn-cta\" method=\"POST\">
-													<input type=\"hidden\" name=\"_url-header\" value=\"$URL/projects/edit/auth/?id=".$project['token']."&uniqueid=".$project['project_token']."\" />
+													<input type=\"hidden\" name=\"_project-token\" value=\"".$project['token']."\" />
 													<button type=\"submit\" class=\"btn-cta\" name=\"edit_project\"><i class=\"fas fa-edit\" style=\"color: #d48728\"></i></button>
 												</form>
 												<form class=\"btn-cta\" method=\"POST\">
-													<input type=\"hidden\" name=\"_url-header\" value=\"$URL/projects/delete/auth/?id=".$project['token']."&uniqueid=".$project['project_token']."\" />
+													<input type=\"hidden\" name=\"_project-token\" value=\"".$project['token']."\" />
 													<button type=\"submit\" class=\"btn-cta\" name=\"delete_project\"><i class=\"fas fa-trash-alt\" style=\"color:red\"></i></button>
 												</form>
 											</th></tr>";

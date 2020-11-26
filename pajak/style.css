@@ -16,6 +16,7 @@ button { outline: none!important; }
 .adv { margin-top: 20px; }
 .adv-desc { display: inline-block; }
 .input-hidden { display: none }
+.disabled { pointer-events: auto! important; cursor: not-allowed! important; }
 .error { background-color: red; color: white; border-radius: 10px; font-weight: bold; }
 .error h4 { padding: 20px 20px 0px 20px; }
 .error p { padding: 0px 20px 0px 20px; }
