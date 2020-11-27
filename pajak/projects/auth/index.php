@@ -40,7 +40,7 @@
 			array_push($errors, "Make sure to fill out all the required forms");
 		}else {
 			if(is_numeric($code) != 1){ array_push($errors, $code." is not an integer");			}
-			if(is_numeric($qty) != 1){ array_push($errors, $qty." is not an integer");			}
+			if(is_numeric($qty) != 1 && !empty($qty)){ array_push($errors, $qty." is not an integer");			}
 			if(is_numeric($price) != 1){ array_push($errors, $price." is not an integer");			}
 			if(is_numeric($debit) != 1){ array_push($errors, $debit." is not an integer");			}
 			if(is_numeric($credit) != 1){ array_push($errors, $credit." is not an integer");			}
@@ -718,17 +718,17 @@
 					  </div>
 					</div>
 				</div>
-				<?php
-					if(isset($errors)){ include('../../api/errors.php'); }
-					if(isset($data_query)){
-						if(isset($search)){
-							echo "<h5>Search Result for ".$search." :</h5>\n
-							<form method=\"POST\">
-								<input name=\"_show-data\" type=\"submit\" value=\"Show all Data\" />";
-						}
-					}
-				?>
 				<div class="col-sm-12">
+					<?php
+						if(isset($errors)){ include('../../api/errors.php'); }
+						if(isset($data_query)){
+							if(isset($search)){
+								echo "<h5>Search Result for ".$search." :</h5>\n
+								<form method=\"POST\">
+									<input name=\"_show-data\" type=\"submit\" value=\"Show all Data\" />";
+							}
+						}
+					?>
 					<div class="form-group table-responsive">
 						<table class="table hover-mode">
 							<thead>

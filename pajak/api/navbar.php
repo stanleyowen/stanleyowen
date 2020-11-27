@@ -1,11 +1,4 @@
 <?php
-	if(isset($_GET['logout'])){
-		$logout = mysqli_real_escape_string($connect, $_GET['logout']);
-		if($logout == "true"){
-			setcookie('token', null, time()-3600, '/');
-			header('Location: '.$URL.'/auth/login');
-		}
-	}
 	if(isset($_COOKIE['token'])){
 		$token = mysqli_real_escape_string($connect, $_COOKIE['token']);
 		if(strlen($token) == 160){

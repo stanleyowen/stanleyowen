@@ -115,16 +115,15 @@
 					      <div class="modal-body">
 					        <p>Username &nbsp; &nbsp; : <?php echo $name?></p>
 					        <p>Email &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $email?></p>
-					        <p>Password &nbsp; &nbsp; &nbsp;: ********** <a href="#" class="disabled">Change Password</a></p>
+					        <p>Password &nbsp; &nbsp; &nbsp;: ********** <a href="#" data-toggle="modal" data-target="#changePassword">Change Password</a></p>
 					      </div>
 					      <div class="modal-footer">
-					        <button type="button" class="btn btn-danger" data-dismiss="modal">Discard</button>
-					        <button type="submit" name="_create-project" class="btn btn-primary">Create</button>
-					        </form>
+					        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 					      </div>
 					    </div>
 					  </div>
 					</div>
+
 					<div class="form-group">
 						<?php if(isset($errors)){include('./api/errors.php');} ?>
 					</div>

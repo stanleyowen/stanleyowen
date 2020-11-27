@@ -37,8 +37,8 @@
 							$usr_token = bin2hex(random_bytes(80));
 							$usr_password = password_hash($password, PASSWORD_DEFAULT);
 							setcookie('token', $usr_token, time()+(3600*24*3), '/');
-							mysqli_num_rows(mysqli_query($connect, "UPDATE users SET password='$usr_password', token='$usr_token' WHERE email='$email'"));
-							header('Location: ../../');
+							mysqli_query($connect, "UPDATE users SET password='$usr_password', token='$usr_token' WHERE email='$email'");
+							header('Location: '.$URL);
 						}else {
 							array_push($errors, "Invalid Credentials");
 						}
