@@ -32,6 +32,36 @@
 			}
 		}
 	}
+	if(isset($_POST['_changepsw'])){
+		$old_password 	= mysqli_real_escape_string($connect, $_POST['_old-password']);
+		$new_password 	= mysqli_real_escape_string($connect, $_POST['_new-password']);
+		$cf_password 	= mysqli_real_escape_string($connect, $_POST['_cf-password']);
+		$errors 		= array();
+		if(!empty($old_password) && !empty($new_password) && !empty($cf_password)){
+			if(strlen($new_password) >= 6 && strlen($cf_password) >= 6 && strlen($new_password) <= 50 && strlen($cf_password) <= 50){
+				$psw_validation = mysqli_query($connect, "SELECT password from users WHERE email='$email'");
+				while ($psw_user_db = mysqli_fetch_assoc($psw_validation)){
+					$psw_user = $psw_user_db['password'];
+				}
+				if(password_verify($old_password, $psw_user)){
+					if($new_password == $cf_password){
+						$usr_token = bin2hex(random_bytes(80));
+						$usr_password = password_hash($new_password, PASSWORD_DEFAULT);
+						setcookie('token', $usr_token, time()+(3600*24*3), '/');
+						mysqli_query($connect, "UPDATE users SET password='$usr_password', token='$usr_token' WHERE email='$email'");
+					}else {
+						array_push($errors, "Make sure both New Password and Confirm Password are Match");
+					}
+				}else {
+					array_push($errors, "Invalid Password");
+				}
+			}else {
+				array_push($errors, "Something Went Wrong, Please Try Again");
+			}
+		}else {
+			array_push($errors, "Make sure to fill out all the Required Fields");
+		}
+	}
 	if(isset($_POST['display_project'])){
 		$get_token = mysqli_real_escape_string($connect, $_POST['_project-token']);
 		header('Location: '.$URl.'/pajak/projects/auth/?id='.$get_token.'&uniqueid='.$project_token.'');
@@ -119,6 +149,38 @@
 					      </div>
 					      <div class="modal-footer">
 					        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+
+					<div class="modal fade" id="changePassword" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					  <div class="modal-dialog">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title" id="exampleModalLabel">Change Password</h5>
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					      </div>
+					      <div class="modal-body">
+					      	<form method="POST">
+						      	<div class="col-sm-12">
+							        <label>Old Password</label><br/>
+							        <input type="password" class="form-control" name="_old-password" placeholder="Input Old Password" autofocus="on" autocomplete="off" required />
+							    </div>
+							    <div class="col-sm-12">
+							        <label class="input-form">New Password</label><br/>
+							        <input type="password" class="form-control" name="_new-password" placeholder="Input Old Password (max 50 chars)" autocomplete="off" minlength="6" maxlength="50"required />
+							    </div>
+							    <div class="col-sm-12">
+							        <label class="input-form">Confirm Password</label><br/>
+							        <input type="password" class="form-control" name="_cf-password" placeholder="Input Old Password (max 50 chars)" autocomplete="off" minlength="6" maxlength="50" required />
+							    </div>
+					      </div>
+					      <div class="modal-footer">
+					      	<button type="submit" class="btn btn-primary" name="_changepsw">Change</button></form>
+					        <button type="button" class="btn btn-danger" data-dismiss="modal">Discard</button>
 					      </div>
 					    </div>
 					  </div>
