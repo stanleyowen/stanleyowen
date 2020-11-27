@@ -102,17 +102,17 @@
 			array_push($errors, "Make sure to fill out all the required forms");
 		}else {
 			if(is_numeric($code) != 1){ array_push($errors, $code." is not an integer");			}
-			if(is_numeric($qty) != 1){ array_push($errors, $qty." is not an integer");			}
+			if(is_numeric($qty) != 1 && !empty($qty)){ array_push($errors, $qty." is not an integer");			}
 			if(is_numeric($price) != 1){ array_push($errors, $price." is not an integer");			}
 			if(is_numeric($debit) != 1){ array_push($errors, $debit." is not an integer");			}
 			if(is_numeric($credit) != 1){ array_push($errors, $credit." is not an integer");			}
 			if(count($errors) == 0) {
 				if($code > 99999){ array_push($errors, "Code is too long"); }
-				if(strlen($proof_code) > 25) { array_push($errors, "Proof Code is too long"); }
+				if(strlen($proof_code) > 25 && !empty($proof_code)) { array_push($errors, "Proof Code is too long"); }
 				if(strlen($desc_data) > 100){ array_push($errors, "Description is too long"); }
-				if(strlen($block) > 10) { array_push($errors, "Block is too long"); }
-				if($qty > 9999999999) { array_push($errors, "Quantity is too long"); }
-				if(strlen($unit) > 25) { array_push($errors, "Unit is too long"); }
+				if(strlen($block) > 10 && !empty($block)) { array_push($errors, "Block is too long"); }
+				if($qty > 9999999999 && !empty($qty)) { array_push($errors, "Quantity is too long"); }
+				if(strlen($unit) > 25 && !empty($unit)) { array_push($errors, "Unit is too long"); }
 				if($price > 99999999999999999999) { array_push($errors, "Price is too long"); }
 				if($debit > 99999999999999999999) { array_push($errors, "Debit is too long"); }
 				if($credit > 99999999999999999999) { array_push($errors, "Credit is too long"); }
