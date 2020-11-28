@@ -1,7 +1,7 @@
 <?php
 	include('../../api/index.php');
 	include('../../api/auth.php');
-	
+
 	if(isset($_GET['id']) && isset($_GET['uniqueid'])){
 		$id 		= mysqli_real_escape_string($connect, $_GET['id']);
 		$uniqueid	= mysqli_real_escape_string($connect, $_GET['uniqueid']);
@@ -36,14 +36,14 @@
 		$debit 		= mysqli_real_escape_string($connect, $_POST['_debit']);
 		$credit 	= mysqli_real_escape_string($connect, $_POST['_credit']);
 		$errors = array();
-		if(empty($code) || empty($desc_data) || empty($date) || empty($price) || empty($debit) || empty($credit)){
+		if(empty($code) || empty($desc_data) || empty($date) || empty($price)){
 			array_push($errors, "Make sure to fill out all the required forms");
 		}else {
-			if(is_numeric($code) != 1){ array_push($errors, $code." is not an integer");			}
-			if(is_numeric($qty) != 1 && !empty($qty)){ array_push($errors, $qty." is not an integer");			}
-			if(is_numeric($price) != 1){ array_push($errors, $price." is not an integer");			}
-			if(is_numeric($debit) != 1){ array_push($errors, $debit." is not an integer");			}
-			if(is_numeric($credit) != 1){ array_push($errors, $credit." is not an integer");			}
+			if(is_numeric($code) != 1){ array_push($errors, $code." is not an integer"); }
+			if(is_numeric($qty) != 1 && !empty($qty)){ array_push($errors, $qty." is not an integer"); }
+			if(is_numeric($price) != 1){ array_push($errors, $price." is not an integer"); }
+			if(is_numeric($debit) != 1 && !empty($qty)){ array_push($errors, $debit." is not an integer"); }
+			if(is_numeric($credit) != 1 && !empty($qty)){ array_push($errors, $credit." is not an integer"); }
 			if(count($errors) == 0) {
 				if($code > 99999){ array_push($errors, "Code is too long"); }
 				if(strlen($proof_code) > 25 && !empty($proof_code)) { array_push($errors, "Proof Code is too long"); }
@@ -52,20 +52,24 @@
 				if($qty > 9999999999 && !empty($qty)) { array_push($errors, "Quantity is too long"); }
 				if(strlen($unit) > 25 && !empty($unit)) { array_push($errors, "Unit is too long"); }
 				if($price > 99999999999999999999) { array_push($errors, "Price is too long"); }
-				if($debit > 99999999999999999999) { array_push($errors, "Debit is too long"); }
-				if($credit > 99999999999999999999) { array_push($errors, "Credit is too long"); }
+				if($debit > 99999999999999999999 && !empty($debit)) { array_push($errors, "Debit is too long"); }
+				if($credit > 99999999999999999999 && !empty($credit)) { array_push($errors, "Credit is too long"); }
 				if(strlen($date) > 10){ array_push($errors, "Please Provide a Valid Date"); }
-				if(count($errors) == 0) {
-					$code_value = mysqli_query($connect, "SELECT * FROM code_data WHERE token='$id' AND code='$code'");
-					$validate_code = mysqli_num_rows(mysqli_query($connect, "SELECT * FROM code_data WHERE token='$id' AND code='$code'"));
-					if($validate_code > 0){
-						while ($get_value = mysqli_fetch_assoc($code_value)){
-							$code_description = $get_value['description'];
+				if(!empty($debit) || !empty($credit)){
+					if(count($errors) == 0) {
+						$code_value = mysqli_query($connect, "SELECT * FROM code_data WHERE token='$id' AND code='$code'");
+						$validate_code = mysqli_num_rows(mysqli_query($connect, "SELECT * FROM code_data WHERE token='$id' AND code='$code'"));
+						if($validate_code > 0){
+							while ($get_value = mysqli_fetch_assoc($code_value)){
+								$code_description = $get_value['description'];
+							}
+							mysqli_query($connect, "INSERT INTO data(code, code_value, proof_code, data, block, qty, unit, price, date, debit, credit, token) VALUES('$code', '$code_description', '$proof_code', '$desc_data', '$block', '$qty', '$unit', '$price', '$date', '$debit', '$credit', '$id')");
+						}else {
+							array_push($errors, "Ref Code Not Found");
 						}
-						mysqli_query($connect, "INSERT INTO data(code, code_value, proof_code, data, block, qty, unit, price, date, debit, credit, token) VALUES('$code', '$code_description', '$proof_code', '$desc_data', '$block', '$qty', '$unit', '$price', '$date', '$debit', '$credit', '$id')");
-					}else {
-						array_push($errors, "Ref Code Not Found");
 					}
+				}else {
+					array_push($errors, "At least 1 field must be filled in Credit or Debit Field");
 				}
 			}
 		}
@@ -87,6 +91,9 @@
 	}
 	if(isset($_POST['_delete-project']) && isset($result_name)){
 		header('Location:'.$URL.'/projects/delete/auth/?id='.$id.'&uniqueid='.$uniqueid.'');
+	}
+	if(isset($_POST['_export'])){
+		header('Location:'.$URL.'/export/excel/?id='.$id.'&uniqueid='.$uniqueid.'');
 	}
 	if(isset($_POST['_back-btn']) && isset($result_name)){
 		header('Location:'.$URL.'');
@@ -384,54 +391,75 @@
 					<form method="POST" class="btn-cta">
 						<button type="submit" name="_back-btn" class="btn-project btn-add">
 							<div class="btn-fa-add">
-						  		<i style="font-size: 48px; color: Dodgerblue;"class="fas fa-long-arrow-alt-left"></i>
+						  		<i style="font-size: 48px; color: Dodgerblue;" class="fas fa-long-arrow-alt-left"></i>
 						  	</div>
-						  	<div class="btn-fa-text">
+						  	<div class="btn-fa-text text-wrap">
 						  		Back
 						  	</div>
 						</button>
 					</form>
 
-					<button type="button" class="btn-project btn-add" data-toggle="modal" data-target="#addData">
-						<div class="btn-fa-add">
-					  		<i style="font-size: 48px; color: Dodgerblue;"class="fas fa-plus-circle"></i>
-					  	</div>
-					  	<div class="btn-fa-text">
-					  		New Data
-					  	</div>
-					</button>
+					<form class="btn-cta">
+						<button type="button" class="btn-project btn-add" data-toggle="modal" data-target="#addData">
+							<div class="btn-fa-add">
+						  		<i style="font-size: 48px; color: Dodgerblue;" class="fas fa-plus-circle"></i>
+						  	</div>
+						  	<div class="btn-fa-text text-wrap">
+						  		New Data
+						  	</div>
+						</button>
+					</form>
 
-					<button type="button" class="btn-project btn-add" data-toggle="modal" data-target="#refCode">
-						<div class="btn-fa-add">
-					  		<i style="font-size: 48px; color: Dodgerblue;"class="fas fa-code-branch"></i>
-					  	</div>
-					  	<div class="btn-fa-text">
-					  		Ref. Code
-					  	</div>
-					</button>
+					<form class="btn-cta">
+						<button type="button" class="btn-project btn-add" data-toggle="modal" data-target="#refCode">
+							<div class="btn-fa-add">
+						  		<i style="font-size: 48px; color: Dodgerblue;" class="fas fa-code-branch"></i>
+						  	</div>
+						  	<div class="btn-fa-text text-wrap">
+						  		Ref. Code
+						  	</div>
+						</button>
+					</form>
 
-					<button type="button" class="btn-project btn-add" data-toggle="modal" data-target="#searchData">
-						<div class="btn-fa-add">
-					  		<i style="font-size: 48px; color: Dodgerblue;"class="fas fa-search"></i>
-					  	</div>
-					  	<div class="btn-fa-text">
-					  		Search
-					  	</div>
-					</button>
-					<button type="button" class="btn-project btn-add" data-toggle="modal" data-target="#infoData">
-						<div class="btn-fa-add">
-					  		<i style="font-size: 48px; color: Dodgerblue;"class="fas fa-info-circle"></i>
-					  	</div>
-					  	<div class="btn-fa-text">
-					  		Information
-					  	</div>
-					</button>
+					<form class="btn-cta">
+						<button type="button" class="btn-project btn-add" data-toggle="modal" data-target="#searchData">
+							<div class="btn-fa-add">
+						  		<i style="font-size: 48px; color: Dodgerblue;" class="fas fa-search"></i>
+						  	</div>
+						  	<div class="btn-fa-text text-wrap">
+						  		Search
+						  	</div>
+						</button>
+					</form>
+
+					<form class="btn-cta">
+						<button type="button" class="btn-project btn-add" data-toggle="modal" data-target="#infoData">
+							<div class="btn-fa-add">
+						  		<i style="font-size: 48px; color: Dodgerblue;" class="fas fa-info-circle"></i>
+						  	</div>
+						  	<div class="btn-fa-text text-wrap">
+						  		Information
+						  	</div>
+						</button>
+					</form>
+
+					<form method="POST" class="btn-cta">
+						<button type="submit" name="_export" class="btn-project btn-add">
+							<div class="btn-fa-add">
+						  		<i style="font-size: 48px; color: Dodgerblue;" class="fas fa-file-export"></i>
+						  	</div>
+						  	<div class="btn-fa-text text-wrap">
+						  		Export to Excel
+						  	</div>
+						</button>
+					</form>
+
 					<form method="POST" class="btn-cta">
 						<button type="submit" name="_delete-project" class="btn-project btn-add">
 							<div class="btn-fa-add">
 						  		<i style="font-size: 48px; color: red;"class="fas fa-trash-alt"></i>
 						  	</div>
-						  	<div class="btn-fa-text">
+						  	<div class="btn-fa-text text-wrap">
 						  		DELETE
 						  	</div>
 						</button>
@@ -448,9 +476,17 @@
 					      <div class="modal-body">
 					        <form method="POST">
 					        	<p class="required">* required</p>
+					        	<p class="required">** At least one field must be filled</p>
 					        	<div class="form-group">
 									<label for="Code">Code <span class="required">*</span></label>
-									<input type="number" name="_code" class="form-control" placeholder="Input Data (max 5 digits)" max="99999" min="0" required>
+									<select name="_code" class="form-control" required>
+										<?php
+											$option_query = mysqli_query($connect, "SELECT code FROM code_data WHERE token='$id'");
+											while ($fetch_data = mysqli_fetch_assoc($option_query)) {
+												echo "<option value=".$fetch_data['code'].">".$fetch_data['code']."</option>";
+											}
+										?>
+									</select>
 								</div>
 								<div class="form-group">
 									<label for="description">Date <span class="required">*</span></label>
@@ -466,7 +502,7 @@
 								</div>
 								<div class="form-group">
 									<label for="description">Block</label>
-									<input type="text" name="_block" class="form-control" maxlength="10" placeholder="Input Block (max 10 digits)">
+									<input type="text" name="_block" class="form-control" maxlength="10" placeholder="Input Block (max 10 chars)">
 								</div>
 								<div class="form-group">
 									<label for="description">Quantity</label>
@@ -481,12 +517,12 @@
 									<input type="number" name="_price" class="form-control" max="99999999999999999999" placeholder="Input Price (max 20 digits)" required>
 								</div>
 								<div class="form-group">
-									<label for="description">Debit <span class="required">*</span></label>
-									<input type="number" name="_debit" class="form-control" max="99999999999999999999" placeholder="Input Debit (max 20 digits)" required>
+									<label for="description">Debit <span class="required">**</span></label>
+									<input type="number" name="_debit" class="form-control" max="99999999999999999999" placeholder="Input Debit (max 20 digits)">
 								</div>
 								<div class="form-group">
-									<label for="description">Credit <span class="required">*</span></label>
-									<input type="number" name="_credit" class="form-control" max="99999999999999999999" placeholder="Input Credit (max 20 digits)" required>
+									<label for="description">Credit <span class="required">**</span></label>
+									<input type="number" name="_credit" class="form-control" max="99999999999999999999" placeholder="Input Credit (max 20 digits)">
 								</div>
 					      </div>
 					      <div class="modal-footer">
@@ -805,9 +841,13 @@
 									}
 									$validation = mysqli_num_rows($data_query);
 									$number = 1;
+									$total_qty = 0;
+									$total_price = 0;
+									$total_debit = 0;
+									$total_credit = 0;
 									if($validation != 0){
 										while($data = mysqli_fetch_assoc($data_query)){
-											echo "<tr class=\"onhover\"><th scope=\"row\">".$number++."</th><th>".$data['date']."</th><th>".$data['code_value']."</th><th>".$data['proof_code']."</th><th>".$data['data']."</th><th>".$data['block']."</th><th>".$data['qty']."</th><th>".$data['unit']."</th><th>".$data['price']."</th><th>".$data['code']."</th><th>".$data['debit']."</th><th>".$data['credit']."</th><th class=\"btn-on-hover\">
+											echo "<tr class=\"onhover\"><th scope=\"row\">".$number++."</th><th>".$data['date']."</th><th>".$data['code_value']."</th><th>".$data['proof_code']."</th><th>".$data['data']."</th><th>".$data['block']."</th><th>".$data['qty']."</th><th>".$data['unit']."</th><th>".number_format($data['price'],0,',','.')."</th><th>".$data['code']."</th><th>".number_format($data['debit'],0,',','.')."</th><th>".number_format($data['credit'],0,',','.')."</th><th class=\"btn-on-hover\">
 												<form method=\"POST\">
 													<input type=\"hidden\" name=\"_id-data\" value=\"".$data['data_id']."\"/>
 													<button type=\"submit\" name=\"_edit-data\" class=\"btn-on-hover\"><i class=\"fas fa-pencil-alt\"></i></button>
@@ -816,7 +856,12 @@
 													<input name=\"_id-data\" type=\"hidden\" value=\"".$data['data_id']."\"/>
 													<button type=\"submit\" name=\"_delete-data\" onClick=\"javascript: return confirm('Are you Sure Want to Delete this Data?')\"class=\"btn-on-hover\"><i class=\"fas fa-times\"></i></button>
 												</form></th></tr>";
+												$total_qty += $data['qty'];
+												$total_price += $data['price'];
+												$total_debit += $data['debit'];
+												$total_credit += $data['credit'];
 										}
+										echo "<tr class=\"onhover\"><th colspan=\"6\" scope=\"row\">Total</th><th>".number_format($total_qty,0,',','.')."</th><th></th><th>".number_format($total_price,0,',','.')."</th><th></th><th>".number_format($total_debit,0,',','.')."</th><th>".number_format($total_credit,0,',','.')."</th><th colspan=\"2\"></th></tr>";
 									}else {
 										echo "
 										<tr><th colspan=\"13\" scope=\"row\"><p class=\"project-null-msg italic\">No Data Found</p></th></tr>";

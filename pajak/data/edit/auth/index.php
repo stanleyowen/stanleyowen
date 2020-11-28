@@ -24,66 +24,14 @@
 					$debit 		 	= $check_name['debit'];
 					$credit		 	= $check_name['credit'];
 				}
-
-				$res_code = '
-					<div class="container mt-20">
-						<h2>Edit Data</h2>
-						<form method="POST">
-					        <p class="required">* required</p>
-					        	<div class="form-group">
-									<label for="Code">Code <span class="required">*</span></label>
-									<input type="number" name="_code" value="'.$code.'" class="form-control" placeholder="Input Data (max 5 digits)" max="99999" min="0" required>
-								</div>
-								<div class="form-group">
-									<label for="description">Date <span class="required">*</span></label>
-									<input type="date" name="_date" value="'.$date.'" max="9999-12-31" class="form-control" required>
-								</div>
-								<div class="form-group">
-									<label for="description">Proof Code</label>
-									<input type="text" name="_proof-code" value="'.$proof_code.'" class="form-control" maxlength="50" placeholder="Input Proof Code (max 50 chars)">
-								</div>
-								<div class="form-group">
-									<label for="description">Description <span class="required">*</span></label>
-									<input type="text" name="_desc-data" class="form-control" maxlength="100" value="'.$description.'" placeholder="Input Data (max 100 chars)" required>
-								</div>
-								<div class="form-group">
-									<label for="description">Block</label>
-									<input type="text" name="_block" value="'.$block.'" class="form-control" maxlength="10" placeholder="Input Block (max 10 digits)">
-								</div>
-								<div class="form-group">
-									<label for="description">Quantity</label>
-									<input type="number" name="_qty" value="'.$qty.'" class="form-control" max="9999999999" placeholder="Input Quantity (max 10 digits)">
-								</div>
-								<div class="form-group">
-									<label for="description">Unit</label>
-									<input type="text" name="_unit" value="'.$unit.'" class="form-control" maxlength="10" placeholder="Input Unit (max 10 chars)">
-								</div>
-								<div class="form-group">
-									<label for="description">Price <span class="required">*</span></label>
-									<input type="number" name="_price" value="'.$price.'" class="form-control" max="99999999999999999999" placeholder="Input Price (max 20 digits)" required>
-								</div>
-								<div class="form-group">
-									<label for="description">Debit <span class="required">*</span></label>
-									<input type="number" name="_debit" value="'.$debit.'" class="form-control" max="99999999999999999999" placeholder="Input Debit (max 20 digits)" required>
-								</div>
-								<div class="form-group">
-									<label for="description">Credit <span class="required">*</span></label>
-									<input type="number" name="_credit" value="'.$credit.'" class="form-control" max="99999999999999999999" placeholder="Input Credit (max 20 digits)" required>
-								</div>
-					      </div>
-						  <button name="_confirm" type="submit" class="btn btn-full btn-outline-primary">UPDATE</button><br/>
-						  <button name="_discard" type="submit" class="btn btn-full btn-outline-danger">DISCARD</button>
-						</form>
-					</div>
-				';
 			}else {
-				$res_code = '<div class="mt-20"><h1>404 - NOT FOUND</h1></div>';
+				header('Location: '.$URL.'/errors/404/');
 			}
 		}else {
-			$res_code = '<div class="mt-20"><h1>403 - FORBIDDEN</h1></div>';
+			header('Location: '.$URL.'/errors/403/');
 		}
 	}else {
-		$res_code = '<div class="mt-20"><h1>400 - BAD REQUEST</h1></div>';
+		header('Location: '.$URL.'/errors/400/');
 	}
 
 	if(isset($_POST['_confirm'])){
@@ -147,7 +95,64 @@
 		<div class="container">
 			<?php if(isset($errors)) { include('../../../api/errors.php'); } ?>
 			<div class="row">
-				<?php echo $res_code ?>
+				<div class="container mt-20">
+						<h2>Edit Data</h2>
+						<form method="POST">
+					        <p class="required">* required</p>
+					        <p class="required">** At least one field must be filled</p>
+					        	<div class="form-group">
+									<label for="Code">Code <span class="required">*</span></label>
+									<select name="_code" class="form-control" required>
+										<option value="<?php echo $code ?>"><?php echo $code ?></option>
+										<?php
+											$option_query = mysqli_query($connect, "SELECT code FROM code_data WHERE token='$id'");
+											while ($fetch_data = mysqli_fetch_assoc($option_query)) {
+												echo "<option value=".$fetch_data['code'].">".$fetch_data['code']."</option>";
+											}
+										?>
+									</select>
+								</div>
+								<div class="form-group">
+									<label for="description">Date <span class="required">*</span></label>
+									<input type="date" name="_date" value="<?php echo $date?>" max="9999-12-31" class="form-control" required>
+								</div>
+								<div class="form-group">
+									<label for="description">Proof Code</label>
+									<input type="text" name="_proof-code" value="<?php echo $proof_code ?>" class="form-control" maxlength="50" placeholder="Input Proof Code (max 50 chars)">
+								</div>
+								<div class="form-group">
+									<label for="description">Description <span class="required">*</span></label>
+									<input type="text" name="_desc-data" class="form-control" maxlength="100" value="<?php echo $description ?>" placeholder="Input Data (max 100 chars)" required>
+								</div>
+								<div class="form-group">
+									<label for="description">Block</label>
+									<input type="text" name="_block" value="<?php echo $block ?>" class="form-control" maxlength="10" placeholder="Input Block (max 10 digits)">
+								</div>
+								<div class="form-group">
+									<label for="description">Quantity</label>
+									<input type="number" name="_qty" value="<?php echo $qty ?>" class="form-control" max="9999999999" placeholder="Input Quantity (max 10 digits)">
+								</div>
+								<div class="form-group">
+									<label for="description">Unit</label>
+									<input type="text" name="_unit" value="<?php echo $unit ?>" class="form-control" maxlength="10" placeholder="Input Unit (max 10 chars)">
+								</div>
+								<div class="form-group">
+									<label for="description">Price <span class="required">*</span></label>
+									<input type="number" name="_price" value="<?php echo $price ?>" class="form-control" max="99999999999999999999" placeholder="Input Price (max 20 digits)" required>
+								</div>
+								<div class="form-group">
+									<label for="description">Debit <span class="required">*</span></label>
+									<input type="number" name="_debit" value="<?php echo $debit ?>" class="form-control" max="99999999999999999999" placeholder="Input Debit (max 20 digits)" required>
+								</div>
+								<div class="form-group">
+									<label for="description">Credit <span class="required">*</span></label>
+									<input type="number" name="_credit" value="<?php echo $credit ?>" class="form-control" max="99999999999999999999" placeholder="Input Credit (max 20 digits)" required>
+								</div>
+					      </div>
+						  <button name="_confirm" type="submit" class="btn btn-full btn-outline-primary">UPDATE</button><br/>
+						  <button name="_discard" type="submit" class="btn btn-full btn-outline-danger">DISCARD</button>
+						</form>
+					</div>
 			</div>
 		</div>
 		<?php include('../../../api/js.php'); ?>
