@@ -86,22 +86,26 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-12">
-					<button type="button" class="btn-project btn-add" data-toggle="modal" data-target="#accountInfo">
-						<div class="btn-fa-add">
-					  		<i style="font-size: 48px; color: Dodgerblue;"class="fas fa-user-circle"></i>
-					  	</div>
-					  	<div class="btn-fa-text">
-					  		Account
-					  	</div>
-					</button>
-					<button type="button" class="btn-project btn-add" data-toggle="modal" data-target="#addProject">
-						<div class="btn-fa-add">
-					  		<i style="font-size: 48px; color: Dodgerblue;"class="fas fa-plus-circle"></i>
-					  	</div>
-					  	<div class="btn-fa-text">
-					  		New Project
-					  	</div>
-					</button>
+					<form class="btn-cta">
+						<button type="button" class="btn-project btn-add" data-toggle="modal" data-target="#accountInfo">
+							<div class="btn-fa-add">
+						  		<i style="font-size: 48px; color: Dodgerblue;"class="fas fa-user-circle"></i>
+						  	</div>
+						  	<div class="btn-fa-text">
+						  		Account
+						  	</div>
+						</button>
+					</form>
+					<form class="btn-cta">
+						<button type="button" class="btn-project btn-add" data-toggle="modal" data-target="#addProject">
+							<div class="btn-fa-add">
+						  		<i style="font-size: 48px; color: Dodgerblue;"class="fas fa-plus-circle"></i>
+						  	</div>
+						  	<div class="btn-fa-text">
+						  		New Project
+						  	</div>
+						</button>
+					</form>
 
 					<div class="modal fade" id="addProject" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 					  <div class="modal-dialog">

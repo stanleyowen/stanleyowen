@@ -9,6 +9,7 @@
 	$databse_name		= 'pajak';
 	$connect			= mysqli_connect($database_server, $username_server, $password_server, $databse_name);
 
+
 	if(mysqli_connect_errno()){
 		echo "<script>alert('ERR CODE : 500\\nMESSAGE  : CANNOT CONNECT TO DATABASE SERVER\\nThis may happen when the server encountered an internal error or misconfiguration and was unable to complete your request'); window.location=''</script>";
 	}

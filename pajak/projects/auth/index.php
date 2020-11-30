@@ -95,6 +95,9 @@
 	if(isset($_POST['_export'])){
 		header('Location:'.$URL.'/export/excel/?id='.$id.'&uniqueid='.$uniqueid.'');
 	}
+	if(isset($_POST['_sales'])){
+		header('Location:'.$URL.'/projects/SL/auth/?id='.$id.'&uniqueid='.$uniqueid.'');
+	}
 	if(isset($_POST['_back-btn']) && isset($result_name)){
 		header('Location:'.$URL.'');
 	}
@@ -358,6 +361,7 @@
 		$keywords 	= mysqli_real_escape_string($connect, $_POST['keywords']);
 		$search 	= mysqli_real_escape_string($connect, $_POST['search']);
 		$errors		= array();
+		if($search > 30){ array_push($errors, "Keywords too Long"); }
 		if($keywords == "date"){ $types = "date"; }
 		else if($keywords == "account"){ $types = "code_value"; }
 		else if($keywords == "proof-code"){ $types = "proof_code"; }
@@ -432,6 +436,17 @@
 						</button>
 					</form>
 
+					<form method="POST" class="btn-cta">
+						<button type="submit" name="_sales" class="btn-project btn-add">
+							<div class="btn-fa-add">
+						  		<i style="font-size: 48px; color: Dodgerblue;" class="fas fa-poll"></i>
+						  	</div>
+						  	<div class="btn-fa-text text-wrap">
+						  		Sales
+						  	</div>
+						</button>
+					</form>
+
 					<form class="btn-cta">
 						<button type="button" class="btn-project btn-add" data-toggle="modal" data-target="#infoData">
 							<div class="btn-fa-add">
@@ -479,7 +494,7 @@
 					        	<p class="required">** At least one field must be filled</p>
 					        	<div class="form-group">
 									<label for="Code">Code <span class="required">*</span></label>
-									<select name="_code" class="form-control" required>
+									<select name="_code" class="form-control select" required>
 										<?php
 											$option_query = mysqli_query($connect, "SELECT code FROM code_data WHERE token='$id'");
 											while ($fetch_data = mysqli_fetch_assoc($option_query)) {
@@ -551,7 +566,7 @@
 								  <div class="input-group-prepend">
 								    <span class="input-group-text" style="background-color: white;" id="basic-addon1"><i class="fas fa-search"></i></span>
 								  </div>
-								  <input type="text" name="search" class="form-control" placeholder="Search Keywords (max 30 chars)">
+								  <input type="text" name="search" class="form-control" placeholder="Search Keywords (max 30 chars)" maxlength="30">
 								</div>
 								<p>Search By :</p>
 								<div class="container row">
