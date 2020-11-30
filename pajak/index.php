@@ -201,7 +201,7 @@
 								<tr>
 									<th scope="col">Project Name</th>
 									<th scope="col">Description</th>
-									<th scope="col">Action</th>
+									<th scope="col">&nbsp;</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -211,9 +211,9 @@
 									if($validation != 0){
 										while($project = mysqli_fetch_assoc($project_query)){
 											echo"
-											<tr><th scope=\"row\">".$project['project_name']."</th>
+											<tr class=\"onhover\"><th scope=\"row\">".$project['project_name']."</th>
 											<th>".$project['project_description']."</th>
-											<th class=\"icons\">
+											<th class=\"btn-on-hover\">
 												<form class=\"btn-cta\" method=\"POST\">
 													<input type=\"hidden\" name=\"_project-token\" value=\"".$project['token']."\" />
 													<button type=\"submit\" class=\"btn-cta\" name=\"display_project\"><i class=\"fas fa-external-link-alt\"style=\"color: Dodgerblue;\"></i></button>

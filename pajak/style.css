@@ -39,7 +39,6 @@ button { outline: none!important; }
 .btn-add { border-radius: 20px; }
 .btn-full { width: 100%; margin-bottom: 10px; }
 .mt-20 { margin: 50px; margin-top: 75px; }
-.icons a i { margin-right: 10px; }
 .btn-cta { display: inline-block; background: none; border-style: none; width: 15%; }
 .btn-cta .btn-project { width: 100%; }
 .status { display: inline-block; }
