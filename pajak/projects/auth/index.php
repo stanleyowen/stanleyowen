@@ -711,7 +711,7 @@
 														</th></tr>";
 													}
 												}else {
-													echo "<tr><th colspan=\"4\" scope=\"row\"><p class=\"project-null-msg italic\">No Code Data Found</p></th></tr>";
+													echo "<tr><th colspan=\"5\" scope=\"row\"><p class=\"project-null-msg italic\">No Code Data Found</p></th></tr>";
 												}
 											?>
 										</tbody>

@@ -234,19 +234,25 @@
 											<th scope="col">Code</th>
 											<th scope="col">Description</th>
 											<th scope="col">Balance</th>
+											<th scope="col">&nbsp;</th>
 										</tr>
 									</thead>
 									<tbody>
 										<?php
-											$code_query = mysqli_query($connect, "SELECT * FROM code_data WHERE token='$id'");
+											$code_query = mysqli_query($connect, "SELECT * FROM code_data WHERE token='$id' ORDER BY code ASC");
 											$validation_code = mysqli_num_rows($code_query);
 											if($validation_code > 0){
 												while ($code_data = mysqli_fetch_assoc($code_query)){
-													echo "<tr><th scope=\"row\">".$code_data['code']."</th><th>".$code_data['description']."</th>
-														<th>".number_format($code_data['bgn_balance'],0,',','.')."</th></tr>";
+													echo "<tr class=\"onhover\"><th scope=\"row\">".$code_data['code']."</th><th>".$code_data['description']."</th>
+														<th>".number_format($code_data['bgn_balance'],0,',','.')."</th><th class=\"btn-on-hover\">
+															<form method=\"POST\">
+																<input name=\"_id-data\" type=\"hidden\" value=\"".$code_data['code_id']."\"/>
+																<button type=\"submit\" class=\"btn-cta\" name=\"_edit-balance\"><i class=\"fas fa-pencil-alt\"></i></button>
+															</form>
+														</th></tr>";
 													}
 												}else {
-													echo "<tr><th colspan=\"3\" scope=\"row\"><p class=\"project-null-msg italic\">No Code Data Found</p></th></tr>";
+													echo "<tr><th colspan=\"4\" scope=\"row\"><p class=\"project-null-msg italic\">No Code Data Found</p></th></tr>";
 												}
 											?>
 										</tbody>
@@ -270,7 +276,7 @@
 					?>
 					<hr class="divider">
 					<?php
-						$query_get_data = mysqli_query($connect, "SELECT * FROM code_data WHERE token='$id'");
+						$query_get_data = mysqli_query($connect, "SELECT * FROM code_data WHERE token='$id' ORDER BY code ASC");
 						$check_code = mysqli_num_rows(mysqli_query($connect, "SELECT code FROM data WHERE token='$id'"));
 						if($check_code > 0){
 							while ($get_data = mysqli_fetch_assoc($query_get_data)){
@@ -311,7 +317,7 @@
 								$get_code = $get_data['code'];
 								if(!isset($balance)){ $balance = $get_data['bgn_balance']; }
 								$number 	= 1;
-								$query_from_code = mysqli_query($connect, "SELECT * FROM data WHERE token='$id' AND code='$get_code'");
+								$query_from_code = mysqli_query($connect, "SELECT * FROM data WHERE token='$id' AND code='$get_code' ORDER BY date ASC");
 								$check_data_exist = mysqli_num_rows($query_from_code);
 								if($check_data_exist > 0){
 									while ($get_data_from_code = mysqli_fetch_assoc($query_from_code)) {
@@ -321,6 +327,7 @@
 											<tr><th scope=\"row\">".$number++."</th><th>".$get_data_from_code['date']."</th><th>".$get_data_from_code['proof_code']."</th><th>".$get_data_from_code['data']."</th><th>".$get_data_from_code['block']."</th><th>".$get_data_from_code['qty']."</th><th>".$get_data_from_code['unit']."</th><th>".number_format($price,0,',','.')."</th><th>".number_format($get_data_from_code['debit'],0,',','.')."</th><th>".number_format($get_data_from_code['credit'],0,',','.')."</th><th>".number_format($balance + $get_data_from_code['debit'] - $get_data_from_code['credit'],0,',','.')."</th></tr>
 										";
 										$balance = $balance + $get_data_from_code['debit'] - $get_data_from_code['credit'];
+										mysqli_query($connect, "UPDATE code_data SET end_balance='$balance' WHERE token='$id' AND code='$get_code'");
 									}
 								}else {
 									echo "<tr><th scope=\"row\" colspan=\"12\"<p class=\"project-null-msg italic\">No Data Found</p></th></tr>";
