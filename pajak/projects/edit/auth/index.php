@@ -43,7 +43,7 @@
 	if(isset($_POST['_confirm']) && isset($result_name)){
 		$project_name 			= mysqli_real_escape_string($connect, $_POST['_confirm-pjname']);
 		$project_description 	= mysqli_real_escape_string($connect, $_POST['_confirm-pjdesc']);
-		mysqli_query($connect, "UPDATE projects SET project_name='$project_name', project_description='$project_description'");
+		mysqli_query($connect, "UPDATE projects SET project_name='$project_name', project_description='$project_description' WHERE token='$id'");
 		echo "<script>alert('CODE : 200\\nMESSAGE  : PROJECT UPDATED SUCCESSFULLY');window.location='$URL'</script>";
 	}else if(isset($_POST['_discard'])){
 		header('Location: '.$URL.'');

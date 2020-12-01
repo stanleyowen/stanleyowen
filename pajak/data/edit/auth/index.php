@@ -19,7 +19,6 @@
 					$block		 	= $check_name['block'];
 					$qty		 	= $check_name['qty'];
 					$unit		 	= $check_name['unit'];
-					$price		 	= $check_name['price'];
 					$date		 	= $check_name['date'];
 					$debit 		 	= $check_name['debit'];
 					$credit		 	= $check_name['credit'];
@@ -42,18 +41,16 @@
 		$block		= mysqli_real_escape_string($connect, $_POST['_block']);
 		$qty 		= mysqli_real_escape_string($connect, $_POST['_qty']);
 		$unit 		= mysqli_real_escape_string($connect, $_POST['_unit']);
-		$price 		= mysqli_real_escape_string($connect, $_POST['_price']);
 		$debit 		= mysqli_real_escape_string($connect, $_POST['_debit']);
 		$credit 	= mysqli_real_escape_string($connect, $_POST['_credit']);
 		$errors = array();
-		if(empty($code) || empty($desc_data) || empty($date) || empty($price) || empty($debit) || empty($credit)){
+		if(empty($code) || empty($desc_data) || empty($date)){
 			array_push($errors, "Make sure to fill out all the required forms");
 		}else {
-			if(is_numeric($code) != 1){ array_push($errors, $code." is not an integer");			}
-			if(is_numeric($qty) != 1 && !empty($qty)){ array_push($errors, $qty." is not an integer");			}
-			if(is_numeric($price) != 1){ array_push($errors, $price." is not an integer");			}
-			if(is_numeric($debit) != 1){ array_push($errors, $debit." is not an integer");			}
-			if(is_numeric($credit) != 1){ array_push($errors, $credit." is not an integer");			}
+			if(is_numeric($code) != 1){ array_push($errors, $code." is not an integer"); }
+			if(is_numeric($qty) != 1 && !empty($qty)){ array_push($errors, $qty." is not an integer"); }
+			if(is_numeric($debit) != 1 && !empty($qty)){ array_push($errors, $debit." is not an integer"); }
+			if(is_numeric($credit) != 1 && !empty($qty)){ array_push($errors, $credit." is not an integer"); }
 			if(count($errors) == 0) {
 				if($code > 99999){ array_push($errors, "Code is too long"); }
 				if(strlen($proof_code) > 25 && !empty($proof_code)) { array_push($errors, "Proof Code is too long"); }
@@ -61,22 +58,25 @@
 				if(strlen($block) > 10 && !empty($block)) { array_push($errors, "Block is too long"); }
 				if($qty > 9999999999 && !empty($qty)) { array_push($errors, "Quantity is too long"); }
 				if(strlen($unit) > 25 && !empty($unit)) { array_push($errors, "Unit is too long"); }
-				if($price > 99999999999999999999) { array_push($errors, "Price is too long"); }
-				if($debit > 99999999999999999999) { array_push($errors, "Debit is too long"); }
-				if($credit > 99999999999999999999) { array_push($errors, "Credit is too long"); }
+				if($debit > 99999999999999999999 && !empty($debit)) { array_push($errors, "Debit is too long"); }
+				if($credit > 99999999999999999999 && !empty($credit)) { array_push($errors, "Credit is too long"); }
 				if(strlen($date) > 10){ array_push($errors, "Please Provide a Valid Date"); }
-				if(count($errors) == 0) {
-					$code_value = mysqli_query($connect, "SELECT * FROM code_data WHERE token='$id' AND code='$code'");
-					$validate_code = mysqli_num_rows(mysqli_query($connect, "SELECT * FROM code_data WHERE token='$id' AND code='$code'"));
-					if($validate_code > 0){
-						while ($get_value = mysqli_fetch_assoc($code_value)){
-							$code_description = $get_value['description'];
+				if(!empty($debit) || !empty($credit)){
+					if(count($errors) == 0) {
+						$code_value = mysqli_query($connect, "SELECT * FROM code_data WHERE token='$id' AND code='$code'");
+						$validate_code = mysqli_num_rows(mysqli_query($connect, "SELECT * FROM code_data WHERE token='$id' AND code='$code'"));
+						if($validate_code > 0){
+							while ($get_value = mysqli_fetch_assoc($code_value)){
+								$code_description = $get_value['description'];
+							}
+							mysqli_query($connect, "UPDATE data SET code='$code', code_value='$code_description', proof_code='$proof_code', data='$desc_data', block='$block', qty='$qty', unit='$unit', date='$date', debit='$debit', credit='$credit', token='$id' WHERE data_id='$data'");
+							header('Location:'.$url.'');
+						}else {
+							array_push($errors, "Ref Code Not Found");
 						}
-						mysqli_query($connect, "UPDATE data SET code='$code', code_value='$code_description', proof_code='$proof_code', data='$desc_data', block='$block', qty='$qty', unit='$unit', price='$price', date='$date', debit='$debit', credit='$credit', token='$id' WHERE data_id='$data'");
-						header('Location:'.$url.'');
-					}else {
-						array_push($errors, "Ref Code Not Found");
 					}
+				}else {
+					array_push($errors, "At least 1 field must be filled in Credit or Debit Field");
 				}
 			}
 		}
@@ -137,16 +137,12 @@
 									<input type="text" name="_unit" value="<?php echo $unit ?>" class="form-control" maxlength="10" placeholder="Input Unit (max 10 chars)">
 								</div>
 								<div class="form-group">
-									<label for="description">Price <span class="required">*</span></label>
-									<input type="number" name="_price" value="<?php echo $price ?>" class="form-control" max="99999999999999999999" placeholder="Input Price (max 20 digits)" required>
+									<label for="description">Debit <span class="required">**</span></label>
+									<input type="number" name="_debit" value="<?php echo $debit ?>" class="form-control" max="99999999999999999999" placeholder="Input Debit (max 20 digits)">
 								</div>
 								<div class="form-group">
-									<label for="description">Debit <span class="required">*</span></label>
-									<input type="number" name="_debit" value="<?php echo $debit ?>" class="form-control" max="99999999999999999999" placeholder="Input Debit (max 20 digits)" required>
-								</div>
-								<div class="form-group">
-									<label for="description">Credit <span class="required">*</span></label>
-									<input type="number" name="_credit" value="<?php echo $credit ?>" class="form-control" max="99999999999999999999" placeholder="Input Credit (max 20 digits)" required>
+									<label for="description">Credit <span class="required">**</span></label>
+									<input type="number" name="_credit" value="<?php echo $credit ?>" class="form-control" max="99999999999999999999" placeholder="Input Credit (max 20 digits)">
 								</div>
 					      </div>
 						  <button name="_confirm" type="submit" class="btn btn-full btn-outline-primary">UPDATE</button><br/>

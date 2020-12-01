@@ -126,7 +126,7 @@
 								</div>
 								<div class="form-group">
 								    <label for="description">Desciption</label>
-								    <textarea class="form-control" name="_desc-project" id="description" rows="3" maxlength="100" placeholder="Project Description (Max 100 Characters)"></textarea>
+								    <textarea class="form-control" name="_desc-project" id="description" rows="3" maxlength="100" placeholder="Project Description (Max 100 Characters)" required></textarea>
 								</div>
 					      </div>
 					      <div class="modal-footer">
@@ -150,9 +150,6 @@
 					        <p>Username &nbsp; &nbsp; : <?php echo $name?></p>
 					        <p>Email &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <?php echo $email?></p>
 					        <p>Password &nbsp; &nbsp; &nbsp;: ********** <a href="#" data-toggle="modal" data-target="#changePassword">Change Password</a></p>
-					      </div>
-					      <div class="modal-footer">
-					        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 					      </div>
 					    </div>
 					  </div>
@@ -211,9 +208,7 @@
 									if($validation != 0){
 										while($project = mysqli_fetch_assoc($project_query)){
 											echo"
-											<tr class=\"onhover\"><th scope=\"row\">".$project['project_name']."</th>
-											<th>".$project['project_description']."</th>
-											<th class=\"btn-on-hover\">
+											<tr class=\"onhover\"><th scope=\"row\">".$project['project_name']."</th><th>".$project['project_description']."</th><th class=\"btn-on-hover\">
 												<form class=\"btn-cta\" method=\"POST\">
 													<input type=\"hidden\" name=\"_project-token\" value=\"".$project['token']."\" />
 													<button type=\"submit\" class=\"btn-cta\" name=\"display_project\"><i class=\"fas fa-external-link-alt\"style=\"color: Dodgerblue;\"></i></button>

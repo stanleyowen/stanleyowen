@@ -36,235 +36,9 @@
 	if(isset($_POST['_show-data'])){
 		unset($data_query);
 	}
-	if(isset($_GET['order']) && isset($_GET['sort'])){
-		$order = mysqli_real_escape_string($connect, $_GET['order']);
-		$sort = mysqli_real_escape_string($connect, $_GET['sort']);
-		if($order == "date"){ $order = "date"; }
-		else if($order == "code_value"){ $order = "code_value"; }
-		if($sort == "ASC"){ $sort = "ASC"; }
-		else { $sort = "DESC"; }
-		if(!empty($order) && !empty($sort)){
-			$data_query = mysqli_query($connect, "SELECT * FROM data WHERE token='$id' ORDER BY $order $sort");
-		}
-	}
-	if(isset($_POST['sort-date'])){
-		if(isset($_GET['order']) && isset($_GET['sort']) && isset($_COOKIE['url-session'])){
-			$order 			= mysqli_real_escape_string($connect, urldecode($_GET['order']));
-			$sort 			= mysqli_real_escape_string($connect, urldecode($_GET['sort']));
-			$url_session 	= mysqli_real_escape_string($connect, urldecode($_COOKIE['url-session']));
-			if(!empty($order) && !empty($sort) ){
-				if($order == "date"){
-					if($sort == "DESC"){ header('Location:'.$url_session."&order=date&sort=ASC"); }
-					else { header('Location:'.$url_session."&order=date&sort=DESC"); }
-				}else {
-					header('Location:'.$url_session."&order=date&sort=ASC");
-				}
-			}
-		}else {
-			setcookie('url-session', $url, '/');
-			$current_url = $url."&order=date&sort=DESC";
-			header('Location:'.$current_url);
-		}
-	}
-
-	if(isset($_POST['sort-name'])){
-		if(isset($_GET['order']) && isset($_GET['sort']) && isset($_COOKIE['url-session'])){
-			$order 			= mysqli_real_escape_string($connect, urldecode($_GET['order']));
-			$sort 			= mysqli_real_escape_string($connect, urldecode($_GET['sort']));
-			$url_session 	= mysqli_real_escape_string($connect, urldecode($_COOKIE['url-session']));
-			if(!empty($order) && !empty($sort) ){
-				if($order == "code_value"){
-					if($sort == "DESC"){ header('Location:'.$url_session."&order=code_value&sort=ASC"); }
-					else { header('Location:'.$url_session."&order=code_value&sort=DESC"); }
-				}else {
-					header('Location:'.$url_session."&order=code_value&sort=ASC");
-				}
-			}
-		}else {
-			setcookie('url-session', $url, '/');
-			$current_url = $url."&order=code_value&sort=DESC";
-			header('Location:'.$current_url);
-		}
-	}
-
-	if(isset($_POST['sort-proof'])){
-		if(isset($_GET['order']) && isset($_GET['sort']) && isset($_COOKIE['url-session'])){
-			$order 			= mysqli_real_escape_string($connect, urldecode($_GET['order']));
-			$sort 			= mysqli_real_escape_string($connect, urldecode($_GET['sort']));
-			$url_session 	= mysqli_real_escape_string($connect, urldecode($_COOKIE['url-session']));
-			if(!empty($order) && !empty($sort) ){
-				if($order == "proof_code"){
-					if($sort == "DESC"){ header('Location:'.$url_session."&order=proof_code&sort=ASC"); }
-					else { header('Location:'.$url_session."&order=proof_code&sort=DESC"); }
-				}else {
-					header('Location:'.$url_session."&order=proof_code&sort=ASC");
-				}
-			}
-		}else {
-			setcookie('url-session', $url, '/');
-			$current_url = $url."&order=proof_code&sort=DESC";
-			header('Location:'.$current_url);
-		}
-	}
-
-	if(isset($_POST['sort-desc'])){
-		if(isset($_GET['order']) && isset($_GET['sort']) && isset($_COOKIE['url-session'])){
-			$order 			= mysqli_real_escape_string($connect, urldecode($_GET['order']));
-			$sort 			= mysqli_real_escape_string($connect, urldecode($_GET['sort']));
-			$url_session 	= mysqli_real_escape_string($connect, urldecode($_COOKIE['url-session']));
-			if(!empty($order) && !empty($sort) ){
-				if($order == "data"){
-					if($sort == "DESC"){ header('Location:'.$url_session."&order=data&sort=ASC"); }
-					else { header('Location:'.$url_session."&order=data&sort=DESC"); }
-				}else {
-					header('Location:'.$url_session."&order=data&sort=ASC");
-				}
-			}
-		}else {
-			setcookie('url-session', $url, '/');
-			$current_url = $url."&order=data&sort=DESC";
-			header('Location:'.$current_url);
-		}
-	}
-
-	if(isset($_POST['sort-block'])){
-		if(isset($_GET['order']) && isset($_GET['sort']) && isset($_COOKIE['url-session'])){
-			$order 			= mysqli_real_escape_string($connect, urldecode($_GET['order']));
-			$sort 			= mysqli_real_escape_string($connect, urldecode($_GET['sort']));
-			$url_session 	= mysqli_real_escape_string($connect, urldecode($_COOKIE['url-session']));
-			if(!empty($order) && !empty($sort) ){
-				if($order == "block"){
-					if($sort == "DESC"){ header('Location:'.$url_session."&order=block&sort=ASC"); }
-					else { header('Location:'.$url_session."&order=block&sort=DESC"); }
-				}else {
-					header('Location:'.$url_session."&order=block&sort=ASC");
-				}
-			}
-		}else {
-			setcookie('url-session', $url, '/');
-			$current_url = $url."&order=block&sort=DESC";
-			header('Location:'.$current_url);
-		}
-	}
-
-	if(isset($_POST['sort-qty'])){
-		if(isset($_GET['order']) && isset($_GET['sort']) && isset($_COOKIE['url-session'])){
-			$order 			= mysqli_real_escape_string($connect, urldecode($_GET['order']));
-			$sort 			= mysqli_real_escape_string($connect, urldecode($_GET['sort']));
-			$url_session 	= mysqli_real_escape_string($connect, urldecode($_COOKIE['url-session']));
-			if(!empty($order) && !empty($sort) ){
-				if($order == "qty"){
-					if($sort == "DESC"){ header('Location:'.$url_session."&order=qty&sort=ASC"); }
-					else { header('Location:'.$url_session."&order=qty&sort=DESC"); }
-				}else {
-					header('Location:'.$url_session."&order=qty&sort=ASC");
-				}
-			}
-		}else {
-			setcookie('url-session', $url, '/');
-			$current_url = $url."&order=qty&sort=DESC";
-			header('Location:'.$current_url);
-		}
-	}
-
-	if(isset($_POST['sort-unit'])){
-		if(isset($_GET['order']) && isset($_GET['sort']) && isset($_COOKIE['url-session'])){
-			$order 			= mysqli_real_escape_string($connect, urldecode($_GET['order']));
-			$sort 			= mysqli_real_escape_string($connect, urldecode($_GET['sort']));
-			$url_session 	= mysqli_real_escape_string($connect, urldecode($_COOKIE['url-session']));
-			if(!empty($order) && !empty($sort) ){
-				if($order == "unit"){
-					if($sort == "DESC"){ header('Location:'.$url_session."&order=unit&sort=ASC"); }
-					else { header('Location:'.$url_session."&order=unit&sort=DESC"); }
-				}else {
-					header('Location:'.$url_session."&order=unit&sort=ASC");
-				}
-			}
-		}else {
-			setcookie('url-session', $url, '/');
-			$current_url = $url."&order=unit&sort=DESC";
-			header('Location:'.$current_url);
-		}
-	}
-
-	if(isset($_POST['sort-price'])){
-		if(isset($_GET['order']) && isset($_GET['sort']) && isset($_COOKIE['url-session'])){
-			$order 			= mysqli_real_escape_string($connect, urldecode($_GET['order']));
-			$sort 			= mysqli_real_escape_string($connect, urldecode($_GET['sort']));
-			$url_session 	= mysqli_real_escape_string($connect, urldecode($_COOKIE['url-session']));
-			if(!empty($order) && !empty($sort) ){
-				if($order == "price"){
-					if($sort == "DESC"){ header('Location:'.$url_session."&order=price&sort=ASC"); }
-					else { header('Location:'.$url_session."&order=price&sort=DESC"); }
-				}else {
-					header('Location:'.$url_session."&order=price&sort=ASC");
-				}
-			}
-		}else {
-			setcookie('url-session', $url, '/');
-			$current_url = $url."&order=price&sort=DESC";
-			header('Location:'.$current_url);
-		}
-	}
-
-	if(isset($_POST['sort-code'])){
-		if(isset($_GET['order']) && isset($_GET['sort']) && isset($_COOKIE['url-session'])){
-			$order 			= mysqli_real_escape_string($connect, urldecode($_GET['order']));
-			$sort 			= mysqli_real_escape_string($connect, urldecode($_GET['sort']));
-			$url_session 	= mysqli_real_escape_string($connect, urldecode($_COOKIE['url-session']));
-			if(!empty($order) && !empty($sort) ){
-				if($order == "code"){
-					if($sort == "DESC"){ header('Location:'.$url_session."&order=code&sort=ASC"); }
-					else { header('Location:'.$url_session."&order=code&sort=DESC"); }
-				}else {
-					header('Location:'.$url_session."&order=code&sort=ASC");
-				}
-			}
-		}else {
-			setcookie('url-session', $url, '/');
-			$current_url = $url."&order=code&sort=DESC";
-			header('Location:'.$current_url);
-		}
-	}
-
-	if(isset($_POST['sort-debit'])){
-		if(isset($_GET['order']) && isset($_GET['sort']) && isset($_COOKIE['url-session'])){
-			$order 			= mysqli_real_escape_string($connect, urldecode($_GET['order']));
-			$sort 			= mysqli_real_escape_string($connect, urldecode($_GET['sort']));
-			$url_session 	= mysqli_real_escape_string($connect, urldecode($_COOKIE['url-session']));
-			if(!empty($order) && !empty($sort) ){
-				if($order == "debit"){
-					if($sort == "DESC"){ header('Location:'.$url_session."&order=debit&sort=ASC"); }
-					else { header('Location:'.$url_session."&order=debit&sort=DESC"); }
-				}else {
-					header('Location:'.$url_session."&order=debit&sort=ASC");
-				}
-			}
-		}else {
-			setcookie('url-session', $url, '/');
-			$current_url = $url."&order=debit&sort=DESC";
-			header('Location:'.$current_url);
-		}
-	}
-
-	if(isset($_POST['sort-credit'])){
-		if(isset($_GET['order']) && isset($_GET['sort']) && isset($_COOKIE['url-session'])){
-			$order 			= mysqli_real_escape_string($connect, urldecode($_GET['order']));
-			$sort 			= mysqli_real_escape_string($connect, urldecode($_GET['sort']));
-			$url_session 	= mysqli_real_escape_string($connect, urldecode($_COOKIE['url-session']));
-			if(!empty($order) && !empty($sort) ){
-				if($order == "credit"){
-					if($sort == "DESC"){ header('Location:'.$url_session."&order=credit&sort=ASC"); }
-					else { header('Location:'.$url_session."&order=credit&sort=DESC"); }
-				}else {
-					header('Location:'.$url_session."&order=credit&sort=ASC");
-				}
-			}
-		}else {
-			setcookie('url-session', $url, '/');
-			$current_url = $url."&order=credit&sort=DESC";
-			header('Location:'.$current_url);
-		}
+	if(isset($_POST['_edit-balance'])){
+		$id_data = mysqli_real_escape_string($connect, $_POST['_id-data']);
+		header('Location:'.$URL.'/projects/SL/edit/auth/?id='.$id.'&uniqueid='.$uniqueid.'&ids='.$id_data.'');
 	}
 
 	if(isset($_POST['type']) && isset($_POST['keywords']) && isset($_POST['search']) && isset($result_name)){
@@ -488,14 +262,12 @@
 					        </button>
 					      </div>
 					      <div class="modal-body">
-							<p>Code List</p>
 							<div class="form-group table-responsive">
 								<table class="table hover-mode">
 									<thead>
 										<tr>
 											<th scope="col">Code</th>
 											<th scope="col">Description</th>
-											<th scope="col">&nbsp;</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -504,15 +276,8 @@
 											$validation_code = mysqli_num_rows($code_query);
 											if($validation_code > 0){
 												while ($code_data = mysqli_fetch_assoc($code_query)){
-													echo "<tr class=\"onhover\">
-														<th scope=\"row\">".$code_data['code']."</th>
-														<th>".$code_data['description']."</th>
-														<th>
-															<form method=\"POST\">
-																<input name=\"_id\" type=\"hidden\" value=\"".$code_data['code_id']."\"/>
-																<button type=\"submit\" class=\"btn-on-hover\" name=\"_delete-code\" onClick=\"javascript: return confirm('Are you Sure Want to Delete this Data?')\"><i class=\"fas fa-times\"></i></button>
-															</form>
-														</th></tr>";
+													echo "<tr><th scope=\"row\">".$code_data['code']."</th><th>".$code_data['description']."</th>
+														<th></tr>";
 													}
 												}else {
 													echo "<tr><th colspan=\"4\" scope=\"row\"><p class=\"project-null-msg italic\">No Code Data Found</p></th></tr>";
@@ -540,6 +305,7 @@
 							}
 						}
 					?>
+					<hr class="divider">
 					<?php
 						$query_get_data = mysqli_query($connect, "SELECT * FROM code_data WHERE token='$id'");
 						$check_code = mysqli_num_rows(mysqli_query($connect, "SELECT code FROM data WHERE token='$id'"));
@@ -548,10 +314,10 @@
 								echo '
 								<div class="container row">
 									<div class="col-sm-12 col-md-6">
-										<p>Account Name : '.$get_data['description'].'</p>
+										<p style="font-weight:bold;">Account Name : '.$get_data['description'].'</p>
 									</div>
 									<div class="col-sm-12 col-md-6">
-										<p>Account Name : '.$get_data['code'].'</p>
+										<p style="font-weight:bold;">Account Code : '.$get_data['code'].'</p>
 									</div>
 								</div>
 								<div class="form-group table-responsive">
@@ -559,177 +325,43 @@
 										<thead>
 											<tr>
 												<th scope="col">No</th>
-												<th scope="col">
-													Date
-													<form method="POST">
-														<input type="hidden" name="_name" value="date">
-														<input type="hidden" name="_sort" value="ASC">
-														<button type="submit" name="sort-date" class="btn-cta"><i class="fas fa-sort-amount-down-alt"></i></button>
-													</form>
-												</th>
-												<th scope="col">
-													Account Name
-													<form method="POST">
-														<button type="submit" name="sort-name" class="btn-cta"><i class="fas fa-sort-amount-down-alt"></i></button>
-													</form>
-												</th>
-												<th scope="col">
-													Proof Code
-													<form method="POST">
-														<button type="submit" name="sort-proof" class="btn-cta"><i class="fas fa-sort-amount-down-alt"></i></button>
-													</form>
-												</th>
-												<th scope="col">Description
-													<form method="POST">
-														<button type="submit" name="sort-desc" class="btn-cta"><i class="fas fa-sort-amount-down-alt"></i></button>
-													</form>
-												</th>
-												<th scope="col">Block
-													<form method="POST">
-														<button type="submit" name="sort-block" class="btn-cta"><i class="fas fa-sort-amount-down-alt"></i></button>
-													</form>
-												</th>
-												<th scope="col">Qty
-													<form method="POST">
-														<button type="submit" name="sort-qty" class="btn-cta"><i class="fas fa-sort-amount-down-alt"></i></button>
-													</form>
-												</th>
-												<th scope="col">Unit
-													<form method="POST">
-														<button type="submit" name="sort-unit" class="btn-cta"><i class="fas fa-sort-amount-down-alt"></i></button>
-													</form>
-												</th>
-												<th scope="col">Price
-													<form method="POST">
-														<button type="submit" name="sort-price" class="btn-cta"><i class="fas fa-sort-amount-down-alt"></i></button>
-													</form>
-												</th>
-												<th scope="col">Code
-													<form method="POST">
-														<button type="submit" name="sort-code" class="btn-cta"><i class="fas fa-sort-amount-down-alt"></i></button>
-													</form>
-												</th>
-												<th scope="col">Debit
-													<form method="POST">
-														<button type="submit" name="sort-debit" class="btn-cta"><i class="fas fa-sort-amount-down-alt"></i></button>
-													</form>
-												</th>
-												<th scope="col">Credit
-													<form method="POST">
-														<button type="submit" name="sort-credit" class="btn-cta"><i class="fas fa-sort-amount-down-alt"></i></button>
-													</form>
-												</th>	
+												<th scope="col">Date</th>
+												<th scope="col">Proof Code</th>
+												<th scope="col">Description</th>
+												<th scope="col">Block</th>
+												<th scope="col">Qty</th>
+												<th scope="col">Unit</th>
+												<th scope="col">Price</th>
+												<th scope="col">Debit</th>
+												<th scope="col">Credit</th>
+												<th scope="col">Balance</th>
+												<th scope="col">&nbsp;</th>
 											</tr>
 										</thead>
-									</table>
-								</div>
+										<tbody>
+										<tr class="onhover"><th scope="row" colspan="3"></th><th>Beginning Balance</th><th colspan="6"></th><th>'.number_format($get_data['bgn_balance'],0,',','.').'</th><th class="btn-on-hover">
+												<form method="POST">
+													<input type="hidden" name="_id-data" value="'.$get_data['code_id'].'"/>
+													<button type="submit" name="_edit-balance" class="btn-on-hover"><i class="fas fa-pencil-alt"></i></button>
+												</form></th>
 								';
 								$get_code = $get_data['code'];
+								if(!isset($balance)){ $balance = $get_data['bgn_balance']; }
+								$number 	= 1;
 								$query_from_code = mysqli_query($connect, "SELECT * FROM data WHERE token='$id' AND code='$get_code'");
+								
 								while ($get_data_from_code = mysqli_fetch_assoc($query_from_code)) {
-									echo '
-										
-									';
+									echo "
+										<tr><th scope=\"row\">".$number++."</th><th>".$get_data_from_code['date']."</th><th>".$get_data_from_code['proof_code']."</th><th>".$get_data_from_code['data']."</th><th>".$get_data_from_code['block']."</th><th>".$get_data_from_code['qty']."</th><th>".$get_data_from_code['unit']."</th><th>".number_format($get_data_from_code['price'],0,',','.')."</th><th>".number_format($get_data_from_code['debit'],0,',','.')."</th><th>".number_format($get_data_from_code['credit'],0,',','.')."</th><th>".number_format($balance + $get_data_from_code['debit'] - $get_data_from_code['credit'],0,',','.')."</th></tr>
+									";
+									$balance = $balance + $get_data_from_code['debit'] - $get_data_from_code['credit'];
 								}
-								echo '<hr class="divider"/>';
+								echo '</tbody></table></div><hr class="divider">';
+								unset($balance);
 							}
 						}
 					?>
-					<div class="form-group table-responsive">
-						<table class="table hover-mode">
-							<thead>
-								<tr>
-									<th scope="col">No</th>
-									<th scope="col">
-										Date
-										<form method="POST">
-											<input type="hidden" name="_name" value="date">
-											<input type="hidden" name="_sort" value="ASC">
-											<button type="submit" name="sort-date" class="btn-cta"><i class="fas fa-sort-amount-down-alt"></i></button>
-										</form>
-									</th>
-									<th scope="col">
-										Account Name
-										<form method="POST">
-											<button type="submit" name="sort-name" class="btn-cta"><i class="fas fa-sort-amount-down-alt"></i></button>
-										</form>
-									</th>
-									<th scope="col">
-										Proof Code
-										<form method="POST">
-											<button type="submit" name="sort-proof" class="btn-cta"><i class="fas fa-sort-amount-down-alt"></i></button>
-										</form>
-									</th>
-									<th scope="col">Description
-										<form method="POST">
-											<button type="submit" name="sort-desc" class="btn-cta"><i class="fas fa-sort-amount-down-alt"></i></button>
-										</form>
-									</th>
-									<th scope="col">Block
-										<form method="POST">
-											<button type="submit" name="sort-block" class="btn-cta"><i class="fas fa-sort-amount-down-alt"></i></button>
-										</form>
-									</th>
-									<th scope="col">Qty
-										<form method="POST">
-											<button type="submit" name="sort-qty" class="btn-cta"><i class="fas fa-sort-amount-down-alt"></i></button>
-										</form>
-									</th>
-									<th scope="col">Unit
-										<form method="POST">
-											<button type="submit" name="sort-unit" class="btn-cta"><i class="fas fa-sort-amount-down-alt"></i></button>
-										</form>
-									</th>
-									<th scope="col">Price
-										<form method="POST">
-											<button type="submit" name="sort-price" class="btn-cta"><i class="fas fa-sort-amount-down-alt"></i></button>
-										</form>
-									</th>
-									<th scope="col">Code
-										<form method="POST">
-											<button type="submit" name="sort-code" class="btn-cta"><i class="fas fa-sort-amount-down-alt"></i></button>
-										</form>
-									</th>
-									<th scope="col">Debit
-										<form method="POST">
-											<button type="submit" name="sort-debit" class="btn-cta"><i class="fas fa-sort-amount-down-alt"></i></button>
-										</form>
-									</th>
-									<th scope="col">Credit
-										<form method="POST">
-											<button type="submit" name="sort-credit" class="btn-cta"><i class="fas fa-sort-amount-down-alt"></i></button>
-										</form>
-									</th>	
-								</tr>
-							</thead>
-							<tbody>
-								<?php
-									if(!isset($data_query)){
-										$data_query = mysqli_query($connect, "SELECT * FROM data WHERE token='$id'");
-									}
-									$validation = mysqli_num_rows($data_query);
-									$number = 1;
-									$total_qty = 0;
-									$total_price = 0;
-									$total_debit = 0;
-									$total_credit = 0;
-									if($validation != 0){
-										while($data = mysqli_fetch_assoc($data_query)){
-											echo "<tr class=\"onhover\"><th scope=\"row\">".$number++."</th><th>".$data['date']."</th><th>".$data['code_value']."</th><th>".$data['proof_code']."</th><th>".$data['data']."</th><th>".$data['block']."</th><th>".$data['qty']."</th><th>".$data['unit']."</th><th>".number_format($data['price'],0,',','.')."</th><th>".$data['code']."</th><th>".number_format($data['debit'],0,',','.')."</th><th>".number_format($data['credit'],0,',','.')."</th></tr>";
-												$total_qty += $data['qty'];
-												$total_price += $data['price'];
-												$total_debit += $data['debit'];
-												$total_credit += $data['credit'];
-										}
-										echo "<tr class=\"onhover\"><th colspan=\"6\" scope=\"row\">Total</th><th>".number_format($total_qty,0,',','.')."</th><th></th><th>".number_format($total_price,0,',','.')."</th><th></th><th>".number_format($total_debit,0,',','.')."</th><th>".number_format($total_credit,0,',','.')."</th><th colspan=\"2\"></th></tr>";
-									}else {
-										echo "
-										<tr><th colspan=\"13\" scope=\"row\"><p class=\"project-null-msg italic\">No Data Found</p></th></tr>";
-									}
-								?>
-							</tbody>
-						</table>
-					</div>
+					
 				</div>
 			</div>
 		</div>

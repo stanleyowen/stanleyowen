@@ -32,16 +32,14 @@
 		$block		= mysqli_real_escape_string($connect, $_POST['_block']);
 		$qty 		= mysqli_real_escape_string($connect, $_POST['_qty']);
 		$unit 		= mysqli_real_escape_string($connect, $_POST['_unit']);
-		$price 		= mysqli_real_escape_string($connect, $_POST['_price']);
 		$debit 		= mysqli_real_escape_string($connect, $_POST['_debit']);
 		$credit 	= mysqli_real_escape_string($connect, $_POST['_credit']);
 		$errors = array();
-		if(empty($code) || empty($desc_data) || empty($date) || empty($price)){
+		if(empty($code) || empty($desc_data) || empty($date)){
 			array_push($errors, "Make sure to fill out all the required forms");
 		}else {
 			if(is_numeric($code) != 1){ array_push($errors, $code." is not an integer"); }
 			if(is_numeric($qty) != 1 && !empty($qty)){ array_push($errors, $qty." is not an integer"); }
-			if(is_numeric($price) != 1){ array_push($errors, $price." is not an integer"); }
 			if(is_numeric($debit) != 1 && !empty($qty)){ array_push($errors, $debit." is not an integer"); }
 			if(is_numeric($credit) != 1 && !empty($qty)){ array_push($errors, $credit." is not an integer"); }
 			if(count($errors) == 0) {
@@ -51,7 +49,6 @@
 				if(strlen($block) > 10 && !empty($block)) { array_push($errors, "Block is too long"); }
 				if($qty > 9999999999 && !empty($qty)) { array_push($errors, "Quantity is too long"); }
 				if(strlen($unit) > 25 && !empty($unit)) { array_push($errors, "Unit is too long"); }
-				if($price > 99999999999999999999) { array_push($errors, "Price is too long"); }
 				if($debit > 99999999999999999999 && !empty($debit)) { array_push($errors, "Debit is too long"); }
 				if($credit > 99999999999999999999 && !empty($credit)) { array_push($errors, "Credit is too long"); }
 				if(strlen($date) > 10){ array_push($errors, "Please Provide a Valid Date"); }
@@ -63,7 +60,7 @@
 							while ($get_value = mysqli_fetch_assoc($code_value)){
 								$code_description = $get_value['description'];
 							}
-							mysqli_query($connect, "INSERT INTO data(code, code_value, proof_code, data, block, qty, unit, price, date, debit, credit, token) VALUES('$code', '$code_description', '$proof_code', '$desc_data', '$block', '$qty', '$unit', '$price', '$date', '$debit', '$credit', '$id')");
+							mysqli_query($connect, "INSERT INTO data(code, code_value, proof_code, data, block, qty, unit, date, debit, credit, token) VALUES('$code', '$code_description', '$proof_code', '$desc_data', '$block', '$qty', '$unit', '$date', '$debit', '$credit', '$id')");
 						}else {
 							array_push($errors, "Ref Code Not Found");
 						}
@@ -95,7 +92,7 @@
 	if(isset($_POST['_export'])){
 		header('Location:'.$URL.'/export/excel/?id='.$id.'&uniqueid='.$uniqueid.'');
 	}
-	if(isset($_POST['_sales'])){
+	if(isset($_POST['_subledger'])){
 		header('Location:'.$URL.'/projects/SL/auth/?id='.$id.'&uniqueid='.$uniqueid.'');
 	}
 	if(isset($_POST['_back-btn']) && isset($result_name)){
@@ -276,26 +273,6 @@
 		}
 	}
 
-	if(isset($_POST['sort-price'])){
-		if(isset($_GET['order']) && isset($_GET['sort']) && isset($_COOKIE['url-session'])){
-			$order 			= mysqli_real_escape_string($connect, urldecode($_GET['order']));
-			$sort 			= mysqli_real_escape_string($connect, urldecode($_GET['sort']));
-			$url_session 	= mysqli_real_escape_string($connect, urldecode($_COOKIE['url-session']));
-			if(!empty($order) && !empty($sort) ){
-				if($order == "price"){
-					if($sort == "DESC"){ header('Location:'.$url_session."&order=price&sort=ASC"); }
-					else { header('Location:'.$url_session."&order=price&sort=DESC"); }
-				}else {
-					header('Location:'.$url_session."&order=price&sort=ASC");
-				}
-			}
-		}else {
-			setcookie('url-session', $url, '/');
-			$current_url = $url."&order=price&sort=DESC";
-			header('Location:'.$current_url);
-		}
-	}
-
 	if(isset($_POST['sort-code'])){
 		if(isset($_GET['order']) && isset($_GET['sort']) && isset($_COOKIE['url-session'])){
 			$order 			= mysqli_real_escape_string($connect, urldecode($_GET['order']));
@@ -369,7 +346,6 @@
 		else if($keywords == "block"){ $types = "block"; }
 		else if ($keywords == "qty"){ $types = "qty"; }
 		else if ($keywords == "unit"){ $types = "unit"; }
-		else if ($keywords == "price"){ $types = "price"; }
 		else if ($keywords == "code"){ $types = "code"; }
 		else if ($keywords == "date"){ $types = "date"; }
 		else if ($keywords == "debit"){ $types = "debit"; }
@@ -437,12 +413,12 @@
 					</form>
 
 					<form method="POST" class="btn-cta">
-						<button type="submit" name="_sales" class="btn-project btn-add">
+						<button type="submit" name="_subledger" class="btn-project btn-add">
 							<div class="btn-fa-add">
 						  		<i style="font-size: 48px; color: Dodgerblue;" class="fas fa-poll"></i>
 						  	</div>
 						  	<div class="btn-fa-text text-wrap">
-						  		Sales
+						  		Subledger
 						  	</div>
 						</button>
 					</form>
@@ -526,10 +502,6 @@
 								<div class="form-group">
 									<label for="description">Unit</label>
 									<input type="text" name="_unit" class="form-control" maxlength="10" placeholder="Input Unit (max 10 chars)">
-								</div>
-								<div class="form-group">
-									<label for="description">Price <span class="required">*</span></label>
-									<input type="number" name="_price" class="form-control" max="99999999999999999999" placeholder="Input Price (max 20 digits)" required>
 								</div>
 								<div class="form-group">
 									<label for="description">Debit <span class="required">**</span></label>
@@ -623,14 +595,6 @@
 										  <input class="form-check-input" type="radio" name="keywords" id="unit" value="unit">
 										  <label class="form-check-label" for="unit">
 										    Unit
-										  </label>
-										</div>
-									</div>
-									<div class="col-md-6 col-sm-12">
-										<div class="form-check">
-										  <input class="form-check-input" type="radio" name="keywords" id="price" value="price">
-										  <label class="form-check-label" for="price">
-										    Price
 										  </label>
 										</div>
 									</div>
@@ -825,11 +789,7 @@
 											<button type="submit" name="sort-unit" class="btn-cta"><i class="fas fa-sort-amount-down-alt"></i></button>
 										</form>
 									</th>
-									<th scope="col">Price
-										<form method="POST">
-											<button type="submit" name="sort-price" class="btn-cta"><i class="fas fa-sort-amount-down-alt"></i></button>
-										</form>
-									</th>
+									<th scope="col">Price</th>
 									<th scope="col">Code
 										<form method="POST">
 											<button type="submit" name="sort-code" class="btn-cta"><i class="fas fa-sort-amount-down-alt"></i></button>
@@ -856,25 +816,28 @@
 									}
 									$validation = mysqli_num_rows($data_query);
 									$number = 1;
+									$price = 0;
 									$total_qty = 0;
 									$total_price = 0;
 									$total_debit = 0;
 									$total_credit = 0;
 									if($validation != 0){
 										while($data = mysqli_fetch_assoc($data_query)){
-											echo "<tr class=\"onhover\"><th scope=\"row\">".$number++."</th><th>".$data['date']."</th><th>".$data['code_value']."</th><th>".$data['proof_code']."</th><th>".$data['data']."</th><th>".$data['block']."</th><th>".$data['qty']."</th><th>".$data['unit']."</th><th>".number_format($data['price'],0,',','.')."</th><th>".$data['code']."</th><th>".number_format($data['debit'],0,',','.')."</th><th>".number_format($data['credit'],0,',','.')."</th><th class=\"btn-on-hover\">
-												<form method=\"POST\">
+											if($data['qty'] == 0){ $price = 0; }
+											else { $price = ($data['debit']+$data['credit'])/$data['qty']; }
+											echo "<tr class=\"onhover\"><th scope=\"row\">".$number++."</th><th>".$data['date']."</th><th>".$data['code_value']."</th><th>".$data['proof_code']."</th><th>".$data['data']."</th><th>".$data['block']."</th><th>".$data['qty']."</th><th>".$data['unit']."</th><th>".number_format($price,0,',','.')."</th><th>".$data['code']."</th><th>".number_format($data['debit'],0,',','.')."</th><th>".number_format($data['credit'],0,',','.')."</th><th class=\"btn-on-hover\">
+												<form class=\"btn-cta\" method=\"POST\">
 													<input type=\"hidden\" name=\"_id-data\" value=\"".$data['data_id']."\"/>
-													<button type=\"submit\" name=\"_edit-data\" class=\"btn-on-hover\"><i class=\"fas fa-pencil-alt\"></i></button>
+													<button type=\"submit\" name=\"_edit-data\" class=\"btn-cta\"><i class=\"fas fa-pencil-alt\"></i></button>
 												</form></th><th class=\"btn-on-hover\">
-												<form method=\"POST\">
+												<form class=\"btn-cta\" method=\"POST\">
 													<input name=\"_id-data\" type=\"hidden\" value=\"".$data['data_id']."\"/>
-													<button type=\"submit\" name=\"_delete-data\" onClick=\"javascript: return confirm('Are you Sure Want to Delete this Data?')\"class=\"btn-on-hover\"><i class=\"fas fa-times\"></i></button>
+													<button type=\"submit\" name=\"_delete-data\" onClick=\"javascript: return confirm('Are you Sure Want to Delete this Data?')\"class=\"btn-cta\"><i class=\"fas fa-times\"></i></button>
 												</form></th></tr>";
 												$total_qty += $data['qty'];
-												$total_price += $data['price'];
 												$total_debit += $data['debit'];
 												$total_credit += $data['credit'];
+												$total_price += $price;
 										}
 										echo "<tr class=\"onhover\"><th colspan=\"6\" scope=\"row\">Total</th><th>".number_format($total_qty,0,',','.')."</th><th></th><th>".number_format($total_price,0,',','.')."</th><th></th><th>".number_format($total_debit,0,',','.')."</th><th>".number_format($total_credit,0,',','.')."</th><th colspan=\"2\"></th></tr>";
 									}else {
