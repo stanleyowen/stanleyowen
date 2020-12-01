@@ -12,54 +12,53 @@
 				while($check_name = mysqli_fetch_assoc($query)){
 					$result_name = $check_name['project_name'];
 				}
-				$code = '
-					<div class="container mt-20">
-						<h2>Are You Sure Want to Delete <font color="red"><b>'.$result_name.'</b></font>?</h2>
-						<p>This action cannot be <font color="red"><b>undone</b></font>. This will permanently delete <font color="red">'.$result_name.'</b></font> projects and all of its\' data</p>
-						<form method="POST">
-						  <div class="form-group">
-						    <label for="confirmation-code">Please type <b>'.$result_name.'</b> to confirm :</label>
-						    <input type="text" name="_confirm-delete" class="form-control" autocomplete="off" autocapitalize="none" autofocus>
-						  </div>
-						  <button name="_confirm" type="submit" class="btn btn-full btn-outline-danger">DELETE PERMANENTLY</button><br/>
-						  <button name="_discard" type="submit" class="btn btn-full btn-outline-warning">DISCARD</button>
-						</form>
-					</div>
-				';
 			}else {
-				$code = '<div class="mt-20"><h1>404 - NOT FOUND</h1></div>';
+				header('Location: '.$URL.'/errors/404/');
 			}
 		}else {
-			$code = '<div class="mt-20"><h1>403 - FORBIDDEN</h1></div>';
+			header('Location: '.$URL.'/errors/403/');
 		}
 	}else {
-		$code = '<div class="mt-20"><h1>400 - BAD REQUEST</h1></div>';
+		header('Location: '.$URL.'/errors/400/');
 	}
 
 	if(isset($_POST['_confirm']) && isset($result_name)){
 		$cf_code 	= mysqli_real_escape_string($connect, $_POST['_confirm-delete']);
+		$errors		= array();
 		if($result_name == $cf_code){
 			mysqli_query($connect, "DELETE FROM projects WHERE token='$id'");
 			mysqli_query($connect, "DELETE FROM data WHERE token='$id'");
-			echo "<script>alert('CODE : 200\\nMESSAGE  : PROJECT DELETED SUCCESSFULLY');window.location='$URL'</script>";
+			header('Location:'.$URL);
 		}else {
-			echo "<script>alert('ERR CODE : 400\\nMESSAGE  : CONFIRMATION CODE MISMATCH');</script>";
+			array_push($errors, "Cannot Delete Project : Code Mismatch");
 		}
 	}else if(isset($_POST['_discard'])){
-		header('Location: '.$URL.'');
+		header('Location: '.$URL);
 	}
 ?>
 
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>Delete Projects</title>
+		<title>Delete | <?php echo $result_name?></title>
 		<?php include('../../../api/headers.php'); ?>
 	</head>
 	<body>
-		<div class="container">
+		<div class="container" style="margin-top: 50px;">
 			<div class="row">
-				<?php echo $code ?>
+				<div class="container mt-20">
+					<h2>Are You Sure Want to Delete <font color="red"><b><?php echo $result_name?></b></font>?</h2>
+					<p>This action cannot be <font color="red"><b>undone</b></font>. This will permanently delete <font color="red"><b><?php echo $result_name?></b></font> projects and all of its' data</p>
+					<?php if(isset($errors)){ include('../../../api/errors.php'); }?>
+					<form method="POST">
+					  <div class="form-group">
+					    <label for="confirmation-code">Please type <b><?php echo $result_name?></b> to confirm :</label>
+					    <input type="text" name="_confirm-delete" class="form-control" autocomplete="off" autocapitalize="none" autofocus>
+					  </div>
+					  <button name="_confirm" type="submit" class="btn btn-full btn-outline-danger">DELETE PERMANENTLY</button><br/>
+					  <button name="_discard" type="submit" class="btn btn-full btn-outline-warning">DISCARD</button>
+					</form>
+				</div>
 			</div>
 		</div>
 		<?php include('../../../api/js.php'); ?>

@@ -95,6 +95,10 @@
 	if(isset($_POST['_subledger'])){
 		header('Location:'.$URL.'/projects/SL/auth/?id='.$id.'&uniqueid='.$uniqueid.'');
 	}
+	if(isset($_POST['_edit-balance'])){
+		$id_data = mysqli_real_escape_string($connect, $_POST['_id-data']);
+		header('Location:'.$URL.'/projects/SL/edit/auth/?id='.$id.'&uniqueid='.$uniqueid.'&ids='.$id_data.'');
+	}
 	if(isset($_POST['_back-btn']) && isset($result_name)){
 		header('Location:'.$URL.'');
 	}
@@ -104,12 +108,12 @@
 	if(isset($_POST['_add-code'])){
 		$code 			= mysqli_real_escape_string($connect, $_POST['_code-data']);
 		$description 	= mysqli_real_escape_string($connect, $_POST['_code-desc']);
+		$bgn_balance 	= mysqli_real_escape_string($connect, $_POST['_bgn-balance']);
 		$validation 	= mysqli_num_rows(mysqli_query($connect, "SELECT * FROM code_data WHERE code='$code' AND token='$id'"));
 		$errors			= array();
 		if($validation == 1){ array_push($errors, "Code had Existed"); }
 		else {
-			$code = 
-			mysqli_query($connect, "INSERT INTO code_data(code, description, token) VALUES('$code','$description','$id')");
+			mysqli_query($connect, "INSERT INTO code_data(code, description, bgn_balance, token) VALUES('$code','$description','$bgn_balance','$id')");
 		}
 	}
 	if(isset($_POST['_delete-code'])){
@@ -513,8 +517,9 @@
 								</div>
 					      </div>
 					      <div class="modal-footer">
+					      	<button type="submit" name="_create-data" class="btn btn-primary">Create</button>
+					      	<button type="reset" class="btn btn-warning">Reset</button>
 					        <button type="button" class="btn btn-danger" data-dismiss="modal">Discard</button>
-					        <button type="submit" name="_create-data" class="btn btn-primary">Create</button>
 					        </form>
 					      </div>
 					    </div>
@@ -660,6 +665,13 @@
 									  </div>
 									  <input type="text" name="_code-desc" class="form-control" placeholder="Description (max 150 chars)" required />
 								  </div>
+
+								  <div class="input-group input-form">
+									  <div class="input-group-prepend">
+									    <span class="input-group-text" style="background-color: white;" id="basic-addon1"><i class="fas fa-coins"></i></span>
+									  </div>
+									  <input type="number" name="_bgn-balance" class="form-control" placeholder="Beginning Balance (max 20 digits)" />
+								  </div>
 								</div>
 								<input type="submit" name="_add-code" value="Add Ref Code" class="btn btn-primary btn-full"/>
 					        </form>
@@ -670,22 +682,31 @@
 											<tr>
 												<th scope="col">Code</th>
 												<th scope="col">Description</th>
+												<th scope="col">Balance</th>
+												<th scope="col">&nbsp;</th>
 												<th scope="col">&nbsp;</th>
 											</tr>
 										</thead>
 										<tbody>
 											<?php
-												$code_query = mysqli_query($connect, "SELECT * FROM code_data WHERE token='$id'");
+												$code_query = mysqli_query($connect, "SELECT * FROM code_data WHERE token='$id' ORDER BY code ASC");
 												$validation_code = mysqli_num_rows($code_query);
 												if($validation_code > 0){
 													while ($code_data = mysqli_fetch_assoc($code_query)){
 														echo "<tr class=\"onhover\">
 														<th scope=\"row\">".$code_data['code']."</th>
 														<th>".$code_data['description']."</th>
-														<th>
+														<th>".number_format($code_data['bgn_balance'],0,',','.')."</th>
+														<th class=\"btn-on-hover\">
+															<form method=\"POST\">
+																<input name=\"_id-data\" type=\"hidden\" value=\"".$code_data['code_id']."\"/>
+																<button type=\"submit\" class=\"btn-cta\" name=\"_edit-balance\"><i class=\"fas fa-pencil-alt\"></i></button>
+															</form>
+														</th>
+														<th class=\"btn-on-hover\">
 															<form method=\"POST\">
 																<input name=\"_id\" type=\"hidden\" value=\"".$code_data['code_id']."\"/>
-																<button type=\"submit\" class=\"btn-on-hover\" name=\"_delete-code\" onClick=\"javascript: return confirm('Are you Sure Want to Delete this Data?')\"><i class=\"fas fa-times\"></i></button>
+																<button type=\"submit\" class=\"btn-cta\" name=\"_delete-code\" onClick=\"javascript: return confirm('Are you Sure Want to Delete this Data?')\"><i class=\"fas fa-times\"></i></button>
 															</form>
 														</th></tr>";
 													}
@@ -726,9 +747,6 @@
 					        	?>
 					        </p> 
 					      </div>
-					      <div class="modal-footer">
-					        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-					      </div>
 					    </div>
 					  </div>
 					</div>
@@ -752,8 +770,6 @@
 									<th scope="col">
 										Date
 										<form method="POST">
-											<input type="hidden" name="_name" value="date">
-											<input type="hidden" name="_sort" value="ASC">
 											<button type="submit" name="sort-date" class="btn-cta"><i class="fas fa-sort-amount-down-alt"></i></button>
 										</form>
 									</th>

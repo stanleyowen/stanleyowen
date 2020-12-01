@@ -40,30 +40,6 @@
 		$id_data = mysqli_real_escape_string($connect, $_POST['_id-data']);
 		header('Location:'.$URL.'/projects/SL/edit/auth/?id='.$id.'&uniqueid='.$uniqueid.'&ids='.$id_data.'');
 	}
-
-	if(isset($_POST['type']) && isset($_POST['keywords']) && isset($_POST['search']) && isset($result_name)){
-		$type		= mysqli_real_escape_string($connect, $_POST['type']);
-		$keywords 	= mysqli_real_escape_string($connect, $_POST['keywords']);
-		$search 	= mysqli_real_escape_string($connect, $_POST['search']);
-		$errors		= array();
-		if($search > 30){ array_push($errors, "Keywords too Long"); }
-		if($keywords == "date"){ $types = "date"; }
-		else if($keywords == "account"){ $types = "code_value"; }
-		else if($keywords == "proof-code"){ $types = "proof_code"; }
-		else if($keywords == "description"){ $types = "data"; }
-		else if($keywords == "block"){ $types = "block"; }
-		else if ($keywords == "qty"){ $types = "qty"; }
-		else if ($keywords == "unit"){ $types = "unit"; }
-		else if ($keywords == "price"){ $types = "price"; }
-		else if ($keywords == "code"){ $types = "code"; }
-		else if ($keywords == "date"){ $types = "date"; }
-		else if ($keywords == "debit"){ $types = "debit"; }
-		else if ($keywords == "credit"){ $types = "credit"; }
-		else { array_push($errors, "Error in Displaying Value"); }
-		if(count($errors) == 0){
-			$data_query = mysqli_query($connect, "SELECT * FROM data WHERE token='$id' AND ".$types." like '%$search%' ");
-		}
-	};
 ?>
 
 <!DOCTYPE HTML>
@@ -95,17 +71,6 @@
 						  	</div>
 						  	<div class="btn-fa-text text-wrap">
 						  		Ref. Code
-						  	</div>
-						</button>
-					</form>
-
-					<form class="btn-cta">
-						<button type="button" class="btn-project btn-add" data-toggle="modal" data-target="#searchData">
-							<div class="btn-fa-add">
-						  		<i style="font-size: 48px; color: Dodgerblue;" class="fas fa-search"></i>
-						  	</div>
-						  	<div class="btn-fa-text text-wrap">
-						  		Search
 						  	</div>
 						</button>
 					</form>
@@ -268,6 +233,7 @@
 										<tr>
 											<th scope="col">Code</th>
 											<th scope="col">Description</th>
+											<th scope="col">Balance</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -277,18 +243,15 @@
 											if($validation_code > 0){
 												while ($code_data = mysqli_fetch_assoc($code_query)){
 													echo "<tr><th scope=\"row\">".$code_data['code']."</th><th>".$code_data['description']."</th>
-														<th></tr>";
+														<th>".number_format($code_data['bgn_balance'],0,',','.')."</th></tr>";
 													}
 												}else {
-													echo "<tr><th colspan=\"4\" scope=\"row\"><p class=\"project-null-msg italic\">No Code Data Found</p></th></tr>";
+													echo "<tr><th colspan=\"3\" scope=\"row\"><p class=\"project-null-msg italic\">No Code Data Found</p></th></tr>";
 												}
 											?>
 										</tbody>
 									</table>
 								</div>
-					      </div>
-					      <div class="modal-footer">
-					        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 					      </div>
 					    </div>
 					</div>
@@ -342,19 +305,25 @@
 										<tr class="onhover"><th scope="row" colspan="3"></th><th>Beginning Balance</th><th colspan="6"></th><th>'.number_format($get_data['bgn_balance'],0,',','.').'</th><th class="btn-on-hover">
 												<form method="POST">
 													<input type="hidden" name="_id-data" value="'.$get_data['code_id'].'"/>
-													<button type="submit" name="_edit-balance" class="btn-on-hover"><i class="fas fa-pencil-alt"></i></button>
+													<button type="submit" name="_edit-balance" class="btn-cta"><i class="fas fa-pencil-alt"></i></button>
 												</form></th>
 								';
 								$get_code = $get_data['code'];
 								if(!isset($balance)){ $balance = $get_data['bgn_balance']; }
 								$number 	= 1;
 								$query_from_code = mysqli_query($connect, "SELECT * FROM data WHERE token='$id' AND code='$get_code'");
-								
-								while ($get_data_from_code = mysqli_fetch_assoc($query_from_code)) {
-									echo "
-										<tr><th scope=\"row\">".$number++."</th><th>".$get_data_from_code['date']."</th><th>".$get_data_from_code['proof_code']."</th><th>".$get_data_from_code['data']."</th><th>".$get_data_from_code['block']."</th><th>".$get_data_from_code['qty']."</th><th>".$get_data_from_code['unit']."</th><th>".number_format($get_data_from_code['price'],0,',','.')."</th><th>".number_format($get_data_from_code['debit'],0,',','.')."</th><th>".number_format($get_data_from_code['credit'],0,',','.')."</th><th>".number_format($balance + $get_data_from_code['debit'] - $get_data_from_code['credit'],0,',','.')."</th></tr>
-									";
-									$balance = $balance + $get_data_from_code['debit'] - $get_data_from_code['credit'];
+								$check_data_exist = mysqli_num_rows($query_from_code);
+								if($check_data_exist > 0){
+									while ($get_data_from_code = mysqli_fetch_assoc($query_from_code)) {
+										if($get_data_from_code['qty'] == 0){ $price = 0; }
+										else { $price = ($get_data_from_code['debit']+$get_data_from_code['credit'])/$get_data_from_code['qty']; }
+										echo "
+											<tr><th scope=\"row\">".$number++."</th><th>".$get_data_from_code['date']."</th><th>".$get_data_from_code['proof_code']."</th><th>".$get_data_from_code['data']."</th><th>".$get_data_from_code['block']."</th><th>".$get_data_from_code['qty']."</th><th>".$get_data_from_code['unit']."</th><th>".number_format($price,0,',','.')."</th><th>".number_format($get_data_from_code['debit'],0,',','.')."</th><th>".number_format($get_data_from_code['credit'],0,',','.')."</th><th>".number_format($balance + $get_data_from_code['debit'] - $get_data_from_code['credit'],0,',','.')."</th></tr>
+										";
+										$balance = $balance + $get_data_from_code['debit'] - $get_data_from_code['credit'];
+									}
+								}else {
+									echo "<tr><th scope=\"row\" colspan=\"12\"<p class=\"project-null-msg italic\">No Data Found</p></th></tr>";
 								}
 								echo '</tbody></table></div><hr class="divider">';
 								unset($balance);

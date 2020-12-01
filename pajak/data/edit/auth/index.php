@@ -81,7 +81,7 @@
 			}
 		}
 	}else if(isset($_POST['_discard'])){
-		header('Location: '.$url.'');
+		header('Location: '.$url);
 	}
 ?>
 
@@ -93,10 +93,10 @@
 	</head>
 	<body>
 		<div class="container">
-			<?php if(isset($errors)) { include('../../../api/errors.php'); } ?>
 			<div class="row">
 				<div class="container mt-20">
 						<h2>Edit Data</h2>
+						<?php if(isset($errors)) { include('../../../api/errors.php'); } ?>
 						<form method="POST">
 					        <p class="required">* required</p>
 					        <p class="required">** At least one field must be filled</p>
@@ -146,6 +146,7 @@
 								</div>
 					      </div>
 						  <button name="_confirm" type="submit" class="btn btn-full btn-outline-primary">UPDATE</button><br/>
+						  <button type="reset" class="btn btn-full btn-outline-warning">RESET</button>
 						  <button name="_discard" type="submit" class="btn btn-full btn-outline-danger">DISCARD</button>
 						</form>
 					</div>

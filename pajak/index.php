@@ -122,7 +122,7 @@
 								<input type="hidden" name="_csrf-token" value="<?php echo $csrf_token ?>">
 								<div class="form-group">
 									<label for="description">Project Name</label>
-									<input type="text" name="_name-project" class="form-control" placeholder="Project Name (Max 30 Characters)" maxlength="30" required>
+									<input type="text" name="_name-project" class="form-control" placeholder="Project Name (Max 30 Characters)" autofocus="on" maxlength="30" required>
 								</div>
 								<div class="form-group">
 								    <label for="description">Desciption</label>
@@ -130,9 +130,9 @@
 								</div>
 					      </div>
 					      <div class="modal-footer">
-					        <button type="button" class="btn btn-danger" data-dismiss="modal">Discard</button>
 					        <button type="submit" name="_create-project" class="btn btn-primary">Create</button>
-					        </form>
+					        <button type="reset" class="btn btn-warning">Reset</button></form>
+					        <button type="button" class="btn btn-danger" data-dismiss="modal">Discard</button>
 					      </div>
 					    </div>
 					  </div>
@@ -180,7 +180,8 @@
 							    </div>
 					      </div>
 					      <div class="modal-footer">
-					      	<button type="submit" class="btn btn-primary" name="_changepsw">Change</button></form>
+					      	<button type="submit" class="btn btn-primary" name="_changepsw">Change</button>
+					      	<button type="reset" class="btn btn-warning">Reset</button></form>
 					        <button type="button" class="btn btn-danger" data-dismiss="modal">Discard</button>
 					      </div>
 					    </div>
