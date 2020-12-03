@@ -105,7 +105,7 @@
 									<select name="_code" class="form-control" required>
 										<option value="<?php echo $code ?>"><?php echo $code ?></option>
 										<?php
-											$option_query = mysqli_query($connect, "SELECT code FROM code_data WHERE token='$id'");
+											$option_query = mysqli_query($connect, "SELECT code FROM code_data WHERE token='$id' ORDER BY code ASC");
 											while ($fetch_data = mysqli_fetch_assoc($option_query)) {
 												echo "<option value=".$fetch_data['code'].">".$fetch_data['code']."</option>";
 											}

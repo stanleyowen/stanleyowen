@@ -95,6 +95,9 @@
 	if(isset($_POST['_subledger'])){
 		header('Location:'.$URL.'/projects/SL/auth/?id='.$id.'&uniqueid='.$uniqueid.'');
 	}
+	if(isset($_POST['_balance-sheet'])){
+		header('Location:'.$URL.'/projects/BS/auth/?id='.$id.'&uniqueid='.$uniqueid.'');
+	}
 	if(isset($_POST['_edit-balance'])){
 		$id_data = mysqli_real_escape_string($connect, $_POST['_id-data']);
 		header('Location:'.$URL.'/projects/SL/edit/auth/?id='.$id.'&uniqueid='.$uniqueid.'&ids='.$id_data.'');
@@ -427,6 +430,17 @@
 						</button>
 					</form>
 
+					<form method="POST" class="btn-cta">
+						<button type="submit" name="_balance-sheet" class="btn-project btn-add">
+							<div class="btn-fa-add">
+						  		<i style="font-size: 48px; color: Dodgerblue;" class="fas fa-balance-scale"></i>
+						  	</div>
+						  	<div class="btn-fa-text text-wrap">
+						  		Balance Sheet
+						  	</div>
+						</button>
+					</form>
+
 					<form class="btn-cta">
 						<button type="button" class="btn-project btn-add" data-toggle="modal" data-target="#infoData">
 							<div class="btn-fa-add">
@@ -476,7 +490,7 @@
 									<label for="Code">Code <span class="required">*</span></label>
 									<select name="_code" class="form-control select" required>
 										<?php
-											$option_query = mysqli_query($connect, "SELECT code FROM code_data WHERE token='$id'");
+											$option_query = mysqli_query($connect, "SELECT code FROM code_data WHERE token='$id' ORDER BY code ASC");
 											while ($fetch_data = mysqli_fetch_assoc($option_query)) {
 												echo "<option value=".$fetch_data['code'].">".$fetch_data['code']."</option>";
 											}

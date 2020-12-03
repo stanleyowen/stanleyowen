@@ -147,6 +147,7 @@
 					<?php
 						if(isset($errors)){ include('../../api/errors.php'); }
 					?>
+					<h3>Balance Sheet</h3>
 					<hr class="divider">
 					<?php
 						$query_get_data = mysqli_query($connect, "SELECT * FROM code_data WHERE token='$id' ORDER BY code ASC");
