@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Stanley Owen</title>
+		<link rel="stylesheet" href="../style.css">
+	</head>
+	<body onload="init();">
+		<noscript><div id="javascript__required"><h1>Oops! You Need to Enable JavaScript to Visit This Pages</h1></div></noscript>
+
+		<div id="loader-wrapper">
+			<div id="loader"></div>
+			<div class="loader-section section-left"></div>
+	        <div class="loader-section section-right"></div>
+		</div>
+
+		<div class="navbar">
+			<a class="navbar__logo" href="#home">&#x3C;Stanley /&#x3E;</a>
+			<div class="navbar__menu" id="navbar__menu">
+				<a class="animation__underline" href="../index.html#home">Home</a>
+				<a class="animation__underline" href="../index.html#about">About</a>
+				<a class="animation__underline" href="#">Contact Stanley</a>
+			</div>
+			<a href="javascript:void(0);" class="toggleNavbar" onclick="toggleNavbar()"><i class="fa fa-bars"></i></a>
+		</div>
+
+		<div class="form__contact">
+			<div class="get_in_touch">
+				<h1>Any Questions? Let's have a talk ~</h1>
+			</div>
+
+			<div class="form">
+				<form class="contact__form" method="POST" action="https://usebasin.com/f/4057c491c382" autocomplete="off">
+					<div class="form__container">
+						<input type="hidden" name="honeypot">
+			            <div class="contact__formControl">
+			                <div class="contact__infoField">
+			            		<span>Name</span>
+			                    <input title="Name" name="Name" type="text" placeholder="Name" class="contact__inputField" minlength="6" maxlength="50" required />
+			                    <span class="contact__onFocus"></span>
+			                </div>
+			            </div>
+			            <div class="contact__formControl">
+			                <div class="contact__infoField">
+			            		<span>Email</span>
+			                    <input title="Email Address" name="Email" type="email" placeholder="hello@gmail.com" class="contact__inputField" required />
+			                    <span class="contact__onFocus"></span>
+			                </div>
+			            </div>
+			        </div>
+					<div class="contact__formControl">
+		                <div class="contact__infoField">
+		            		<span>Message</span>
+		        			<textarea class="contact__inputField" name="Message" id="comment__form"></textarea>
+		        			<span class="contact__onFocus"></span>
+		                </div>
+			        </div>
+		        	<input type="submit" class="contact__sendBtn" value="Send" />
+	        	</form>
+	        </div>
+		</div>
+		<a id="scrollTop" class="btn__scrollTop" href="#home"><i class="fas fa-angle-double-up" style="font-size: 2em;"></i></a>
+		<button class="btn__changeMode"><i class="fas fa-adjust" style="font-size: 2em;"></i></button>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="../style.js"></script>
+		<script src="../assets/js/all.js"></script>
+	</body>
+</html>
