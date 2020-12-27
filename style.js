@@ -1,11 +1,21 @@
 var observe;
-var fireuiModal = document.getElementById("fireuiModal");
-var fireuiBtn = document.getElementById("fireuiBtn");
-var closeModal = document.getElementsByClassName("modal__closeBtn")[0];
 var scrollTop_btn = document.getElementById("scrollTop");
 var btnMode1 = document.querySelector(".btn__changeMode");
 var currentTheme = localStorage.getItem("theme");
 var form = document.getElementById('comment__form');
+
+var fireuiModal = document.getElementById("fireuiModal");
+var fireuiBtn = document.getElementById("fireuiBtn");
+var closeFireUI = document.getElementsByClassName("modal__closeFireUI")[0];
+
+var chatAppModal = document.getElementById("chatAppModal");
+var chatAppBtn = document.getElementById("chatAppBtn");
+var closeChatApp = document.getElementsByClassName("modal__closeChatApp")[0];
+
+var todoAppModal = document.getElementById("todoAppModal");
+var todoAppBtn = document.getElementById("todoAppBtn");
+var closeTodoApp = document.getElementsByClassName("modal__closeTodoApp")[0];
+
 if (window.attachEvent) {
     observe = function (element, event, handler) {
         element.attachEvent('on'+event, handler);
@@ -75,9 +85,23 @@ function toggleNavbar() {
 fireuiBtn.onclick = function() {
 	fireuiModal.style.display = "block";
 }
-closeModal.onclick = function() {
+closeFireUI.onclick = function() {
 	fireuiModal.style.display = "none";
+}
+chatAppBtn.onclick = function() {
+	chatAppModal.style.display = "block";
+}
+closeChatApp.onclick = function() {
+	chatAppModal.style.display = "none";
+}
+todoAppBtn.onclick = function() {
+	todoAppModal.style.display = "block";
+}
+closeTodoApp.onclick = function() {
+	todoAppModal.style.display = "none";
 }
 window.onclick = function(event){
 	if(event.target == fireuiModal){ fireuiModal.style.display = "none"; }
+	if(event.target == chatAppModal){ chatAppModal.style.display = "none"; }
+	if(event.target == todoAppModal){ todoAppModal.style.display = "none"; }
 }
