@@ -4,8 +4,18 @@
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Stanley Owen</title>
-		<link rel="stylesheet" href="style.css">
+		<meta name="title" content="Stanley Owen | Front-End & Back-end Developer">
+		<meta name="description" content="Hi, I'm Stanley Owen from Indonesia, a junior high school student passionate about programming, computer science, and loves building awesome projects. Feel free to fill the form or email me on hi@stanleyowen.com">
+		<meta property="og:type" content="website">
+		<meta property="og:url" content="https://stanleyowen.com/">
+		<meta property="og:title" content="Stanley Owen | Front-End & Back-end Developer">
+		<meta property="og:description" content="Hi, I'm Stanley Owen from Indonesia, a junior high school student passionate about programming, computer science, and loves building awesome projects. Feel free to fill the form or email me on hi@stanleyowen.com">
+		<meta property="twitter:card" content="summary_large_image">
+		<meta property="twitter:url" content="https://stanleyowen.com/">
+		<meta property="twitter:title" content="Stanley Owen | Front-End & Back-end Developer">
+		<meta property="twitter:description" content="Hi, I'm Stanley Owen from Indonesia, a junior high school student passionate about programming, computer science, and loves building awesome projects. Feel free to fill the form or email me on hi@stanleyowen.com">
+		<title>Stanley Owen | Front-End & Back-end Developer</title>
+		<link rel="stylesheet" href="assets/css/style.min.css">
 	</head>
 	<body>
 		<noscript><div id="javascript__required"><h1>Oops! You Need to Enable JavaScript to Visit This Pages</h1></div></noscript>
@@ -17,11 +27,12 @@
 		</div>
 
 		<div class="navbar">
-			<a class="navbar__logo" href="#home">&#x3C;Stanley /&#x3E;</a>
+			<a class="navbar__logo" href="/">&#x3C;Stanley /&#x3E;</a>
 			<div class="navbar__menu" id="navbar__menu">
 				<a class="animation__underline" href="#home">Home</a>
 				<a class="animation__underline" href="#about">About</a>
-				<a class="animation__underline" href="get-in-touch/index.html">Contact Stanley</a>
+				<a class="animation__underline" href="#projects">Achievements</a>
+				<a class="animation__underline" href="get-in-touch/">Contact Stanley</a>
 			</div>
 			<a href="javascript:void(0);" class="toggleNavbar" onclick="toggleNavbar()"><i class="fa fa-bars"></i></a>
 		</div>
@@ -153,20 +164,44 @@
 		</div>
 
 		<footer class="footer" id="footer">
+			<h2 class="projects__isCentered">Social Links:</h2>
 			<div class="footer__socialBtn">
 				<a href="https://instagram.com/stanleyowennn" target="_blank"><i class="fab fa-instagram" style="font-size: 30px;"></i></a>
 				<a href="https://dev.to/stanleyowen" target="_blank"><i class="fab fa-dev" style="font-size: 30px;"></i></a>
 				<a href="https://github.com/stanleyowen" target="_blank"><i class="fab fa-github" style="font-size: 30px;"></i></a>
 				<a href="mailto:hi@stanleyowen.com" target="_blank"><i class="far fa-envelope" style="font-size: 30px;"></i></a>
 			</div>
-			<div class="footer__copyright">&copy; 2021 stanleyowen.com</div>
+			<div class="footer__copyright">&copy; 2021 stanleyowen.com | Handcrafted by Me</div>
 		</footer>
 
 		<a id="scrollTop" class="btn__scrollTop" href="#home"><i class="fas fa-angle-double-up" style="font-size: 2em;"></i></a>
 		<button class="btn__changeMode"><i class="fas fa-adjust" style="font-size: 2em;"></i></button>
 
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-		<script src="style.js"></script>
-		<script src="assets/js/all.js"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script type="text/javascript" src="assets/js/main.min.js"></script>
+		<script type="text/javascript" src="assets/js/fontawesome.min.js"></script>
+		<script type="text/javascript">
+			var fireuiModal = document.getElementById("fireuiModal");
+			var fireuiBtn = document.getElementById("fireuiBtn");
+			var closeFireUI = document.getElementsByClassName("modal__closeFireUI")[0];
+			var chatAppModal = document.getElementById("chatAppModal");
+			var chatAppBtn = document.getElementById("chatAppBtn");
+			var closeChatApp = document.getElementsByClassName("modal__closeChatApp")[0];
+			var todoAppModal = document.getElementById("todoAppModal");
+			var todoAppBtn = document.getElementById("todoAppBtn");
+			var closeTodoApp = document.getElementsByClassName("modal__closeTodoApp")[0];
+
+			fireuiBtn.onclick = function(){fireuiModal.style.display = "block";}
+			closeFireUI.onclick = function(){fireuiModal.style.display = "none";}
+			chatAppBtn.onclick = function(){chatAppModal.style.display = "block";}
+			closeChatApp.onclick = function(){chatAppModal.style.display = "none";}
+			todoAppBtn.onclick = function(){todoAppModal.style.display = "block";}
+			closeTodoApp.onclick = function(){todoAppModal.style.display = "none";}
+			window.onclick = function(event){
+				if(event.target == fireuiModal){fireuiModal.style.display = "none";}
+				if(event.target == chatAppModal){chatAppModal.style.display = "none";}
+				if(event.target == todoAppModal){todoAppModal.style.display = "none";}
+			}
+		</script>
 	</body>
 </html>
