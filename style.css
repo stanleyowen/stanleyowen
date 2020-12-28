@@ -535,18 +535,15 @@ body.dark .modal__body a { color: #FFFFFF; }
     color: #FFFFFF;
     background-color: #1a73e8;
 }
-.footer__container {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 40%;
-}
 .footer__socialBtn {
     display: grid;
-    grid-template-columns: auto auto auto auto auto;
-    text-align: center;
+    grid-template-columns: auto auto auto auto;
+    width: 50%;
+    margin: auto;
 }
 .footer__socialBtn a {
+    width: 100%;
+    margin: auto;
     display: inline-block;
     width: 40px;
     height: 40px;
@@ -562,7 +559,7 @@ body.dark .modal__body a { color: #FFFFFF; }
     border: 2px solid #FFFFFF;
 }
 .footer__socialBtn a:hover { background-color: #FFFFFF; color: #1a73e8; }
-
+.footer__copyright { margin-top: 20px; width: 100%; text-align: center; }
 @media only screen and (max-width: 1024px) {
     .body__aboutLeft, .body__aboutRight { display: none; }
     .body__about { flex: 1; }
@@ -587,8 +584,11 @@ body.dark .modal__body a { color: #FFFFFF; }
     }
     .projects__container { grid-template-columns: auto; }
     .contact__container { grid-template-columns: auto; }
+    .footer__socialBtn { width: 75%; }
 }
 @media only screen and (max-width: 480px) {
     .main__divider { width: 80%; }
     .main__button { width: 50%; }
+    .footer__socialBtn { width: 100%; }
+
 }

@@ -7,7 +7,7 @@
 		<title>Stanley Owen</title>
 		<link rel="stylesheet" href="../style.css">
 	</head>
-	<body onload="init();">
+	<body onload="init(); document.contact__form.Name.focus();">
 		<noscript><div id="javascript__required"><h1>Oops! You Need to Enable JavaScript to Visit This Pages</h1></div></noscript>
 
 		<div id="loader-wrapper">
@@ -32,13 +32,13 @@
 			</div>
 
 			<div class="form">
-				<form class="contact__form" method="POST" action="https://usebasin.com/f/4057c491c382" autocomplete="off">
+				<form class="contact__form" method="POST" action="https://usebasin.com/f/4057c491c382" name="contact__form" autocomplete="off">
 					<div class="form__container">
 						<input type="hidden" name="honeypot">
 			            <div class="contact__formControl">
 			                <div class="contact__infoField">
 			            		<span>Name</span>
-			                    <input title="Name" name="Name" type="text" placeholder="Name" class="contact__inputField" minlength="6" maxlength="50" required />
+			                    <input title="Name" name="Name" type="text" placeholder="Name" class="contact__inputField" minlength="6" maxlength="50" required autofocus>
 			                    <span class="contact__onFocus"></span>
 			                </div>
 			            </div>
@@ -57,7 +57,7 @@
 		        			<span class="contact__onFocus"></span>
 		                </div>
 			        </div>
-		        	<input type="submit" class="contact__sendBtn" value="Send" />
+		        	<button type="submit" class="contact__sendBtn">Send <i class="far fa-paper-plane"></i></button>
 	        	</form>
 	        </div>
 		</div>
