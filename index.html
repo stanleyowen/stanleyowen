@@ -15,7 +15,7 @@
 		<meta property="twitter:title" content="Stanley Owen | Front-End & Back-end Developer">
 		<meta property="twitter:description" content="Hi, I'm Stanley Owen from Indonesia, a junior high school student passionate about programming, computer science, and loves building awesome projects. Feel free to fill the form or email me on hi@stanleyowen.com">
 		<title>Stanley Owen | Front-End & Back-end Developer</title>
-		<link rel="stylesheet" href="assets/css/style.min.css">
+		<link rel="stylesheet" href="css/style.css">
 	</head>
 	<body>
 		<noscript><div id="javascript__required"><h1>Oops! You Need to Enable JavaScript to Visit This Pages</h1></div></noscript>
@@ -29,9 +29,9 @@
 		<div class="navbar">
 			<a class="navbar__logo" href="/">&#x3C;Stanley /&#x3E;</a>
 			<div class="navbar__menu" id="navbar__menu">
-				<a class="animation__underline" href="#home">Home</a>
-				<a class="animation__underline" href="#about">About</a>
-				<a class="animation__underline" href="#projects">Achievements</a>
+				<a class="animation__underline" onclick="smoothScroll('home')">Home</a>
+				<a class="animation__underline" onclick="smoothScroll('about')">About</a>
+				<a class="animation__underline" onclick="smoothScroll('projects')">Achievements</a>
 				<a class="animation__underline" href="get-in-touch/">Contact Stanley</a>
 			</div>
 			<a href="javascript:void(0);" class="toggleNavbar" onclick="toggleNavbar()"><i class="fa fa-bars"></i></a>
@@ -42,10 +42,10 @@
 				Front-end & Back-end<br>WebDev</span>
 			</h1>
 			<hr class="main__divider"></hr>
-			<a class="main__button" href="#about">Get Started</a>
+			<a class="main__button" onclick="smoothScroll('about')">Get Started</a>
 		</div>
 
-		<img id="about" class="animation__picture" alt="wrapper" src="assets/img/wrapper.webp">
+		<img id="about" class="animation__picture" alt="wrapper" src="img/wrapper.webp">
 
 		<div class="about">
 			<div class="body__container">
@@ -65,7 +65,7 @@
 					<h2>Fire-UI</h2>
 				</div>
 				<div class="modal__body">
-					<img src="assets/img/fire-ui.webp" class="modal__bodyImg" />
+					<img src="img/fire-ui.webp" class="modal__bodyImg" />
 					<p>
 						<a href="https://fire-ui.github.io" class="animation__underline">Fire-UI</a> is an open source project built by developers, for developers. Fire UI is a user-friendly and reliable CSS Framework aimed to cope with any difficulties found by Web Developers on Front-End.
 					</p>
@@ -109,7 +109,6 @@
 				</div>
 			</div>
 		</div>
-
 
 		<div class="projects" id="projects">
 			<h1>Recent Projects & Achievements</h1>
@@ -174,12 +173,11 @@
 			<div class="footer__copyright">&copy; 2021 stanleyowen.com | Handcrafted by Me</div>
 		</footer>
 
-		<a id="scrollTop" class="btn__scrollTop" href="#home"><i class="fas fa-angle-double-up" style="font-size: 2em;"></i></a>
+		<a id="scrollTop" onclick="smoothScroll('home')" class="btn__scrollTop"><i class="fas fa-angle-double-up" style="font-size: 2em;"></i></a>
 		<button class="btn__changeMode"><i class="fas fa-adjust" style="font-size: 2em;"></i></button>
 
-		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-		<script type="text/javascript" src="assets/js/main.min.js"></script>
-		<script type="text/javascript" src="assets/js/fontawesome.min.js"></script>
+		<script type="text/javascript" src="js/main.js"></script>
+		<script type="text/javascript" src="js/fontawesome.min.js"></script>
 		<script type="text/javascript">
 			var fireuiModal = document.getElementById("fireuiModal");
 			var fireuiBtn = document.getElementById("fireuiBtn");

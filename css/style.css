@@ -28,6 +28,7 @@ body.dark .contact {
 body.dark .btn__scrollTop,
 body.dark .navbar__logo,
 body.dark .navbar a,
+body.dark .main__button,
 body.dark .projects__detail,
 body.dark .get_in_touch,
 body.dark .form span,
@@ -35,7 +36,6 @@ body.dark .form input,
 body.dark .form textarea,
 body.dark .contact__sendBtn,
 body.dark .modal__body a,
-body.dark .main__button,
 body.dark .footer {
     color: #FFFFFF;
 }
@@ -60,7 +60,7 @@ body.dark .main__button { box-shadow: 2px 1000px 1px #212121 inset; }
 body.dark .projects__viewMore:hover { background-color: #79c3ff; color: #212121; }
 body.dark .footer__socialBtn a:hover { background-color: #FFFFFF; color: #212121; }
 body.dark .main__divider { background-image: linear-gradient(315deg, #0cbaba 0%, #f400eb 74%); }
-button, a { user-select: none; }
+button, a { user-select: none; cursor: pointer; }
 #javascript__required {
     text-align: center;
     color: #a6d400;
@@ -242,7 +242,6 @@ button, a { user-select: none; }
     bottom: 15vh;
     right: 2.25vw;
     padding: 15px;
-    cursor: pointer;
     display: none;
     color: #212121;
     z-index: 1;
@@ -255,7 +254,6 @@ button, a { user-select: none; }
     bottom: 4vh;
     right: 2vw;
     padding: 15px;
-    cursor: pointer;
     outline: none;
     border: none;
     color: white;
@@ -284,6 +282,7 @@ button, a { user-select: none; }
 .main__button {
     display: block;
     width: 15%;
+    color: #212121;
     text-align: center;
     margin: 20px auto;
     padding: 15px 20px;
@@ -426,7 +425,6 @@ button, a { user-select: none; }
 }
 .modal__closeBtn:hover {
     opacity: 0.7;
-    cursor: pointer;
     text-decoration: none;
 }
 .modal__body { padding: 10px; text-decoration: none; }
@@ -518,7 +516,6 @@ button, a { user-select: none; }
     width: auto;
     display: block;
     outline: none;
-    cursor: pointer;
     margin: auto;
     height: auto;
     color: #1a73e8;

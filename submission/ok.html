@@ -5,7 +5,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Stanley Owen</title>
-		<link rel="stylesheet" href="../css/style.css">
+		<link rel="stylesheet" href="../css/style.min.css">
 	</head>
 	<body onload="init(); document.contact__form.Name.focus();">
 		<noscript><div id="javascript__required"><h1>Oops! You Need to Enable JavaScript to Visit This Pages</h1></div></noscript>
@@ -46,7 +46,7 @@
 			            <div class="contact__formControl">
 			                <div class="contact__infoField">
 			            		<span>Email</span>
-			                    <input title="Email Address" name="Email" type="email" class="contact__inputField" minlength="8" maxlength="50" required />
+			                    <input title="Email Address" name="Email" type="email" class="contact__inputField" required />
 			                    <span class="contact__onFocus"></span>
 			                </div>
 			            </div>
@@ -74,10 +74,11 @@
 			<div class="footer__copyright">&copy; 2021 stanleyowen.com | Handcrafted by Me</div>
 		</footer>
 
-		<a id="scrollTop" class="btn__scrollTop" onclick="smoothScroll('form')"><i class="fas fa-angle-double-up" style="font-size: 2em;"></i></a>
+		<a id="scrollTop" class="btn__scrollTop" href="#form"><i class="fas fa-angle-double-up" style="font-size: 2em;"></i></a>
 		<button class="btn__changeMode"><i class="fas fa-adjust" style="font-size: 2em;"></i></button>
 
-		<script src="../js/main.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="../js/main.min.js"></script>
 		<script src="../js/fontawesome.min.js"></script>
 	</body>
 </html>
