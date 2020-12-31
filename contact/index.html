@@ -4,7 +4,17 @@
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Stanley Owen</title>
+		<meta name="title" content="Stanley Owen | Front-End & Back-end Developer">
+		<meta name="description" content="Hi, I'm Stanley Owen from Indonesia, a junior high school student passionate about programming, computer science, and loves building awesome projects. Feel free to fill the form or email me on hi@stanleyowen.com">
+		<meta property="og:type" content="website">
+		<meta property="og:url" content="https://stanleyowen.com/">
+		<meta property="og:title" content="Stanley Owen | Front-End & Back-end Developer">
+		<meta property="og:description" content="Hi, I'm Stanley Owen from Indonesia, a junior high school student passionate about programming, computer science, and loves building awesome projects. Feel free to fill the form or email me on hi@stanleyowen.com">
+		<meta property="twitter:card" content="summary_large_image">
+		<meta property="twitter:url" content="https://stanleyowen.com/">
+		<meta property="twitter:title" content="Stanley Owen | Front-End & Back-end Developer">
+		<meta property="twitter:description" content="Hi, I'm Stanley Owen from Indonesia, a junior high school student passionate about programming, computer science, and loves building awesome projects. Feel free to fill the form or email me on hi@stanleyowen.com">
+		<title>Stanley Owen | Contact Me</title>
 		<link rel="stylesheet" href="../css/style.min.css">
 	</head>
 	<body onload="init(); document.contact__form.Name.focus();">
@@ -46,7 +56,7 @@
 			            <div class="contact__formControl">
 			                <div class="contact__infoField">
 			            		<span>Email</span>
-			                    <input title="Email Address" name="Email" type="email" class="contact__inputField" required />
+			                    <input title="Email Address" name="Email" type="email" class="contact__inputField" minlength="8" maxlength="50" required />
 			                    <span class="contact__onFocus"></span>
 			                </div>
 			            </div>
@@ -74,7 +84,7 @@
 			<div class="footer__copyright">&copy; 2021 stanleyowen.com | Handcrafted by Me</div>
 		</footer>
 
-		<a id="scrollTop" class="btn__scrollTop" href="#form"><i class="fas fa-angle-double-up" style="font-size: 2em;"></i></a>
+		<a id="scrollTop" class="btn__scrollTop" onclick="smoothScroll('form')"><i class="fas fa-angle-double-up" style="font-size: 2em;"></i></a>
 		<button class="btn__changeMode"><i class="fas fa-adjust" style="font-size: 2em;"></i></button>
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

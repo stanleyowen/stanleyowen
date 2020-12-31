@@ -299,6 +299,12 @@ button, a { user-select: none; cursor: pointer; }
     margin-top: 150px;
     width: 100%;
 }
+.animation__message {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: auto;
+}
 .about {
     display: block;
     background-color: #1a73e8;
@@ -357,7 +363,7 @@ button, a { user-select: none; cursor: pointer; }
 }
 .projects__card:hover .projects__detail { opacity: 1; }
 .projects__detail:hover { color: #1a73e8!important }
-.projects__isCentered { text-align: center; }
+.isCentered { text-align: center; }
 .projects__viewMore {
     width: 50%;
     margin: auto;
@@ -561,6 +567,21 @@ button, a { user-select: none; cursor: pointer; }
 }
 .footer__socialBtn a:hover { background-color: #FFFFFF; color: #1a73e8; }
 .footer__copyright { margin-top: 40px; width: 100%; text-align: center; }
+.content__transition { display: none; }
+.content__fadeIn {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20vh);
+    transition: opacity .6s ease-out, transform 1.2s ease-out;
+    will-change: opacity, visibility;
+    color: #212121;
+}
+.visible {
+    opacity: 1;
+    transform: none;
+    visibility: visible;
+}
+.message { margin: 40px auto; }
 @media only screen and (max-width: 1024px) {
     .body__aboutLeft, .body__aboutRight { display: none; }
     .body__about { flex: 1; }
@@ -591,6 +612,7 @@ button, a { user-select: none; cursor: pointer; }
     .form__container { grid-template-columns: auto; }
     .footer__socialBtn { width: 75%; }
 }
+@media only screen and (max-width: 600px) { .animation__message { width: 100%; height: auto; } }
 @media only screen and (max-width: 480px) {
     .main__divider { width: 80%; }
     .main__button { width: 50%; }

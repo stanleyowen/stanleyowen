@@ -102,3 +102,19 @@ function smoothScroll(eID) {
         leapY -= step; if (leapY < stopY) leapY = stopY; timer++;
     }
 }
+
+$(window).scroll(function(){
+    $('.content__fadeIn').each(function(){
+        var topElement = $(this).offset().top;
+        var bottomElement = $(this).offset().top + $(this).outerHeight();
+        var bottomScreen = $(window).scrollTop() + $(window).innerHeight();
+        var topScreen = $(window).scrollTop();
+        if((bottomScreen > topElement) && (topScreen < bottomElement) && !$(this).hasClass('visible')){
+            $(this).addClass('visible');
+        }
+    });
+});
+
+setTimeout(function(){
+    $('.content__transition').fadeIn(1500);  
+}, 1000);
