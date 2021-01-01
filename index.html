@@ -29,9 +29,9 @@
 		<div class="navbar">
 			<a class="navbar__logo" href="/">&#x3C;Stanley /&#x3E;</a>
 			<div class="navbar__menu" id="navbar__menu">
-				<a class="animation__underline" onclick="smoothScroll('home')">Home</a>
-				<a class="animation__underline" onclick="smoothScroll('about')">About</a>
-				<a class="animation__underline" onclick="smoothScroll('projects')">Achievements</a>
+				<a class="animation__underline" href="#home">Home</a>
+				<a class="animation__underline" href="#about">About</a>
+				<a class="animation__underline" href="#projects">Achievements</a>
 				<a class="animation__underline" href="contact/">Contact Stanley</a>
 			</div>
 			<a href="javascript:void(0);" class="toggleNavbar" onclick="toggleNavbar()"><i class="fa fa-bars"></i></a>
@@ -42,7 +42,7 @@
 				Front-end & Back-end<br>WebDev</span>
 			</h1>
 			<hr class="main__divider"></hr>
-			<a class="main__button" onclick="smoothScroll('about')">Get Started</a>
+			<a class="main__button" href="#about">Get Started</a>
 		</div>
 
 		<img id="about" class="animation__picture" alt="wrapper" src="img/wrapper.webp">
@@ -172,10 +172,10 @@
 			<div class="footer__copyright">&copy; 2021 stanleyowen.com | Handcrafted by Me</div>
 		</footer>
 
-		<a id="scrollTop" onclick="smoothScroll('home')" class="btn__scrollTop"><i class="fas fa-angle-double-up" style="font-size: 2em;"></i></a>
+		<a id="scrollTop" href="#home" class="btn__scrollTop"><i class="fas fa-angle-double-up" style="font-size: 2em;"></i></a>
 		<button class="btn__changeMode"><i class="fas fa-adjust" style="font-size: 2em;"></i></button>
 
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
 		<script type="text/javascript" src="js/main.min.js"></script>
 		<script type="text/javascript" src="js/fontawesome.min.js"></script>
 		<script type="text/javascript">
@@ -188,7 +188,6 @@
 			var todoAppModal = document.getElementById("todoAppModal");
 			var todoAppBtn = document.getElementById("todoAppBtn");
 			var closeTodoApp = document.getElementsByClassName("modal__closeTodoApp")[0];
-
 			fireuiBtn.onclick = function(){fireuiModal.style.display = "block";}
 			closeFireUI.onclick = function(){fireuiModal.style.display = "none";}
 			chatAppBtn.onclick = function(){chatAppModal.style.display = "block";}

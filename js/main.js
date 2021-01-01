@@ -1,3 +1,4 @@
+/*! Personal Website - JS Version 0.0.1 Copyright 2020, Stanley Owen stanleyowen.com */
 var observe;
 var scrollTop_btn = document.getElementById("scrollTop");
 var btnMode1 = document.querySelector(".btn__changeMode");
@@ -66,43 +67,10 @@ function toggleNavbar() {
         menu.style.display = "block";
     }
 }
-function currentYPosition() {
-    if (self.pageYOffset) return self.pageYOffset;
-    if (document.documentElement && document.documentElement.scrollTop) return document.documentElement.scrollTop;
-    if (document.body.scrollTop) return document.body.scrollTop;
-    return 0;
-}
-function elmYPosition(eID) {
-    var elm = document.getElementById(eID);
-    var y = elm.offsetTop;
-    var node = elm;
-    while (node.offsetParent && node.offsetParent != document.body) {
-        node = node.offsetParent;
-        y += node.offsetTop;
-    } return y;
-}
-function smoothScroll(eID) {
-    var startY = currentYPosition();
-    var stopY = elmYPosition(eID);
-    var distance = stopY > startY ? stopY - startY : startY - stopY;
-    if (distance < 100) { scrollTo(0, stopY); return; }
-    var speed = Math.round(distance / 100);
-    if (speed >= 30) speed = 30;
-    var step = Math.round(distance / 35);
-    var leapY = stopY > startY ? startY + step : startY - step;
-    var timer = 0;
-    if (stopY > startY) {
-        for ( var i=startY; i<stopY; i+=step ) {
-            setTimeout("window.scrollTo(0, "+leapY+")", timer * speed);
-            leapY += step; if (leapY > stopY) leapY = stopY; timer++;
-        } return;
-    }
-    for ( var i=startY; i>stopY; i-=step ) {
-        setTimeout("window.scrollTo(0, "+leapY+")", timer * speed);
-        leapY -= step; if (leapY < stopY) leapY = stopY; timer++;
-    }
-}
-
+$('a[href*=\\#]').on('click', function(event){
+    $('html,body').animate({scrollTop:$(this.hash).offset().top}, 500);
+});
+window.onscroll = function() {scrollButton()};
 $(window).scroll(function(){
     $('.content__fadeIn').each(function(){
         var topElement = $(this).offset().top;

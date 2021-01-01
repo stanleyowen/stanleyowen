@@ -1,5 +1,20 @@
-/* Personal Website - CSS Version 0.0.1 Copyright 2020, Stanley Owen stanleyowen.com */
-@import url('https://fonts.googleapis.com/css2?family=Chilanka&display=swap');
+/*! Personal Website - CSS Version 0.0.1 Copyright 2020, Stanley Owen stanleyowen.com */
+@font-face {
+  font-family: 'Chilanka';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(WWXRlj2DZQiMJYaYRoJPKdAiZQTP8MU.woff2) format('woff2');
+  unicode-range: U+0307, U+0323, U+0964-0965, U+0D02-0D7F, U+200C-200D, U+20B9, U+25CC;
+}
+@font-face {
+  font-family: 'Chilanka';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(WWXRlj2DZQiMJYaYRoJXKdAiZQTP.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 body {
     margin: 0;
     padding: 0;
@@ -503,7 +518,8 @@ button, a { user-select: none; cursor: pointer; }
 .contact__infoField .contact__inputField:focus + .contact__onFocus { left: 0; }
 #form { padding-top: 120px; }
 .form__contact {
-    margin: auto 20px;
+    margin: 20px;
+    margin-bottom: 40px;
     padding: 10px;
     border-radius: 10px;
     transition: all .4s;
@@ -606,8 +622,7 @@ button, a { user-select: none; cursor: pointer; }
     }
     .projects__container { grid-template-columns: auto; }
     .contact { margin: auto 25px -70px 25px; }
-    .contact__btn { width: auto; }
-    .contact__me { padding: 10px; }
+    .contact__me { padding: 10px; text-align: center; }
     .contact__container { grid-template-columns: auto; }
     .form__container { grid-template-columns: auto; }
     .footer__socialBtn { width: 75%; }
