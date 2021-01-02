@@ -90,7 +90,7 @@ setTimeout(function(){
 if(navigator.serviceWorker){
     window.addEventListener('load', () => {
         navigator.serviceWorker
-        .register('service-worker.min.js')
+        .register('https://stanleyowen.github.io/js/service-worker.min.js')
         .then(reg => console.log('Service Workers Registered Successfully'))
         .catch(err => console.log(`Error: ${err}`));
     });
