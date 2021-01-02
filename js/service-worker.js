@@ -1,4 +1,4 @@
-const offlineCache = '../offline/index.html';
+const offlineCache = 'https://stanleyowen.github.io/offline/index.html';
 self.addEventListener('install', e => {
 	e.waitUntil(
 		caches.open(offlineCache)
