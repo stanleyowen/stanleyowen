@@ -86,3 +86,12 @@ $(window).scroll(function(){
 setTimeout(function(){
     $('.content__transition').fadeIn(1500);  
 }, 1000);
+
+if(navigator.serviceWorker){
+    window.addEventListener('load', () => {
+        navigator.serviceWorker
+        .register('service-worker.min.js')
+        .then(reg => console.log('Service Workers Registered Successfully'))
+        .catch(err => console.log(`Error: ${err}`));
+    });
+}
