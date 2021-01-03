@@ -14,8 +14,6 @@
 		<meta property="twitter:url" content="https://stanleyowen.com/">
 		<meta property="twitter:title" content="Stanley Owen | Front-End & Back-end Developer">
 		<meta property="twitter:description" content="Hi, I'm Stanley Owen from Indonesia, a junior high school student passionate about programming, computer science, and loves building awesome projects. Feel free to fill the form or email me on hi@stanleyowen.com">
-		<meta http-equiv="cache-control" content="private">
-		<meta http-equiv="expires" content="31536000">
 		<title>Stanley Owen | Front-End & Back-end Developer</title>
 		<link rel="stylesheet" href="css/style.min.css">
 	</head>
@@ -181,6 +179,14 @@
 		<script type="text/javascript" src="js/main.min.js"></script>
 		<script type="text/javascript" src="js/fa.min.js"></script>
 		<script type="text/javascript">
+			if ('serviceWorker' in navigator) {
+			    navigator.serviceWorker.register(`sw.min.js`)
+			    .then(function() {
+			      console.log('Service Worker: Registration Complete');
+			    }, function() {
+			      console.error('Service Worker: Registration Failure');
+			    });
+			}
 			var fireuiModal = document.getElementById("fireuiModal");
 			var fireuiBtn = document.getElementById("fireuiBtn");
 			var closeFireUI = document.getElementsByClassName("modal__closeFireUI")[0];
