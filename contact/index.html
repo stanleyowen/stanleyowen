@@ -48,22 +48,22 @@
 							<input type="hidden" name="honeypot">
 				            <div class="contact__formControl">
 				                <div class="contact__infoField">
-				            		<span>Name</span>
-				                    <input title="Name" name="Name" type="text" class="contact__inputField" minlength="6" maxlength="50" required autofocus>
+				            		<label for="name">Name</label>
+				                    <input title="Name" id="name" name="Name" type="text" class="contact__inputField" minlength="6" maxlength="50" required autofocus>
 				                    <span class="contact__onFocus"></span>
 				                </div>
 				            </div>
 				            <div class="contact__formControl">
 				                <div class="contact__infoField">
-				            		<span>Email</span>
-				                    <input title="Email Address" name="Email" type="email" class="contact__inputField" minlength="8" maxlength="50" required />
+				            		<label for="email">Email</label>
+				                    <input title="Email Address" id="email" name="Email" type="email" class="contact__inputField" minlength="8" maxlength="50" required />
 				                    <span class="contact__onFocus"></span>
 				                </div>
 				            </div>
 				        </div>
 						<div class="contact__formControl">
 			                <div class="contact__infoField">
-			            		<span>Message</span>
+			            		<label for="comment__form">Message</span>
 			        			<textarea class="contact__inputField" name="Message" id="comment__form"></textarea>
 			        			<span class="contact__onFocus"></span>
 			                </div>
@@ -77,16 +77,16 @@
 		<footer class="footer" id="footer">
 			<h2 class="isCentered">Social Links:</h2>
 			<div class="footer__socialBtn">
-				<a href="https://instagram.com/stanleyowennn" target="_blank"><i class="fab fa-instagram" style="font-size: 30px;"></i></a>
-				<a href="https://dev.to/stanleyowen" target="_blank"><i class="fab fa-dev" style="font-size: 30px;"></i></a>
-				<a href="https://github.com/stanleyowen" target="_blank"><i class="fab fa-github" style="font-size: 30px;"></i></a>
-				<a href="mailto:stanleyowen06@gmail.com" target="_blank"><i class="far fa-envelope" style="font-size: 30px;"></i></a>
+				<a href="https://instagram.com/stanleyowennn" rel="noreferrer" target="_blank"><i class="fab fa-instagram" style="font-size: 30px;"></i></a>
+				<a href="https://dev.to/stanleyowen" rel="noreferrer" target="_blank"><i class="fab fa-dev" style="font-size: 30px;"></i></a>
+				<a href="https://github.com/stanleyowen" rel="noreferrer" target="_blank"><i class="fab fa-github" style="font-size: 30px;"></i></a>
+				<a href="mailto:stanleyowen06@gmail.com" rel="noreferrer" target="_blank"><i class="far fa-envelope" style="font-size: 30px;"></i></a>
 			</div>
 			<div class="footer__copyright">&copy; 2021 stanleyowen.github.io | Handcrafted by Me</div>
 		</footer>
 
 		<a id="scrollTop" class="btn__scrollTop" href="#form"><i class="fas fa-angle-double-up" style="font-size: 2em;"></i></a>
-		<button class="btn__changeMode"><i class="fas fa-adjust" style="font-size: 2em;"></i></button>
+		<button class="btn__changeMode" aria-label="Change Mode"><i class="fas fa-adjust" style="font-size: 2em;"></i></button>
 
 		<script type="text/javascript" src="../js/jquery.min.js"></script>
 		<script type="text/javascript" src="../js/main.min.js"></script>
