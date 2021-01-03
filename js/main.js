@@ -87,11 +87,13 @@ setTimeout(function(){
     $('.content__transition').fadeIn(1500);  
 }, 1000);
 
-if(navigator.serviceWorker){
-    window.addEventListener('load', () => {
-        navigator.serviceWorker
-        .register('https://stanleyowen.github.io/js/service-worker.min.js')
-        .then(reg => console.log('Service Workers Registered Successfully'))
-        .catch(err => console.log(`Error: ${err}`));
+if ('serviceWorker' in navigator) {
+    console.log('CLIENT: service worker registration in progress.');
+    navigator.serviceWorker.register('/js/service-worker.js').then(function() {
+      console.log('CLIENT: service worker registration complete.');
+    }, function() {
+      console.log('CLIENT: service worker registration failure.');
     });
-}
+  } else {
+    console.log('CLIENT: service worker is not supported.');
+  }
