@@ -88,12 +88,10 @@ setTimeout(function(){
 }, 1000);
 
 if ('serviceWorker' in navigator) {
-    console.log('CLIENT: service worker registration in progress.');
-    navigator.serviceWorker.register('/js/service-worker.js').then(function() {
-      console.log('CLIENT: service worker registration complete.');
+    navigator.serviceWorker.register('https://stanleyowen.github.io/js/sw.min.js')
+    .then(function() {
+      console.log('Service Worker Complete');
     }, function() {
-      console.log('CLIENT: service worker registration failure.');
+      console.log('Error: Service Worker Failure');
     });
-  } else {
-    console.log('CLIENT: service worker is not supported.');
-  }
+}

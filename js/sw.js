@@ -1,52 +1,20 @@
 "use strict";
-
-console.log('WORKER: executing.');
-
-/* A version number is useful when updating the worker logic,
-   allowing you to remove outdated cache entries during the update.
-*/
 var version = 'v1::';
-
-/* These resources will be downloaded and cached by the service worker
-   during the installation process. If any resource fails to be downloaded,
-   then the service worker won't be installed either.
-*/
 var offlineFundamentals = [
-	'',
-	'/css/style.min.css',
-	'/js/jquery.min.js',
-	'/js/main.min.js',
-	'/js/fa.min.js',
-	'/index.html',
-	'/contact/index.html'
+	'https://stanleyowen.github.io/',
+	'https://stanleyowen.github.io/css/style.min.css',
+	'https://stanleyowen.github.io/js/jquery.min.js',
+	'https://stanleyowen.github.io/js/main.min.js',
+	'https://stanleyowen.github.io/js/fa.min.js',
+	'https://stanleyowen.github.io/index.html',
+	'https://stanleyowen.github.io/contact/index.html'
 ];
 
-/* The install event fires when the service worker is first installed.
-   You can use this event to prepare the service worker to be able to serve
-   files while visitors are offline.
-*/
-
 self.addEventListener("install", function(event) {
-  console.log('WORKER: install event in progress.');
-  /* Using event.waitUntil(p) blocks the installation process on the provided
-     promise. If the promise is rejected, the service worker won't be installed.
-  */
   event.waitUntil(
-    /* The caches built-in is a promise-based API that helps you cache responses,
-       as well as finding and deleting them.
-    */
-    caches
-      /* You can open a cache by name, and this method returns a promise. We use
-         a versioned cache name here so that we can remove old cache entries in
-         one fell swoop later, when phasing out an older service worker.
-      */
-      .open(version + 'fundamentals')
+    caches.open(version + 'fundamentals')
       .then(function(cache) {
-        /* After the cache is opened, we can fill it with the offline fundamentals.
-           The method below will add all resources in `offlineFundamentals` to the
-           cache, after making requests for them.
-        */
-        return cache.addAll(offlineFundamentals);
+		return cache.addAll(offlineFundamentals);
       })
       .then(function() {
         console.log('WORKER: install completed');
@@ -54,11 +22,6 @@ self.addEventListener("install", function(event) {
   );
 });
 
-/* The fetch event fires whenever a page controlled by this service worker requests
-   a resource. This isn't limited to `fetch` or even XMLHttpRequest. Instead, it
-   comprehends even the request for the HTML page on first load, as well as JS and
-   CSS resources, fonts, any images, etc.
-*/
 self.addEventListener("fetch", function(event) {
   console.log('WORKER: fetch event in progress.');
 
