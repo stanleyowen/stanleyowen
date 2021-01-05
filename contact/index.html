@@ -17,7 +17,7 @@
 		<title>Stanley Owen | Contact Me</title>
 		<link rel="stylesheet" href="../css/style.min.css">
 	</head>
-	<body onload="init(); document.contact__form.Name.focus();">
+	<body onload="init(); document.contact__form._name.focus();">
 		<noscript><div id="javascript__required"><h1>Oops! You Need to Enable JavaScript to Visit This Pages</h1></div></noscript>
 
 		<div id="loader-wrapper">
@@ -43,20 +43,20 @@
 				</div>
 
 				<div class="form">
-					<form class="contact__form" method="POST" action="https://usebasin.com/f/4057c491c382" name="contact__form" autocomplete="off">
+					<form class="contact__form" method="POST" action="https://stanleyowen.000webhostapp.com/api/mail-service/" name="contact__form" autocomplete="off">
 						<div class="form__container">
-							<input type="hidden" name="honeypot">
+							<input type="hidden" name="_honeypot">
 				            <div class="contact__formControl">
 				                <div class="contact__infoField">
 				            		<label for="name">Name</label>
-				                    <input title="Name" id="name" name="Name" type="text" class="contact__inputField" minlength="6" maxlength="50" required autofocus>
+				                    <input title="Name" id="name" name="_name" type="text" class="contact__inputField" minlength="6" maxlength="50" required autofocus>
 				                    <span class="contact__onFocus"></span>
 				                </div>
 				            </div>
 				            <div class="contact__formControl">
 				                <div class="contact__infoField">
 				            		<label for="email">Email</label>
-				                    <input title="Email Address" id="email" name="Email" type="email" class="contact__inputField" minlength="8" maxlength="50" required />
+				                    <input title="Email Address" id="email" name="_email-address" type="email" class="contact__inputField" minlength="8" maxlength="50" required />
 				                    <span class="contact__onFocus"></span>
 				                </div>
 				            </div>
@@ -64,7 +64,7 @@
 						<div class="contact__formControl">
 			                <div class="contact__infoField">
 			            		<label for="comment__form">Message</span>
-			        			<textarea class="contact__inputField" name="Message" id="comment__form"></textarea>
+			        			<textarea class="contact__inputField" name="_message" id="comment__form" maxlength="2000" required></textarea>
 			        			<span class="contact__onFocus"></span>
 			                </div>
 				        </div>
