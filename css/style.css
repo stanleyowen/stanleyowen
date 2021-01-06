@@ -491,6 +491,7 @@ button, a { user-select: none; cursor: pointer; }
 .contact__form { padding: 15px; }
 .contact__infoField {
     position: relative;
+    font-weight: bold;
     display: inline-block;
     overflow: hidden;
     width: 100%;
@@ -515,6 +516,7 @@ button, a { user-select: none; cursor: pointer; }
     height: 2px;
     background: #1a73e8;
 }
+body.dark .contact__onFocus { background: #FFFFFF; }
 .contact__infoField .contact__inputField:focus + .contact__onFocus { left: 0; }
 #form { padding-top: 120px; }
 .form__contact {
@@ -555,6 +557,7 @@ button, a { user-select: none; cursor: pointer; }
     z-index: -1;
     padding: 70px 20px 20px 20px;
     color: #FFFFFF;
+    font-weight: bold;
     background-color: #1a73e8;
     transition: all .4s;
 }
