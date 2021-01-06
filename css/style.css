@@ -590,7 +590,6 @@ button, a { user-select: none; cursor: pointer; }
     transform: translateY(20vh);
     transition: opacity .6s ease-out, transform 1.2s ease-out;
     will-change: opacity, visibility;
-    color: #212121;
 }
 .visible {
     opacity: 1;
