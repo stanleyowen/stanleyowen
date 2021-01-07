@@ -1,4 +1,4 @@
-/*! Personal Website - JS Version 0.0.1 Copyright 2020, Stanley Owen stanleyowen.com */
+/*! Personal Website - JS Version 0.0.2 Copyright 2021, Stanley Owen stanleyowen.github.io */
 var observe;
 var scrollTop_btn = document.getElementById("scrollTop");
 var btnMode1 = document.querySelector(".btn__changeMode");
