@@ -202,16 +202,43 @@
 			var todoAppModal = document.getElementById("todoAppModal");
 			var todoAppBtn = document.getElementById("todoAppBtn");
 			var closeTodoApp = document.getElementsByClassName("modal__closeTodoApp")[0];
-			fireuiBtn.onclick = function(){fireuiModal.style.display = "block";}
-			closeFireUI.onclick = function(){fireuiModal.style.display = "none";}
-			chatAppBtn.onclick = function(){chatAppModal.style.display = "block";}
-			closeChatApp.onclick = function(){chatAppModal.style.display = "none";}
-			todoAppBtn.onclick = function(){todoAppModal.style.display = "block";}
-			closeTodoApp.onclick = function(){todoAppModal.style.display = "none";}
+			fireuiBtn.onclick = function(){
+				fireuiModal.style.visibility = "visible";
+				fireuiModal.style.opacity = "1";
+			}
+			closeFireUI.onclick = function(){
+				fireuiModal.style.visibility = "hidden";
+				fireuiModal.style.opacity = "0";
+			}
+			chatAppBtn.onclick = function(){
+				chatAppModal.style.visibility = "visible";
+				chatAppModal.style.opacity = "1";
+			}
+			closeChatApp.onclick = function(){
+				chatAppModal.style.visibility = "hidden";
+				chatAppModal.style.opacity = "0";
+			}
+			todoAppBtn.onclick = function(){
+				todoAppModal.style.visibility = "visible";
+				todoAppModal.style.opacity = "1";
+			}
+			closeTodoApp.onclick = function(){
+				todoAppModal.style.visibility = "hidden";
+				todoAppModal.style.opacity = "0";
+			}
 			window.onclick = function(event){
-				if(event.target == fireuiModal){fireuiModal.style.display = "none";}
-				if(event.target == chatAppModal){chatAppModal.style.display = "none";}
-				if(event.target == todoAppModal){todoAppModal.style.display = "none";}
+				if(event.target == fireuiModal){
+					fireuiModal.style.visibility = "hidden";
+					fireuiModal.style.opacity = "0";
+				}
+				if(event.target == chatAppModal){
+					chatAppModal.style.visibility = "hidden";
+					chatAppModal.style.opacity = "0";
+				}
+				if(event.target == todoAppModal){
+					todoAppModal.style.visibility = "hidden";
+					todoAppModal.style.opacity = "0";
+				}
 			}
 		</script>
 	</body>
