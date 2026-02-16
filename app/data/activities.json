@@ -1,0 +1,185 @@
+[
+    {
+        "id": 1,
+        "title": "Researcher: LIWC-Style Psycholinguistic NLP Model",
+        "organization": "National Taiwan University of Science and Technology",
+        "type": "work",
+        "period": "Oct 2025 - Present",
+        "location": "Hybrid",
+        "description": "Developing AI-powered system integrating NLP and emotion recognition for suicide ideation detection",
+        "details": [
+            "Building annotated training datasets for mental health risk assessment",
+            "Designing language classification models with emotion-aware detection pipelines",
+            "Analyzing word-level emotional context, semantic tone, and sentiment progression",
+            "Advancing intelligent mental health screening tools for earlier crisis identification",
+            "Integrating affective computing and deep learning approaches",
+            "Supporting clinicians in risk assessment and intervention planning"
+        ],
+        "skills": [
+            "NLP",
+            "AI",
+            "Machine Learning",
+            "Deep Learning",
+            "Mental Health",
+            "Affective Computing"
+        ],
+        "icon": "🔬"
+    },
+    {
+        "id": 2,
+        "title": "Lead Software Developer",
+        "organization": "PT Sumber Windu Makmur Semesta",
+        "type": "work",
+        "period": "Jan 2022 - Sep 2025",
+        "location": "Medan, Indonesia (Remote)",
+        "description": "Initialized and led development of 'SD Desktop' sales and invoice management software",
+        "details": [
+            "Led development of desktop sales and invoice management system",
+            "Improved user operational efficiency and optimized process architecture",
+            "Updated VAT system to 12% for Indonesian government compliance",
+            "Achieved 30% improvement in invoice processing efficiency",
+            "Reduced operational error rate significantly post-launch"
+        ],
+        "skills": [
+            "Team Leadership",
+            "Electron",
+            "Desktop Development",
+            "Process Optimization"
+        ],
+        "icon": "💻"
+    },
+    {
+        "id": 3,
+        "title": "President of Overseas Chinese Student Association",
+        "organization": "National Taiwan University of Science and Technology",
+        "type": "volunteer",
+        "period": "Sep 2025 - Present",
+        "location": "Taipei, Taiwan",
+        "description": "Leading the Overseas Chinese Student Association, organizing events and supporting international students",
+        "details": [
+            "Leading organization of cultural and academic events",
+            "Supporting integration of overseas Chinese students",
+            "Coordinating with university administration",
+            "Managing association activities and initiatives"
+        ],
+        "skills": [
+            "Leadership",
+            "Event Planning",
+            "Community Building",
+            "Communication"
+        ],
+        "icon": "👔"
+    },
+    {
+        "id": 4,
+        "title": "Secretary of Overseas Chinese Student Association",
+        "organization": "National Taiwan University of Science and Technology",
+        "type": "volunteer",
+        "period": "Sep 2024 - Aug 2025",
+        "location": "Taipei, Taiwan",
+        "description": "Managed administrative duties and coordinated association activities",
+        "details": [
+            "Handled administrative responsibilities for the association",
+            "Coordinated meetings and events",
+            "Maintained records and documentation",
+            "Supported president and other officers in organizational tasks"
+        ],
+        "skills": [
+            "Administration",
+            "Organization",
+            "Documentation",
+            "Coordination"
+        ],
+        "icon": "📋"
+    },
+    {
+        "id": 5,
+        "title": "Web Developer - Beasiswa Indonesia Maju Program",
+        "organization": "Beasiswa Indonesia Maju - Taman Sains",
+        "type": "work",
+        "period": "Oct 2023 - Nov 2023",
+        "location": "Hybrid",
+        "description": "Freelance web development for scholarship program platform",
+        "details": [
+            "Led development team for scholarship management platform",
+            "Implemented full-stack solutions using MERN Stack",
+            "Delivered project within tight timeline",
+            "Ensured platform scalability and performance"
+        ],
+        "skills": [
+            "MERN Stack",
+            "MongoDB",
+            "Express.js",
+            "React",
+            "Node.js",
+            "Team Leadership"
+        ],
+        "icon": "🌐"
+    },
+    {
+        "id": 6,
+        "title": "Chairman I of Student Council",
+        "organization": "SMA Sutomo 1",
+        "type": "volunteer",
+        "period": "Oct 2022 - Sep 2023",
+        "location": "Indonesia",
+        "description": "Led student council activities and represented student body",
+        "details": [
+            "Led student council in organizing school-wide events",
+            "Represented student interests to school administration",
+            "Coordinated between different student organizations",
+            "Managed council budget and resources"
+        ],
+        "skills": [
+            "Leadership",
+            "Public Speaking",
+            "Event Management",
+            "Negotiation"
+        ],
+        "icon": "🎓"
+    },
+    {
+        "id": 7,
+        "title": "President of SEALNet",
+        "organization": "SMA Sutomo 1",
+        "type": "volunteer",
+        "period": "Oct 2023 - Mar 2024",
+        "location": "Indonesia",
+        "description": "Led Southeast Asian Service Leadership Network chapter",
+        "details": [
+            "Organized service-learning projects across Southeast Asia",
+            "Led leadership development programs",
+            "Coordinated with regional SEALNet chapters",
+            "Promoted service leadership among students"
+        ],
+        "skills": [
+            "Leadership",
+            "Service Learning",
+            "International Coordination",
+            "Project Management"
+        ],
+        "icon": "🌏"
+    },
+    {
+        "id": 8,
+        "title": "Steering Committee of Student Council",
+        "organization": "SMA Sutomo 1",
+        "type": "volunteer",
+        "period": "Oct 2023 - Mar 2024",
+        "location": "Indonesia",
+        "description": "Advised and guided student council operations and strategic planning",
+        "details": [
+            "Provided strategic guidance to student council",
+            "Advised on policy and program development",
+            "Mentored current student council members",
+            "Ensured continuity of student council initiatives"
+        ],
+        "skills": [
+            "Strategic Planning",
+            "Mentorship",
+            "Advisory",
+            "Policy Development"
+        ],
+        "icon": "🎯"
+    }
+]
