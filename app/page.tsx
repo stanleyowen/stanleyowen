@@ -2,13 +2,15 @@ import Image from "next/image";
 import ParticleBackground from "./components/ParticleBackground";
 import GitHubIcon from "./components/icons/GitHubIcon";
 import EmailIcon from "./components/icons/EmailIcon";
+import Skills from "./components/Skills";
 
 export default function Home() {
   return (
-    <div className="relative flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black overflow-hidden">
+    <div className="relative bg-zinc-50 font-sans dark:bg-black">
       <ParticleBackground />
 
-      <main className="relative z-10 flex flex-col items-center justify-center px-8 py-20">
+      {/* Hero Section */}
+      <section className="relative z-10 flex min-h-screen flex-col items-center justify-center px-8 py-20">
         {/* Profile Photo */}
         <div className="mb-8">
           <Image
@@ -61,7 +63,10 @@ export default function Home() {
             Contact
           </a>
         </div>
-      </main>
+      </section>
+
+      {/* Skills Section */}
+      <Skills />
     </div>
   );
 }
