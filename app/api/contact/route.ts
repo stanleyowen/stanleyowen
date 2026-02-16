@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
 
     // Email to you (the recipient)
     const mailOptions = {
-      from: process.env.SMTP_USER, // Your email (the sender)
+      from: process.env.SMTP_FROM || "me@stanleyowen.com", // Sender email address
       to: "me@stanleyowen.com", // Your receiving email
       subject: `Contact Form: ${subject}`,
       replyTo: email, // Sender's email for easy replies
