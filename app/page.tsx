@@ -3,11 +3,17 @@ import ParticleBackground from "./components/ParticleBackground";
 import GitHubIcon from "./components/icons/GitHubIcon";
 import EmailIcon from "./components/icons/EmailIcon";
 import Skills from "./components/Skills";
+import { ThemeToggle } from "./components/ThemeToggle";
 
 export default function Home() {
   return (
-    <div className="relative bg-zinc-50 font-sans dark:bg-black">
+    <div className="relative min-h-screen bg-zinc-50 font-sans dark:bg-black">
       <ParticleBackground />
+
+      {/* Theme Toggle - Fixed in top right corner */}
+      <div className="fixed top-6 right-6 z-50">
+        <ThemeToggle />
+      </div>
 
       {/* Hero Section */}
       <section className="relative z-10 flex min-h-screen flex-col items-center justify-center px-8 py-20">

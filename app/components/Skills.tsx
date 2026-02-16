@@ -4,8 +4,6 @@ import ElectronIcon from "./icons/ElectronIcon";
 import ReactIcon from "./icons/ReactIcon";
 import NodeIcon from "./icons/NodeIcon";
 import MongoDBIcon from "./icons/MongoDBIcon";
-import PostgreSQLIcon from "./icons/PostgreSQLIcon";
-import DockerIcon from "./icons/DockerIcon";
 import GitIcon from "./icons/GitIcon";
 import TailwindIcon from "./icons/TailwindIcon";
 
