@@ -3,6 +3,7 @@ import ParticleBackground from "./components/ParticleBackground";
 import GitHubIcon from "./components/icons/GitHubIcon";
 import EmailIcon from "./components/icons/EmailIcon";
 import Skills from "./components/Skills";
+import Projects from "./components/Projects";
 import { ThemeToggle } from "./components/ThemeToggle";
 import SocialLinks from "./components/SocialLinks";
 
@@ -77,6 +78,9 @@ export default function Home() {
 
       {/* Skills Section */}
       <Skills />
+
+      {/* Projects Section */}
+      <Projects />
     </div>
   );
 }
