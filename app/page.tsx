@@ -4,6 +4,7 @@ import GitHubIcon from "./components/icons/GitHubIcon";
 import EmailIcon from "./components/icons/EmailIcon";
 import Skills from "./components/Skills";
 import { ThemeToggle } from "./components/ThemeToggle";
+import SocialLinks from "./components/SocialLinks";
 
 export default function Home() {
   return (
@@ -14,6 +15,9 @@ export default function Home() {
       <div className="fixed top-6 right-6 z-50">
         <ThemeToggle />
       </div>
+
+      {/* Social Links - Fixed on left side */}
+      <SocialLinks />
 
       {/* Hero Section */}
       <section className="relative z-10 flex min-h-screen flex-col items-center justify-center px-8 py-20">
