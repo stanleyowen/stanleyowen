@@ -6,6 +6,7 @@ import Skills from "./components/Skills";
 import Projects from "./components/Projects";
 import Activities from "./components/Activities";
 import Contact from "./components/Contact";
+import Footer from "./components/Footer";
 import { ThemeToggle } from "./components/ThemeToggle";
 import SocialLinks from "./components/SocialLinks";
 
@@ -89,6 +90,9 @@ export default function Home() {
 
       {/* Contact Section */}
       <Contact />
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }
