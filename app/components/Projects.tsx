@@ -72,9 +72,10 @@ export default function Projects() {
         let newTranslate = prev - movement;
 
         // Seamless loop: reset when we've moved one full set of original items
-        if (containerRef.current) {
-          const containerWidth = containerRef.current.offsetWidth;
-          const itemWidth = containerWidth / 3; // Each item is 1/3 of container width
+        if (containerRef.current && sliderRef.current) {
+          // Get the actual width of the first card to account for responsive sizes
+          const firstCard = sliderRef.current.children[0] as HTMLElement;
+          const itemWidth = firstCard ? firstCard.offsetWidth : 0;
           const oneSetWidth = itemWidth * repos.length;
 
           // Reset smoothly when we've scrolled past the original set
@@ -129,9 +130,10 @@ export default function Projects() {
       let newPos = prev + dragOffset;
 
       // Normalize position to prevent infinite scrolling in wrong direction
-      if (containerRef.current) {
-        const containerWidth = containerRef.current.offsetWidth;
-        const itemWidth = containerWidth / 3;
+      if (containerRef.current && sliderRef.current) {
+        // Get the actual width of the first card to account for responsive sizes
+        const firstCard = sliderRef.current.children[0] as HTMLElement;
+        const itemWidth = firstCard ? firstCard.offsetWidth : 0;
         const oneSetWidth = itemWidth * repos.length;
 
         // Keep within bounds for smooth experience
@@ -275,7 +277,7 @@ export default function Projects() {
               {[...repos, ...repos, ...repos].map((repo, index) => (
                 <div
                   key={`${repo.id}-${Math.floor(index / repos.length)}-${index % repos.length}`}
-                  className="w-1/3 shrink-0 px-2"
+                  className="w-full sm:w-1/2 lg:w-1/3 shrink-0 px-2"
                 >
                   {/* Project Card */}
                   <div
