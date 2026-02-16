@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_next/
+Disallow: /test/
+
+Sitemap: https://stanleyowen.com/sitemap.xml

@@ -1,0 +1,16 @@
+{
+    "name": "Stanley Owen - Full Stack Developer",
+    "short_name": "Stanley Owen",
+    "description": "Portfolio of Stanley Owen - Full Stack Developer and Software Engineer",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#000000",
+    "theme_color": "#000000",
+    "icons": [
+        {
+            "src": "https://github.com/stanleyowen.png",
+            "sizes": "460x460",
+            "type": "image/png"
+        }
+    ]
+}

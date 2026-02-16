@@ -1,6 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  poweredByHeader: false,
+  compress: true,
+  output: "export",
+  trailingSlash: false,
   images: {
     remotePatterns: [
       {
@@ -8,8 +12,8 @@ const nextConfig: NextConfig = {
         hostname: "github.com",
       },
     ],
+    unoptimized: true,
   },
-  /* config options here */
 };
 
 export default nextConfig;
