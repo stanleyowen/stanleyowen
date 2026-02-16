@@ -11,23 +11,28 @@ export default function Skills() {
   const languages = [
     {
       name: "JavaScript",
-      color: "bg-yellow-500/20 text-yellow-300 border-yellow-500/30",
+      color:
+        "bg-yellow-200 text-yellow-800 border-yellow-400 dark:bg-yellow-500/20 dark:text-yellow-300 dark:border-yellow-500/30",
     },
     {
       name: "TypeScript",
-      color: "bg-blue-500/20 text-blue-300 border-blue-500/30",
+      color:
+        "bg-blue-200 text-blue-800 border-blue-400 dark:bg-blue-500/20 dark:text-blue-300 dark:border-blue-500/30",
     },
     {
       name: "Python",
-      color: "bg-green-500/20 text-green-300 border-green-500/30",
+      color:
+        "bg-green-200 text-green-800 border-green-400 dark:bg-green-500/20 dark:text-green-300 dark:border-green-500/30",
     },
     {
       name: "Rust",
-      color: "bg-orange-500/20 text-orange-300 border-orange-500/30",
+      color:
+        "bg-orange-200 text-orange-800 border-orange-400 dark:bg-orange-500/20 dark:text-orange-300 dark:border-orange-500/30",
     },
     {
       name: "C++",
-      color: "bg-purple-500/20 text-purple-300 border-purple-500/30",
+      color:
+        "bg-purple-200 text-purple-800 border-purple-400 dark:bg-purple-500/20 dark:text-purple-300 dark:border-purple-500/30",
     },
   ];
 
@@ -75,7 +80,7 @@ export default function Skills() {
             {stacks.map((stack) => (
               <div
                 key={stack.name}
-                className="bg-white/10 dark:bg-white/5 backdrop-blur-sm border border-white/20 dark:border-white/10 rounded-lg p-6 hover:bg-white/20 dark:hover:bg-white/10 transition-all hover:scale-105"
+                className="bg-white/60 dark:bg-white/5 backdrop-blur-sm border-2 border-zinc-300 dark:border-white/10 rounded-lg p-6 hover:bg-white/80 dark:hover:bg-white/10 transition-all hover:scale-105"
               >
                 <h3 className="text-2xl font-bold mb-2 text-black dark:text-white">
                   {stack.name}
@@ -99,7 +104,7 @@ export default function Skills() {
               return (
                 <div
                   key={tech.name}
-                  className="bg-white/10 dark:bg-white/5 backdrop-blur-sm border border-white/20 dark:border-white/10 rounded-lg p-4 flex flex-col items-center justify-center hover:bg-white/20 dark:hover:bg-white/10 transition-all hover:scale-105"
+                  className="bg-white/60 dark:bg-white/5 backdrop-blur-sm border-2 border-zinc-300 dark:border-white/10 rounded-lg p-4 flex flex-col items-center justify-center hover:bg-white/80 dark:hover:bg-white/10 transition-all hover:scale-105"
                 >
                   <div className="text-black dark:text-white mb-2">
                     <IconComponent size={40} />
