@@ -3,7 +3,6 @@ import ParticleBackground from "./components/ParticleBackground";
 import GitHubIcon from "./components/icons/GitHubIcon";
 import EmailIcon from "./components/icons/EmailIcon";
 import Skills from "./components/Skills";
-import Projects from "./components/Projects";
 import Activities from "./components/Activities";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
@@ -81,9 +80,6 @@ export default function Home() {
 
       {/* Skills Section */}
       <Skills />
-
-      {/* Projects Section */}
-      <Projects />
 
       {/* Activities Section */}
       <Activities />
