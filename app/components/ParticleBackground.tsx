@@ -4,12 +4,10 @@ import { useEffect, useState } from "react";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
 import type { Container, Engine } from "@tsparticles/engine";
-import { useTheme } from "next-themes";
 
 export default function ParticleBackground() {
   const [init, setInit] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const { resolvedTheme } = useTheme();
 
   useEffect(() => {
     initParticlesEngine(async (engine: Engine) => {
@@ -29,16 +27,12 @@ export default function ParticleBackground() {
 
   if (!mounted || !init) return null;
 
-  // Dynamic colors based on theme
-  const isDark = resolvedTheme === "dark";
-  const particleColor = isDark ? "#ffffff52" : "#00000052";
-  const linkColor = isDark ? "#ffffffb7" : "#000000b7";
-
   return (
     <Particles
+      key="particles-instance"
       id="tsparticles"
       particlesLoaded={particlesLoaded}
-      className="absolute inset-0 z-0"
+      className="absolute inset-0 z-0 [&_canvas]:mix-blend-difference"
       options={{
         background: {
           color: {
@@ -74,10 +68,10 @@ export default function ParticleBackground() {
         },
         particles: {
           color: {
-            value: particleColor,
+            value: "#808080",
           },
           links: {
-            color: linkColor,
+            color: "#808080",
             distance: 150,
             enable: true,
             opacity: 0.5,
