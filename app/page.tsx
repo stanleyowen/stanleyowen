@@ -70,7 +70,7 @@ export default function Home() {
           </a>
 
           <a
-            href="mailto:contact@stanleyowen.com"
+            href="mailto:me@stanleyowen.com"
             className="flex items-center gap-2 px-6 py-3 bg-zinc-200 dark:bg-zinc-800 text-black dark:text-white rounded-full font-medium transition-all hover:scale-105 hover:shadow-lg"
           >
             <EmailIcon />
