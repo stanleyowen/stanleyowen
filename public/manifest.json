@@ -8,7 +8,7 @@
     "theme_color": "#000000",
     "icons": [
         {
-            "src": "https://github.com/stanleyowen.png",
+            "src": "/icon.png",
             "sizes": "460x460",
             "type": "image/png"
         }

@@ -7,7 +7,7 @@ export default function StructuredData() {
     description:
       "Passionate about building elegant solutions and creating meaningful digital experiences. I enjoy developing cross-platform applications, combining modern UI design with high-performance systems programming.",
     url: "https://stanleyowen.com",
-    image: "https://github.com/stanleyowen.png",
+    image: "/icon.png",
     sameAs: [
       "https://github.com/stanleyowen",
       "https://linkedin.com/in/stanley-owen",

@@ -54,7 +54,7 @@ export const metadata: Metadata = {
     siteName: "Stanley Owen Portfolio",
     images: [
       {
-        url: "https://github.com/stanleyowen.png",
+        url: "/icon.png",
         width: 460,
         height: 460,
         alt: "Stanley Owen Profile Picture",
@@ -68,7 +68,7 @@ export const metadata: Metadata = {
     title: "Stanley Owen",
     description:
       "Passionate about building elegant solutions and creating meaningful digital experiences.",
-    images: ["https://github.com/stanleyowen.png"],
+    images: ["/icon.png"],
     creator: "@stanleyowen",
   },
   robots: {
@@ -81,6 +81,11 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
       "max-snippet": -1,
     },
+  },
+  icons: {
+    icon: "/icon.png",
+    shortcut: "/icon.png",
+    apple: "/icon.png",
   },
   manifest: "/manifest.json",
 };
