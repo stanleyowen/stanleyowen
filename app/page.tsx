@@ -5,6 +5,7 @@ import EmailIcon from "./components/icons/EmailIcon";
 import Skills from "./components/Skills";
 import Projects from "./components/Projects";
 import Activities from "./components/Activities";
+import Contact from "./components/Contact";
 import { ThemeToggle } from "./components/ThemeToggle";
 import SocialLinks from "./components/SocialLinks";
 
@@ -85,6 +86,9 @@ export default function Home() {
 
       {/* Activities Section */}
       <Activities />
+
+      {/* Contact Section */}
+      <Contact />
     </div>
   );
 }
