@@ -18,20 +18,30 @@ import JavaIcon from "./icons/JavaIcon";
 import BootstrapIcon from "./icons/BootstrapIcon";
 import MaterialUiIcon from "./icons/MaterialUiIcon";
 import PostmanIcon from "./icons/PostmanIcon";
+import CIcon from "./icons/CIcon";
+import CSharpIcon from "./icons/CSharpIcon";
+import PhpIcon from "./icons/PhpIcon";
+import AssemblyIcon from "./icons/AssemblyIcon";
 
 export default function Skills() {
   const technologies = [
-    // Programming Languages
-    { name: "JavaScript", Icon: JavaScriptIcon },
-    { name: "TypeScript", Icon: TypeScriptIcon },
-    { name: "Python", Icon: PythonIcon },
-    { name: "Rust", Icon: RustIcon },
-    { name: "C++", Icon: CppIcon },
-    { name: "Java", Icon: JavaIcon },
     // Markup and Styling
     { name: "HTML", Icon: HtmlIcon },
     { name: "CSS", Icon: CssIcon },
     { name: "SASS", Icon: SassIcon },
+
+    // Programming Languages
+    { name: "JavaScript", Icon: JavaScriptIcon },
+    { name: "TypeScript", Icon: TypeScriptIcon },
+    { name: "Python", Icon: PythonIcon },
+    { name: "C", Icon: CIcon },
+    { name: "C++", Icon: CppIcon },
+    { name: "C#", Icon: CSharpIcon },
+    { name: "PHP", Icon: PhpIcon },
+    { name: "Java", Icon: JavaIcon },
+    { name: "Assembly", Icon: AssemblyIcon },
+    { name: "Rust", Icon: RustIcon },
+
     // Frameworks and Tools
     { name: "Electron", Icon: ElectronIcon },
     { name: "React", Icon: ReactIcon },
