@@ -2,6 +2,7 @@ import Image from "next/image";
 import ParticleBackground from "./components/ParticleBackground";
 import GitHubIcon from "./components/icons/GitHubIcon";
 import EmailIcon from "./components/icons/EmailIcon";
+import DocumentIcon from "./components/icons/DocumentIcon";
 import Skills from "./components/Skills";
 import Activities from "./components/Activities";
 import Contact from "./components/Contact";
@@ -66,6 +67,16 @@ export default function Home() {
           >
             <GitHubIcon />
             GitHub
+          </a>
+
+          <a
+            href="/%E5%BC%B5%E9%8A%98%E5%85%83%20STANLEY%20OWEN%20-%20CV.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 px-6 py-3 bg-zinc-200 dark:bg-zinc-800 text-black dark:text-white rounded-full font-medium transition-all hover:scale-105 hover:shadow-lg"
+          >
+            <DocumentIcon />
+            View CV
           </a>
 
           <a
