@@ -5,7 +5,6 @@ import { Turnstile } from "@marsidev/react-turnstile";
 import EmailIcon from "./icons/EmailIcon";
 import GitHubIcon from "./icons/GitHubIcon";
 import LinkedInIcon from "./icons/LinkedInIcon";
-import InstagramIcon from "./icons/InstagramIcon";
 
 interface FormData {
   name: string;
@@ -45,12 +44,6 @@ export default function Contact() {
       label: "LinkedIn",
       value: "Stanley Owen",
       href: "https://linkedin.com/in/stanley-owen",
-    },
-    {
-      icon: InstagramIcon,
-      label: "Instagram",
-      value: "@stanleyowennn",
-      href: "https://instagram.com/stanleyowennn",
     },
   ];
 

@@ -2,7 +2,6 @@
 
 import GitHubIcon from "./icons/GitHubIcon";
 import LinkedInIcon from "./icons/LinkedInIcon";
-import InstagramIcon from "./icons/InstagramIcon";
 import EmailIcon from "./icons/EmailIcon";
 
 export default function SocialLinks() {
@@ -20,13 +19,6 @@ export default function SocialLinks() {
       icon: LinkedInIcon,
       color: "hover:bg-blue-400 dark:hover:bg-blue-500",
       tooltip: "in/stanley-owen",
-    },
-    {
-      name: "Instagram",
-      url: "https://instagram.com/stanleyowennn",
-      icon: InstagramIcon,
-      color: "hover:bg-pink-400 dark:hover:bg-pink-500",
-      tooltip: "stanleyowennn",
     },
     {
       name: "Email",

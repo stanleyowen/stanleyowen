@@ -20,8 +20,8 @@ export default function Home() {
     <div className="relative min-h-screen bg-zinc-50 font-sans dark:bg-black">
       <ParticleBackground />
 
-      {/* Theme Toggle - Fixed in top right corner */}
-      <div className="fixed top-6 right-6 z-50">
+      {/* Theme Toggle - Fixed bottom left on mobile (clear of the nav and back-to-top), top right on desktop */}
+      <div className="fixed bottom-4 left-4 z-50 md:bottom-auto md:left-auto md:right-6 md:top-6">
         <ThemeToggle />
       </div>
 
@@ -85,7 +85,7 @@ export default function Home() {
           </a>
 
           <a
-            href="mailto:me@stanleyowen.com"
+            href="#contact"
             className="flex items-center gap-2 px-6 py-3 bg-zinc-200 dark:bg-zinc-800 text-black dark:text-white rounded-full font-medium transition-all hover:scale-105 hover:shadow-lg"
           >
             <EmailIcon />

@@ -11,7 +11,6 @@ export default function StructuredData() {
     sameAs: [
       "https://github.com/stanleyowen",
       "https://linkedin.com/in/stanley-owen",
-      "https://www.instagram.com/stanleyowennn",
     ],
     knowsAbout: [
       "Software Engineering",

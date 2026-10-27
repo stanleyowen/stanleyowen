@@ -104,9 +104,10 @@ export function ThemeToggle() {
           >
             {option.icon}
           </button>
-          <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 px-3 py-1.5 bg-black/90 dark:bg-white/90 text-white dark:text-black text-sm rounded-lg whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 pointer-events-none">
+          <div className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 md:bottom-auto md:top-full md:mb-0 md:mt-2 px-3 py-1.5 bg-black/90 dark:bg-white/90 text-white dark:text-black text-sm rounded-lg whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 pointer-events-none">
             {option.label}
-            <div className="absolute bottom-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-b-[6px] border-b-black/90 dark:border-b-white/90"></div>
+            <div className="md:hidden absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[6px] border-t-black/90 dark:border-t-white/90"></div>
+            <div className="hidden md:block absolute bottom-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-b-[6px] border-b-black/90 dark:border-b-white/90"></div>
           </div>
         </div>
       ))}
