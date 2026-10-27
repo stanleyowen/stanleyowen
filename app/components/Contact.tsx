@@ -117,8 +117,8 @@ export default function Contact() {
             Get in Touch
           </h2>
           <p className="text-lg text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto">
-            Have a project in mind or just want to chat? I'd love to hear from
-            you. Let's connect and create something amazing together.
+            Interested in collaborating or have an opportunity to discuss? I'd be
+            glad to hear from you.
           </p>
         </div>
 
@@ -272,9 +272,9 @@ export default function Contact() {
                 Let's connect
               </h3>
               <p className="text-zinc-600 dark:text-zinc-400 mb-8 leading-relaxed">
-                I'm always interested in new opportunities, collaborations, and
-                interesting projects. Whether you have a question, want to work
-                together, or just want to say hello, feel free to reach out!
+                I'm open to new opportunities, collaborations and interesting
+                projects. Whether you have a question or would like to work
+                together, please feel free to reach out.
               </p>
             </div>
 
@@ -326,10 +326,10 @@ export default function Contact() {
             {/* Call to Action */}
             <div className="bg-gradient-to-r from-black to-zinc-700 dark:from-white dark:to-zinc-300 text-white dark:text-black rounded-lg p-6">
               <h4 className="font-bold text-lg mb-2">
-                Ready to start a project?
+                Interested in working together?
               </h4>
               <p className="text-white/80 dark:text-black/80 text-sm mb-4">
-                Let's discuss your ideas and bring them to life!
+                Let's discuss your ideas.
               </p>
               <a
                 href="mailto:me@stanleyowen.com?subject=Project%20Collaboration"

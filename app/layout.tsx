@@ -21,18 +21,18 @@ export const metadata: Metadata = {
     template: "%s | Stanley Owen",
   },
   description:
-    "Passionate about building elegant solutions and creating meaningful digital experiences. I enjoy developing cross-platform applications, combining modern UI design with high-performance systems programming.",
+    "Computer Science student at NTUST and software engineer building cross-platform applications and dependable systems.",
   keywords: [
     "Stanley Owen",
-    "Full Stack Developer",
     "Software Engineer",
-    "React Developer",
-    "Next.js Developer",
+    "Full Stack Developer",
+    "Computer Science",
+    "NTUST",
+    "Electron",
+    "React",
     "TypeScript",
-    "JavaScript",
-    "Frontend Developer",
-    "Backend Developer",
-    "Web Development",
+    "Python",
+    "Natural Language Processing",
     "Software Development",
   ],
   authors: [{ name: "Stanley Owen" }],
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Stanley Owen",
     description:
-      "Passionate about building elegant solutions and creating meaningful digital experiences. I enjoy developing cross-platform applications, combining modern UI design with high-performance systems programming.",
+      "Computer Science student at NTUST and software engineer building cross-platform applications and dependable systems.",
     url: "https://stanleyowen.com",
     siteName: "Stanley Owen Portfolio",
     images: [
@@ -68,7 +68,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Stanley Owen",
     description:
-      "Passionate about building elegant solutions and creating meaningful digital experiences.",
+      "Computer Science student at NTUST and software engineer building cross-platform applications and dependable systems.",
     images: ["/icon.png"],
     creator: "@stanleyowen",
   },

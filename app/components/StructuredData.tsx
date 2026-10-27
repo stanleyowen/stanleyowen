@@ -3,9 +3,9 @@ export default function StructuredData() {
     "@context": "https://schema.org",
     "@type": "Person",
     name: "Stanley Owen",
-    jobTitle: "Full Stack Developer",
+    jobTitle: "Software Engineer",
     description:
-      "Passionate about building elegant solutions and creating meaningful digital experiences. I enjoy developing cross-platform applications, combining modern UI design with high-performance systems programming.",
+      "Computer Science student at NTUST and software engineer building cross-platform applications and dependable systems.",
     url: "https://stanleyowen.com",
     image: "/icon.png",
     sameAs: [
@@ -14,15 +14,16 @@ export default function StructuredData() {
       "https://www.instagram.com/stanleyowennn",
     ],
     knowsAbout: [
+      "Software Engineering",
       "Full Stack Development",
       "React",
-      "Next.js",
+      "Electron",
       "TypeScript",
       "JavaScript",
+      "Python",
       "Node.js",
       "MongoDB",
-      "Software Engineering",
-      "Web Development",
+      "Natural Language Processing",
     ],
     alumniOf: [
       {

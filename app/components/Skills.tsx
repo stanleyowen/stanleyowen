@@ -1,5 +1,3 @@
-"use client";
-
 import ElectronIcon from "./icons/ElectronIcon";
 import ReactIcon from "./icons/ReactIcon";
 import NodeIcon from "./icons/NodeIcon";
@@ -23,62 +21,89 @@ import CSharpIcon from "./icons/CSharpIcon";
 import PhpIcon from "./icons/PhpIcon";
 import AssemblyIcon from "./icons/AssemblyIcon";
 
+import SectionHeading from "./SectionHeading";
+
+const groups = [
+  {
+    title: "Languages",
+    items: [
+      { name: "Python", Icon: PythonIcon },
+      { name: "TypeScript", Icon: TypeScriptIcon },
+      { name: "JavaScript", Icon: JavaScriptIcon },
+      { name: "C", Icon: CIcon },
+      { name: "C++", Icon: CppIcon },
+      { name: "C#", Icon: CSharpIcon },
+      { name: "Java", Icon: JavaIcon },
+      { name: "Rust", Icon: RustIcon },
+      { name: "PHP", Icon: PhpIcon },
+      { name: "Assembly", Icon: AssemblyIcon },
+    ],
+  },
+  {
+    title: "Frontend",
+    items: [
+      { name: "React", Icon: ReactIcon },
+      { name: "HTML", Icon: HtmlIcon },
+      { name: "CSS", Icon: CssIcon },
+      { name: "Sass", Icon: SassIcon },
+      { name: "Tailwind CSS", Icon: TailwindIcon },
+      { name: "Bootstrap", Icon: BootstrapIcon },
+      { name: "Material UI", Icon: MaterialUiIcon },
+    ],
+  },
+  {
+    title: "Backend & Platforms",
+    items: [
+      { name: "Node.js", Icon: NodeIcon },
+      { name: "Electron", Icon: ElectronIcon },
+      { name: "MongoDB", Icon: MongoDBIcon },
+    ],
+  },
+  {
+    title: "Tooling",
+    items: [
+      { name: "Git", Icon: GitIcon },
+      { name: "Postman", Icon: PostmanIcon },
+    ],
+  },
+];
+
 export default function Skills() {
-  const technologies = [
-    // Markup and Styling
-    { name: "HTML", Icon: HtmlIcon },
-    { name: "CSS", Icon: CssIcon },
-    { name: "SASS", Icon: SassIcon },
-
-    // Programming Languages
-    { name: "JavaScript", Icon: JavaScriptIcon },
-    { name: "TypeScript", Icon: TypeScriptIcon },
-    { name: "Python", Icon: PythonIcon },
-    { name: "C", Icon: CIcon },
-    { name: "C++", Icon: CppIcon },
-    { name: "C#", Icon: CSharpIcon },
-    { name: "PHP", Icon: PhpIcon },
-    { name: "Java", Icon: JavaIcon },
-    { name: "Assembly", Icon: AssemblyIcon },
-    { name: "Rust", Icon: RustIcon },
-
-    // Frameworks and Tools
-    { name: "Electron", Icon: ElectronIcon },
-    { name: "React", Icon: ReactIcon },
-    { name: "Node.js", Icon: NodeIcon },
-    { name: "MongoDB", Icon: MongoDBIcon },
-    { name: "Git", Icon: GitIcon },
-    { name: "Tailwind CSS", Icon: TailwindIcon },
-    { name: "Bootstrap", Icon: BootstrapIcon },
-    { name: "Material UI", Icon: MaterialUiIcon },
-    { name: "Postman", Icon: PostmanIcon },
-  ];
-
   return (
-    <section className="relative z-10 w-full py-20 px-8">
-      <div className="w-full">
-        {/* Technologies & Tools Section */}
-        <div>
-          <h2 className="text-3xl font-bold text-center mb-8 text-black dark:text-white">
-            Technologies & Tools
-          </h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 px-4">
-            {technologies.map((tech) => {
-              const IconComponent = tech.Icon;
-              return (
-                <div
-                  key={tech.name}
-                  className="bg-white/60 dark:bg-white/5 backdrop-blur-sm border-2 border-zinc-300 dark:border-white/10 rounded-lg p-4 flex flex-col items-center justify-center hover:bg-white/80 dark:hover:bg-white/10 transition-all hover:scale-105"
-                >
-                  <div className="text-black dark:text-white mb-2">
-                    <IconComponent size={40} />
-                  </div>
-                  <span className="text-sm font-medium text-black dark:text-white">
-                    {tech.name}
-                  </span>
-                </div>
-              );
-            })}
+    <section id="skills" className="relative z-10 w-full px-6 py-20 md:px-24">
+      <div className="mx-auto max-w-5xl">
+        <SectionHeading eyebrow="Toolkit" title="Technical Skills" />
+
+        <div className="divide-y divide-zinc-200 overflow-hidden rounded-xl border border-zinc-200 bg-white/70 backdrop-blur-sm dark:divide-white/10 dark:border-white/10 dark:bg-zinc-950/60">
+          {groups.map((g) => (
+            <div
+              key={g.title}
+              className="grid gap-4 p-6 md:grid-cols-[180px_1fr] md:gap-8"
+            >
+              <h3 className="font-mono text-xs uppercase tracking-[0.15em] text-zinc-500 md:pt-2 dark:text-zinc-400">
+                {g.title}
+              </h3>
+              <ul className="flex flex-wrap gap-2">
+                {g.items.map(({ name, Icon }) => (
+                  <li
+                    key={name}
+                    className="flex items-center gap-2 rounded-md border border-zinc-200 bg-zinc-50 px-3 py-1.5 text-sm text-zinc-800 dark:border-white/10 dark:bg-white/5 dark:text-zinc-200"
+                  >
+                    <Icon size={18} />
+                    {name}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+
+          <div className="grid gap-4 p-6 md:grid-cols-[180px_1fr] md:gap-8">
+            <h3 className="font-mono text-xs uppercase tracking-[0.15em] text-zinc-500 md:pt-0 dark:text-zinc-400">
+              Spoken Languages
+            </h3>
+            <p className="text-sm text-zinc-700 dark:text-zinc-300">
+              Indonesian (native) · English (IELTS 7.0) · Chinese (HSK 5, TOCFL B2)
+            </p>
           </div>
         </div>
       </div>

@@ -9,6 +9,12 @@
 
 html {
   height: 100%;
+  scroll-behavior: smooth;
+}
+
+/* Keep section headings clear of the sticky nav when jumping to anchors */
+[id] {
+  scroll-margin-top: 3.5rem;
 }
 
 body {

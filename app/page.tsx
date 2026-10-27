@@ -4,7 +4,12 @@ import GitHubIcon from "./components/icons/GitHubIcon";
 import EmailIcon from "./components/icons/EmailIcon";
 import DocumentIcon from "./components/icons/DocumentIcon";
 import Skills from "./components/Skills";
-import Activities from "./components/Activities";
+import Experience from "./components/Experience";
+import Education from "./components/Education";
+import OpenSource from "./components/OpenSource";
+import Honors from "./components/Honors";
+import Nav from "./components/Nav";
+import Leadership from "./components/Leadership";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import { ThemeToggle } from "./components/ThemeToggle";
@@ -24,7 +29,7 @@ export default function Home() {
       <SocialLinks />
 
       {/* Hero Section */}
-      <section className="relative z-10 flex min-h-screen flex-col items-center justify-center px-8 py-20">
+      <section id="about" className="relative z-10 flex min-h-screen flex-col items-center justify-center px-8 py-20">
         {/* Profile Photo */}
         <div className="mb-8">
           <Image
@@ -43,17 +48,17 @@ export default function Home() {
             Stanley Owen
           </h1>
           <p className="text-xl md:text-2xl text-zinc-600 dark:text-zinc-400 font-light">
-            Full Stack & Cross-Platform Software Engineer
+            Computer Science Student, NTUST (Class of 2028)
           </p>
         </div>
 
         {/* About Me */}
         <div className="max-w-2xl text-center mb-10">
           <p className="text-lg text-zinc-700 dark:text-zinc-300 leading-relaxed">
-            Passionate about building elegant solutions and creating meaningful
-            digital experiences. I enjoy developing cross-platform applications,
-            combining modern UI design with high-performance systems
-            programming.
+            Computer Science student at NTUST and software engineer. I led the
+            development of production desktop software for nearly four years,
+            conducted NLP research on mental health, and build cross-platform
+            applications with clean interfaces and dependable systems.
           </p>
         </div>
 
@@ -89,14 +94,19 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Skills Section */}
+      <Nav />
+
+      <Education />
+      <Experience />
+      <OpenSource />
+      <Honors />
+      <Leadership />
       <Skills />
 
-      {/* Activities Section */}
-      <Activities />
-
       {/* Contact Section */}
-      <Contact />
+      <div id="contact">
+        <Contact />
+      </div>
 
       {/* Footer */}
       <Footer />
