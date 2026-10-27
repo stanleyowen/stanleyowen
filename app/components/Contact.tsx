@@ -109,10 +109,6 @@ export default function Contact() {
           <h2 className="text-3xl font-bold text-black dark:text-white mb-4">
             Get in Touch
           </h2>
-          <p className="text-lg text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto">
-            Interested in collaborating or have an opportunity to discuss? I'd be
-            glad to hear from you.
-          </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">

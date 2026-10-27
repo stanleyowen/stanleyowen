@@ -29,7 +29,10 @@ export default function Home() {
       <SocialLinks />
 
       {/* Hero Section */}
-      <section id="about" className="relative z-10 flex min-h-screen flex-col items-center justify-center px-8 py-20">
+      <section
+        id="about"
+        className="relative z-10 flex min-h-screen flex-col items-center justify-center px-8 py-20"
+      >
         {/* Profile Photo */}
         <div className="mb-8">
           <Image
@@ -55,10 +58,11 @@ export default function Home() {
         {/* About Me */}
         <div className="max-w-2xl text-center mb-10">
           <p className="text-lg text-zinc-700 dark:text-zinc-300 leading-relaxed">
-            Computer Science student at NTUST and software engineer. I led the
-            development of production desktop software for nearly four years,
-            conducted NLP research on mental health, and build cross-platform
-            applications with clean interfaces and dependable systems.
+            I&apos;m an undergraduate in Computer Science at National Taiwan
+            University of Science and Technology (NTUST). My work spans NLP
+            research on mental health, full-stack software development,
+            cross-platform application development, production desktop
+            software, and open-source contributions.
           </p>
         </div>
 
