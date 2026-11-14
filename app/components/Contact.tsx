@@ -30,7 +30,7 @@ export default function Contact({
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<
-    "idle" | "success" | "error"
+    "idle" | "success" | "error" | "rateLimited"
   >("idle");
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const turnstileRef = useRef<TurnstileInstance>(null);
@@ -88,6 +88,11 @@ export default function Contact({
           turnstileToken,
         }),
       });
+
+      if (response.status === 429) {
+        setSubmitStatus("rateLimited");
+        return;
+      }
 
       const data = await response.json();
 
@@ -226,7 +231,7 @@ export default function Contact({
                   onSuccess={(token) => setTurnstileToken(token)}
                   onError={() => setTurnstileToken(null)}
                   onExpire={() => setTurnstileToken(null)}
-                  options={{ language }}
+                  options={{ language: language.toLowerCase() }}
                 />
               </div>
 
@@ -269,6 +274,12 @@ export default function Contact({
               {submitStatus === "error" && (
                 <div className="text-red-600 dark:text-red-400 text-sm text-center">
                   {dict.error}
+                </div>
+              )}
+
+              {submitStatus === "rateLimited" && (
+                <div className="text-red-600 dark:text-red-400 text-sm text-center">
+                  {dict.rateLimited}
                 </div>
               )}
             </form>

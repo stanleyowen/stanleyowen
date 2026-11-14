@@ -60,6 +60,8 @@ const en = {
     success: "Thanks, your message is on its way. I’ll reply as soon as I can.",
     error:
       "Something went wrong and your message wasn’t sent. Please try again, or email me directly.",
+    rateLimited:
+      "You’ve sent several messages in a short time. Please wait a few minutes and try again, or email me directly.",
     talkTitle: "Let’s talk",
     talkBody:
       "I’m open to new opportunities, collaborations and interesting projects. If you have a question or something you’d like to build together, send me a message.",

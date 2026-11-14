@@ -31,8 +31,62 @@ function escapeHtml(value: string) {
   return value.replace(/[&<>"']/g, (ch) => HTML_ESCAPES[ch]);
 }
 
-function error(message: string, status = 400) {
-  return NextResponse.json({ error: message }, { status });
+function error(message: string, status = 400, headers?: HeadersInit) {
+  return NextResponse.json({ error: message }, { status, headers });
+}
+
+/**
+ * Reads the body but gives up as soon as it passes `limit` bytes. Checking
+ * Content-Length alone isn't enough: a chunked request has no length header,
+ * and request.json() would buffer the whole thing.
+ */
+async function readBody(request: NextRequest, limit: number) {
+  if (!request.body) return "";
+  const reader = request.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let size = 0;
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    size += value.byteLength;
+    if (size > limit) {
+      await reader.cancel();
+      return null;
+    }
+    chunks.push(value);
+  }
+  return new TextDecoder().decode(Buffer.concat(chunks));
+}
+
+// Per-IP rate limit, kept in memory. It resets when the server restarts and
+// isn't shared between instances, so it's a backstop behind Turnstile rather
+// than a hard guarantee.
+const RATE_LIMIT = { max: 5, windowMs: 60 * 60 * 1000 };
+const hits = new Map<string, { count: number; resetAt: number }>();
+
+/** Returns the seconds to wait if `key` is over the limit, otherwise 0. */
+function rateLimit(key: string, now = Date.now()) {
+  if (hits.size > 10_000) {
+    for (const [k, v] of hits) if (v.resetAt <= now) hits.delete(k);
+  }
+  const entry = hits.get(key);
+  if (!entry || entry.resetAt <= now) {
+    hits.set(key, { count: 1, resetAt: now + RATE_LIMIT.windowMs });
+    return 0;
+  }
+  entry.count++;
+  return entry.count > RATE_LIMIT.max
+    ? Math.ceil((entry.resetAt - now) / 1000)
+    : 0;
+}
+
+function clientIp(request: NextRequest) {
+  return (
+    request.headers.get("cf-connecting-ip") ??
+    request.headers.get("x-real-ip") ??
+    request.headers.get("x-forwarded-for")?.split(",")[0].trim() ??
+    null
+  );
 }
 
 async function verifyTurnstile(token: string, ip: string | null) {
@@ -61,13 +115,25 @@ async function verifyTurnstile(token: string, ip: string | null) {
 
 export async function POST(request: NextRequest) {
   try {
+    const ip = clientIp(request);
+    const retryAfter = rateLimit(ip ?? "unknown");
+    if (retryAfter) {
+      return error("Too many messages. Please try again later.", 429, {
+        "Retry-After": String(retryAfter),
+      });
+    }
+
     if (Number(request.headers.get("content-length")) > MAX_BODY_BYTES) {
+      return error("Request too large", 413);
+    }
+    const text = await readBody(request, MAX_BODY_BYTES);
+    if (text === null) {
       return error("Request too large", 413);
     }
 
     let body: unknown;
     try {
-      body = await request.json();
+      body = JSON.parse(text);
     } catch {
       return error("Invalid request body");
     }
@@ -108,10 +174,6 @@ export async function POST(request: NextRequest) {
     if (typeof turnstileToken !== "string" || !turnstileToken) {
       return error("Please complete the verification");
     }
-    const ip =
-      request.headers.get("cf-connecting-ip") ??
-      request.headers.get("x-forwarded-for")?.split(",")[0].trim() ??
-      null;
     if (!(await verifyTurnstile(turnstileToken, ip))) {
       return error("Verification failed. Please try again.");
     }
