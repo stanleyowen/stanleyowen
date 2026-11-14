@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     siteName: "Stanley Owen Portfolio",
     images: [
       {
-        url: "/icon.png",
+        url: "/profile.jpg",
         width: 460,
         height: 460,
         alt: "Stanley Owen Profile Picture",
@@ -69,7 +69,7 @@ export const metadata: Metadata = {
     title: "Stanley Owen",
     description:
       "Computer Science student at NTUST and software engineer building cross-platform applications and dependable systems.",
-    images: ["/icon.png"],
+    images: ["/profile.jpg"],
     creator: "@stanleyowen",
   },
   robots: {
@@ -84,9 +84,9 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/icon.png",
-    shortcut: "/icon.png",
-    apple: "/icon.png",
+    icon: "/profile.jpg",
+    shortcut: "/profile.jpg",
+    apple: "/profile.jpg",
   },
   manifest: "/manifest.json",
 };

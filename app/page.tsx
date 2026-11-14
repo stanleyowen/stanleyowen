@@ -36,7 +36,7 @@ export default function Home() {
         {/* Profile Photo */}
         <div className="mb-8">
           <Image
-            src="/icon.png"
+            src="/profile.jpg"
             alt="Stanley Owen"
             width={160}
             height={160}
