@@ -29,10 +29,6 @@ export default function StructuredData() {
         "@type": "Organization",
         name: "National Taiwan University of Science and Technology",
       },
-      {
-        "@type": "Organization",
-        name: "SMA Sutomo 1",
-      },
     ],
   };
 

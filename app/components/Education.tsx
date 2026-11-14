@@ -7,7 +7,7 @@ export default function Education() {
       <div className="mx-auto max-w-5xl">
         <SectionHeading eyebrow="Academics" title="Education" />
 
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-6">
           {education.map((e) => (
             <article
               key={e.school}

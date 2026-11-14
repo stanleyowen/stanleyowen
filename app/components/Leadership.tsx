@@ -13,7 +13,7 @@ export default function Leadership() {
         >
           {leadership.map((l) => (
             <li
-              key={`${l.role}-${l.organization}-${l.period}`}
+              key={`${l.role ?? ""}-${l.organization}-${l.period}`}
               data-reveal
               className="grid gap-2 p-5 md:grid-cols-[180px_1fr] md:gap-8"
             >
@@ -21,16 +21,47 @@ export default function Leadership() {
                 {l.period}
               </span>
               <div>
-                <h3 className="font-semibold text-zinc-900 dark:text-white">
-                  {l.role}
-                  <span className="font-normal text-zinc-600 dark:text-zinc-400">
-                    {" "}
-                    · {l.organization}
-                  </span>
-                </h3>
-                <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-                  {l.summary}
-                </p>
+                {l.roles ? (
+                  <>
+                    <h3 className="font-semibold text-zinc-900 dark:text-white">
+                      {l.role ?? l.organization}
+                      {l.role && (
+                        <span className="font-normal text-zinc-600 dark:text-zinc-400">
+                          {" "}
+                          · {l.organization}
+                        </span>
+                      )}
+                    </h3>
+                    <ul className="mt-2 space-y-1.5 text-sm">
+                      {l.roles.map((r) => (
+                        <li
+                          key={`${r.title}-${r.period}`}
+                          className="flex flex-col gap-0.5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4"
+                        >
+                          <span className="text-zinc-700 dark:text-zinc-300">
+                            {r.title}
+                          </span>
+                          <span className="shrink-0 font-mono text-xs text-zinc-500 dark:text-zinc-400">
+                            {r.period}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                ) : (
+                  <h3 className="font-semibold text-zinc-900 dark:text-white">
+                    {l.role}
+                    <span className="font-normal text-zinc-600 dark:text-zinc-400">
+                      {" "}
+                      · {l.organization}
+                    </span>
+                  </h3>
+                )}
+                {l.summary && (
+                  <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+                    {l.summary}
+                  </p>
+                )}
               </div>
             </li>
           ))}

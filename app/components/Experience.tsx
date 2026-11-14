@@ -7,7 +7,7 @@ export default function Experience() {
       <div className="mx-auto max-w-5xl">
         <SectionHeading eyebrow="Career" title="Professional Experience" />
 
-        <ol className="timeline relative space-y-12 border-l border-zinc-300 pl-8 dark:border-white/15">
+        <ol className="timeline relative isolate space-y-12 pl-8">
           {experience.map((job) => (
             <li
               key={`${job.role}-${job.period}`}
@@ -16,7 +16,7 @@ export default function Experience() {
             >
               <span
                 data-reveal="pop"
-                className="absolute -left-[37px] top-2 h-2.5 w-2.5 rounded-full bg-zinc-900 ring-4 ring-zinc-50 dark:bg-white dark:ring-black" />
+                className="absolute -left-[31.5px] top-2 h-2.5 w-2.5 -translate-x-1/2 rounded-full bg-zinc-900 ring-4 ring-zinc-50 dark:bg-white dark:ring-black" />
 
               <div className="rounded-xl border border-zinc-200 bg-white/70 p-6 backdrop-blur-sm dark:border-white/10 dark:bg-zinc-950/60">
                 <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
@@ -35,9 +35,11 @@ export default function Experience() {
                   </span>
                 </p>
 
-                <p className="mt-4 text-zinc-700 dark:text-zinc-300">
-                  {job.summary}
-                </p>
+                {job.summary && (
+                  <p className="mt-4 text-zinc-700 dark:text-zinc-300">
+                    {job.summary}
+                  </p>
+                )}
 
                 {job.highlights.length > 0 && (
                   <ul className="mt-4 space-y-2 text-sm text-zinc-600 dark:text-zinc-400">
