@@ -126,9 +126,9 @@ export const education: EducationItem[] = [
     note: "CGPA 4.21 / 4.30",
     highlights: [
       "Ranked 2nd in the department (top 2.38%)",
-      "Research in Prof. Shih-Fan Chou’s lab on robotics and autonomous mobile robots (AMR), currently focused on simulating robots in Gazebo with ROS 2",
       "Presidential Award for both semesters of 2024/25 and the second semester of 2025/26",
       "NTU System President’s Award for International Degree Students (Jan 2026)",
+      "Research in Prof. Shih-Fan Chou’s lab on robotics and autonomous mobile robots (AMR), currently focused on simulating robots in Gazebo with ROS 2",
     ],
   },
 ];
@@ -197,7 +197,8 @@ export const leadership: LeadershipItem[] = [
         period: "May 2026 – Sep 2026",
       },
       {
-        title: "Financial Director and Committee Member, ICPR-APR 2026",
+        title:
+          "Financial Director, International Conference on Production Research – Asia Pacific Region",
         period: "Mar 2026 – Jun 2026",
       },
     ],
