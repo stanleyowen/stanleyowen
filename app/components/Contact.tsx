@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { Turnstile } from "@marsidev/react-turnstile";
+import { useRef, useState } from "react";
+import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 import EmailIcon from "./icons/EmailIcon";
 import GitHubIcon from "./icons/GitHubIcon";
 import LinkedInIcon from "./icons/LinkedInIcon";
@@ -25,6 +25,7 @@ export default function Contact() {
     "idle" | "success" | "error"
   >("idle");
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const turnstileRef = useRef<TurnstileInstance>(null);
 
   const contactInfo = [
     {
@@ -90,7 +91,6 @@ export default function Contact() {
           subject: "",
           message: "",
         });
-        setTurnstileToken(null);
       } else {
         throw new Error(data.error || "Failed to send message");
       }
@@ -98,6 +98,9 @@ export default function Contact() {
       console.error("Contact form error:", error);
       setSubmitStatus("error");
     } finally {
+      // Turnstile tokens are single-use, so get a fresh one for the next attempt.
+      setTurnstileToken(null);
+      turnstileRef.current?.reset();
       setIsSubmitting(false);
     }
   };
@@ -131,6 +134,7 @@ export default function Contact() {
                     type="text"
                     id="name"
                     name="name"
+                    maxLength={100}
                     value={formData.name}
                     onChange={handleInputChange}
                     required
@@ -150,6 +154,7 @@ export default function Contact() {
                     type="email"
                     id="email"
                     name="email"
+                    maxLength={254}
                     value={formData.email}
                     onChange={handleInputChange}
                     required
@@ -170,6 +175,7 @@ export default function Contact() {
                   type="text"
                   id="subject"
                   name="subject"
+                  maxLength={200}
                   value={formData.subject}
                   onChange={handleInputChange}
                   required
@@ -188,6 +194,7 @@ export default function Contact() {
                 <textarea
                   id="message"
                   name="message"
+                  maxLength={5000}
                   value={formData.message}
                   onChange={handleInputChange}
                   required
@@ -200,6 +207,7 @@ export default function Contact() {
               {/* Cloudflare Turnstile */}
               <div className="flex justify-center">
                 <Turnstile
+                  ref={turnstileRef}
                   siteKey={
                     process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ||
                     "1x00000000000000000000AA"
@@ -242,7 +250,7 @@ export default function Contact() {
 
               {submitStatus === "success" && (
                 <div className="text-green-600 dark:text-green-400 text-sm text-center">
-                  Message sent successfully! I'll get back to you soon.
+                  Message sent successfully! I&apos;ll get back to you soon.
                 </div>
               )}
 
@@ -258,10 +266,10 @@ export default function Contact() {
           <div className="space-y-8">
             <div>
               <h3 className="text-xl font-bold text-black dark:text-white mb-6">
-                Let's connect
+                Let&apos;s connect
               </h3>
               <p className="text-zinc-600 dark:text-zinc-400 mb-8 leading-relaxed">
-                I'm open to new opportunities, collaborations and interesting
+                I&apos;m open to new opportunities, collaborations and interesting
                 projects. Whether you have a question or would like to work
                 together, please feel free to reach out.
               </p>
@@ -318,7 +326,7 @@ export default function Contact() {
                 Interested in working together?
               </h4>
               <p className="text-white/80 dark:text-black/80 text-sm mb-4">
-                Let's discuss your ideas.
+                Let&apos;s discuss your ideas.
               </p>
               <a
                 href="mailto:me@stanleyowen.com?subject=Project%20Collaboration"

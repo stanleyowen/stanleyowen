@@ -1,7 +1,9 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
+
+const noopSubscribe = () => () => {};
 
 const SunIcon = () => (
   <svg
@@ -62,13 +64,13 @@ const MonitorIcon = () => (
 );
 
 export function ThemeToggle() {
-  const [mounted, setMounted] = useState(false);
+  // false during SSR/hydration, true on the client — avoids a theme mismatch flash
+  const mounted = useSyncExternalStore(
+    noopSubscribe,
+    () => true,
+    () => false,
+  );
   const { theme, setTheme } = useTheme();
-
-  // useEffect only runs on the client, so now we can safely show the UI
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   if (!mounted) {
     return (
