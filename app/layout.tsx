@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     template: "%s | Stanley Owen",
   },
   description:
-    "Computer Science student at NTUST and software engineer building cross-platform applications and dependable systems.",
+    "Computer Science student at NTUST in Taipei, building mobile and cross-platform apps, AI systems, and open-source software.",
   keywords: [
     "Stanley Owen",
     "Software Engineer",
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Stanley Owen",
     description:
-      "Computer Science student at NTUST and software engineer building cross-platform applications and dependable systems.",
+      "Computer Science student at NTUST in Taipei, building mobile and cross-platform apps, AI systems, and open-source software.",
     url: "https://stanleyowen.com",
     siteName: "Stanley Owen Portfolio",
     images: [
@@ -68,7 +68,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Stanley Owen",
     description:
-      "Computer Science student at NTUST and software engineer building cross-platform applications and dependable systems.",
+      "Computer Science student at NTUST in Taipei, building mobile and cross-platform apps, AI systems, and open-source software.",
     images: ["/profile.jpg"],
     creator: "@stanleyowen",
   },

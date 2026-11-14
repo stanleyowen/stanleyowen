@@ -180,7 +180,7 @@ export default function Contact() {
                   onChange={handleInputChange}
                   required
                   className="w-full px-4 py-3 bg-white/50 dark:bg-white/5 border border-zinc-300 dark:border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white text-black dark:text-white placeholder-zinc-500 dark:placeholder-zinc-400"
-                  placeholder="Project collaboration, job opportunity, etc."
+                  placeholder="What’s this about?"
                 />
               </div>
 
@@ -200,7 +200,7 @@ export default function Contact() {
                   required
                   rows={6}
                   className="w-full px-4 py-3 bg-white/50 dark:bg-white/5 border border-zinc-300 dark:border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white text-black dark:text-white placeholder-zinc-500 dark:placeholder-zinc-400 resize-vertical"
-                  placeholder="Tell me about your project or what you'd like to discuss..."
+                  placeholder="A few lines about what you have in mind"
                 />
               </div>
 
@@ -250,13 +250,13 @@ export default function Contact() {
 
               {submitStatus === "success" && (
                 <div className="text-green-600 dark:text-green-400 text-sm text-center">
-                  Message sent successfully! I&apos;ll get back to you soon.
+                  Thanks, your message is on its way. I’ll reply as soon as I can.
                 </div>
               )}
 
               {submitStatus === "error" && (
                 <div className="text-red-600 dark:text-red-400 text-sm text-center">
-                  Something went wrong. Please try again or contact me directly.
+                  Something went wrong and your message wasn’t sent. Please try again, or email me directly.
                 </div>
               )}
             </form>
@@ -266,12 +266,12 @@ export default function Contact() {
           <div className="space-y-8">
             <div>
               <h3 className="text-xl font-bold text-black dark:text-white mb-6">
-                Let&apos;s connect
+                Let’s talk
               </h3>
               <p className="text-zinc-600 dark:text-zinc-400 mb-8 leading-relaxed">
-                I&apos;m open to new opportunities, collaborations and interesting
-                projects. Whether you have a question or would like to work
-                together, please feel free to reach out.
+                I’m open to new opportunities, collaborations and interesting
+                projects. If you have a question or something you’d like to
+                build together, send me a message.
               </p>
             </div>
 
@@ -323,17 +323,17 @@ export default function Contact() {
             {/* Call to Action */}
             <div className="bg-gradient-to-r from-black to-zinc-700 dark:from-white dark:to-zinc-300 text-white dark:text-black rounded-lg p-6">
               <h4 className="font-bold text-lg mb-2">
-                Interested in working together?
+                Have a project in mind?
               </h4>
               <p className="text-white/80 dark:text-black/80 text-sm mb-4">
-                Let&apos;s discuss your ideas.
+                Tell me about it and I’ll get back to you.
               </p>
               <a
                 href="mailto:me@stanleyowen.com?subject=Project%20Collaboration"
                 className="inline-flex items-center gap-2 px-4 py-2 bg-white/20 dark:bg-black/20 rounded-lg text-sm font-medium transition-all hover:scale-105"
               >
                 <EmailIcon />
-                Start a conversation
+                Email me
               </a>
             </div>
           </div>

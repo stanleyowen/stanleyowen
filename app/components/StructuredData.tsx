@@ -5,7 +5,7 @@ export default function StructuredData() {
     name: "Stanley Owen",
     jobTitle: "Software Engineer",
     description:
-      "Computer Science student at NTUST and software engineer building cross-platform applications and dependable systems.",
+      "Computer Science student at NTUST in Taipei, building mobile and cross-platform apps, AI systems, and open-source software.",
     url: "https://stanleyowen.com",
     image: "https://stanleyowen.com/profile.jpg",
     sameAs: [
