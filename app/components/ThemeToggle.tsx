@@ -2,6 +2,7 @@
 
 import { useTheme } from "next-themes";
 import { useSyncExternalStore } from "react";
+import type { Dictionary } from "../i18n";
 
 const noopSubscribe = () => () => {};
 
@@ -63,7 +64,7 @@ const MonitorIcon = () => (
   </svg>
 );
 
-export function ThemeToggle() {
+export function ThemeToggle({ labels }: { labels: Dictionary["theme"] }) {
   // false during SSR/hydration, true on the client — avoids a theme mismatch flash
   const mounted = useSyncExternalStore(
     noopSubscribe,
@@ -83,9 +84,9 @@ export function ThemeToggle() {
   }
 
   const themeOptions = [
-    { value: "light", label: "Light", icon: <SunIcon /> },
-    { value: "dark", label: "Dark", icon: <MoonIcon /> },
-    { value: "system", label: "System", icon: <MonitorIcon /> },
+    { value: "light", label: labels.light, icon: <SunIcon /> },
+    { value: "dark", label: labels.dark, icon: <MoonIcon /> },
+    { value: "system", label: labels.system, icon: <MonitorIcon /> },
   ];
 
   return (

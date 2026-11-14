@@ -28,11 +28,15 @@ import OpenCvIcon from "./icons/OpenCvIcon";
 import MediaPipeIcon from "./icons/MediaPipeIcon";
 import InsomniaIcon from "./icons/InsomniaIcon";
 
+import type { Dictionary } from "../i18n";
 import SectionHeading from "./SectionHeading";
 
-const groups = [
+const groups: {
+  key: keyof Dictionary["skills"];
+  items: { name: string; Icon: typeof PythonIcon }[];
+}[] = [
   {
-    title: "Programming",
+    key: "programming",
     items: [
       { name: "Python", Icon: PythonIcon },
       { name: "TypeScript", Icon: TypeScriptIcon },
@@ -47,7 +51,7 @@ const groups = [
     ],
   },
   {
-    title: "Frontend",
+    key: "frontend",
     items: [
       { name: "React", Icon: ReactIcon },
       { name: "Next.js", Icon: NextIcon },
@@ -59,7 +63,7 @@ const groups = [
     ],
   },
   {
-    title: "Backend & Desktop",
+    key: "backend",
     items: [
       { name: "Node.js", Icon: NodeIcon },
       { name: "Express", Icon: ExpressIcon },
@@ -68,7 +72,7 @@ const groups = [
     ],
   },
   {
-    title: "Databases & Cloud",
+    key: "databases",
     items: [
       { name: "MongoDB", Icon: MongoDBIcon },
       { name: "Firebase", Icon: FirebaseIcon },
@@ -76,7 +80,7 @@ const groups = [
     ],
   },
   {
-    title: "Tools & Libraries",
+    key: "tools",
     items: [
       { name: "Git", Icon: GitIcon },
       { name: "Docker", Icon: DockerIcon },
@@ -87,11 +91,11 @@ const groups = [
   },
 ];
 
-export default function Skills() {
+export default function Skills({ dict }: { dict: Dictionary }) {
   return (
     <section id="skills" className="relative z-10 w-full px-6 py-20 md:px-24">
       <div className="mx-auto max-w-5xl">
-        <SectionHeading eyebrow="Toolkit" title="Technical Skills" />
+        <SectionHeading {...dict.sections.skills} />
 
         <div
           data-reveal="fade"
@@ -99,14 +103,14 @@ export default function Skills() {
         >
           {groups.map((g) => (
             <div
-              key={g.title}
+              key={g.key}
               className="grid gap-4 p-6 md:grid-cols-[180px_1fr] md:gap-8"
             >
               <h3
                 data-reveal
                 className="font-mono text-xs uppercase tracking-[0.15em] text-zinc-500 md:pt-2 dark:text-zinc-400"
               >
-                {g.title}
+                {dict.skills[g.key]}
               </h3>
               <ul className="flex flex-wrap gap-2">
                 {g.items.map(({ name, Icon }) => (

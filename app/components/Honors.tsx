@@ -1,11 +1,18 @@
-import { awards } from "../data/profile";
+import type { AwardItem } from "../data/profile";
+import type { Dictionary } from "../i18n";
 import SectionHeading from "./SectionHeading";
 
-export default function Honors() {
+export default function Honors({
+  dict,
+  awards,
+}: {
+  dict: Dictionary;
+  awards: AwardItem[];
+}) {
   return (
     <section id="honors" className="relative z-10 w-full px-6 py-20 md:px-24">
       <div className="mx-auto max-w-5xl">
-        <SectionHeading eyebrow="Recognition" title="Honors & Awards" />
+        <SectionHeading {...dict.sections.honors} />
 
         <ul
           data-reveal="fade"

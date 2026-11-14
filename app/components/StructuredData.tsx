@@ -1,12 +1,18 @@
-export default function StructuredData() {
+export default function StructuredData({
+  description,
+  url,
+}: {
+  description: string;
+  url: string;
+}) {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Person",
     name: "Stanley Owen",
+    alternateName: "張銘元",
     jobTitle: "Software Engineer",
-    description:
-      "Computer Science student at NTUST in Taipei, building mobile and cross-platform apps, AI systems, and open-source software.",
-    url: "https://stanleyowen.com",
+    description,
+    url,
     image: "https://stanleyowen.com/profile.jpg",
     sameAs: [
       "https://github.com/stanleyowen",

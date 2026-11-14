@@ -1,11 +1,18 @@
-import { experience } from "../data/profile";
+import type { ExperienceItem } from "../data/profile";
+import type { Dictionary } from "../i18n";
 import SectionHeading from "./SectionHeading";
 
-export default function Experience() {
+export default function Experience({
+  dict,
+  experience,
+}: {
+  dict: Dictionary;
+  experience: ExperienceItem[];
+}) {
   return (
     <section id="experience" className="relative z-10 w-full px-6 py-20 md:px-24">
       <div className="mx-auto max-w-5xl">
-        <SectionHeading eyebrow="Career" title="Professional Experience" />
+        <SectionHeading {...dict.sections.experience} />
 
         <ol className="timeline relative isolate space-y-12 pl-8">
           {experience.map((job) => (

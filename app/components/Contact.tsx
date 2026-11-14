@@ -5,6 +5,7 @@ import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 import EmailIcon from "./icons/EmailIcon";
 import GitHubIcon from "./icons/GitHubIcon";
 import LinkedInIcon from "./icons/LinkedInIcon";
+import type { Dictionary } from "../i18n";
 
 interface FormData {
   name: string;
@@ -13,7 +14,14 @@ interface FormData {
   message: string;
 }
 
-export default function Contact() {
+export default function Contact({
+  dict,
+  language,
+}: {
+  dict: Dictionary["contact"];
+  /** BCP 47 tag for the Turnstile widget, e.g. "en" or "zh-TW". */
+  language: string;
+}) {
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
@@ -30,7 +38,7 @@ export default function Contact() {
   const contactInfo = [
     {
       icon: EmailIcon,
-      label: "Email",
+      label: dict.emailLabel,
       value: "me@stanleyowen.com",
       href: "mailto:me@stanleyowen.com",
     },
@@ -110,7 +118,7 @@ export default function Contact() {
       <div className="max-w-6xl mx-auto">
         <div data-reveal className="text-center mb-16">
           <h2 className="text-3xl font-bold text-black dark:text-white mb-4">
-            Get in Touch
+            {dict.title}
           </h2>
         </div>
 
@@ -121,7 +129,7 @@ export default function Contact() {
             className="bg-white/60 dark:bg-white/5 backdrop-blur-sm border-2 border-zinc-300 dark:border-white/10 rounded-lg p-8"
           >
             <h3 className="text-xl font-bold text-black dark:text-white mb-6">
-              Send me a message
+              {dict.formTitle}
             </h3>
 
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -131,7 +139,7 @@ export default function Contact() {
                     htmlFor="name"
                     className="block text-sm font-medium text-black dark:text-white mb-2"
                   >
-                    Name *
+                    {dict.name} *
                   </label>
                   <input
                     type="text"
@@ -142,7 +150,7 @@ export default function Contact() {
                     onChange={handleInputChange}
                     required
                     className="w-full px-4 py-3 bg-white/50 dark:bg-white/5 border border-zinc-300 dark:border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white text-black dark:text-white placeholder-zinc-500 dark:placeholder-zinc-400"
-                    placeholder="Your name"
+                    placeholder={dict.namePlaceholder}
                   />
                 </div>
 
@@ -151,7 +159,7 @@ export default function Contact() {
                     htmlFor="email"
                     className="block text-sm font-medium text-black dark:text-white mb-2"
                   >
-                    Email *
+                    {dict.email} *
                   </label>
                   <input
                     type="email"
@@ -162,7 +170,7 @@ export default function Contact() {
                     onChange={handleInputChange}
                     required
                     className="w-full px-4 py-3 bg-white/50 dark:bg-white/5 border border-zinc-300 dark:border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white text-black dark:text-white placeholder-zinc-500 dark:placeholder-zinc-400"
-                    placeholder="your@email.com"
+                    placeholder={dict.emailPlaceholder}
                   />
                 </div>
               </div>
@@ -172,7 +180,7 @@ export default function Contact() {
                   htmlFor="subject"
                   className="block text-sm font-medium text-black dark:text-white mb-2"
                 >
-                  Subject *
+                  {dict.subject} *
                 </label>
                 <input
                   type="text"
@@ -183,7 +191,7 @@ export default function Contact() {
                   onChange={handleInputChange}
                   required
                   className="w-full px-4 py-3 bg-white/50 dark:bg-white/5 border border-zinc-300 dark:border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white text-black dark:text-white placeholder-zinc-500 dark:placeholder-zinc-400"
-                  placeholder="What’s this about?"
+                  placeholder={dict.subjectPlaceholder}
                 />
               </div>
 
@@ -192,7 +200,7 @@ export default function Contact() {
                   htmlFor="message"
                   className="block text-sm font-medium text-black dark:text-white mb-2"
                 >
-                  Message *
+                  {dict.message} *
                 </label>
                 <textarea
                   id="message"
@@ -203,7 +211,7 @@ export default function Contact() {
                   required
                   rows={6}
                   className="w-full px-4 py-3 bg-white/50 dark:bg-white/5 border border-zinc-300 dark:border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white text-black dark:text-white placeholder-zinc-500 dark:placeholder-zinc-400 resize-vertical"
-                  placeholder="A few lines about what you have in mind"
+                  placeholder={dict.messagePlaceholder}
                 />
               </div>
 
@@ -218,6 +226,7 @@ export default function Contact() {
                   onSuccess={(token) => setTurnstileToken(token)}
                   onError={() => setTurnstileToken(null)}
                   onExpire={() => setTurnstileToken(null)}
+                  options={{ language }}
                 />
               </div>
 
@@ -244,22 +253,22 @@ export default function Contact() {
                         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                       />
                     </svg>
-                    Sending...
+                    {dict.sending}
                   </span>
                 ) : (
-                  "Send Message"
+                  dict.send
                 )}
               </button>
 
               {submitStatus === "success" && (
                 <div className="text-green-600 dark:text-green-400 text-sm text-center">
-                  Thanks, your message is on its way. I’ll reply as soon as I can.
+                  {dict.success}
                 </div>
               )}
 
               {submitStatus === "error" && (
                 <div className="text-red-600 dark:text-red-400 text-sm text-center">
-                  Something went wrong and your message wasn’t sent. Please try again, or email me directly.
+                  {dict.error}
                 </div>
               )}
             </form>
@@ -269,12 +278,10 @@ export default function Contact() {
           <div className="space-y-8">
             <div data-reveal>
               <h3 className="text-xl font-bold text-black dark:text-white mb-6">
-                Let’s talk
+                {dict.talkTitle}
               </h3>
               <p className="text-zinc-600 dark:text-zinc-400 mb-8 leading-relaxed">
-                I’m open to new opportunities, collaborations and interesting
-                projects. If you have a question or something you’d like to
-                build together, send me a message.
+                {dict.talkBody}
               </p>
             </div>
 
@@ -286,9 +293,9 @@ export default function Contact() {
                   <a
                     key={contact.label}
                     href={contact.href}
-                    target={contact.label !== "Email" ? "_blank" : undefined}
+                    target={!contact.href.startsWith("mailto:") ? "_blank" : undefined}
                     rel={
-                      contact.label !== "Email"
+                      !contact.href.startsWith("mailto:")
                         ? "noopener noreferrer"
                         : undefined
                     }
@@ -329,17 +336,17 @@ export default function Contact() {
               className="bg-gradient-to-r from-black to-zinc-700 dark:from-white dark:to-zinc-300 text-white dark:text-black rounded-lg p-6"
             >
               <h4 className="font-bold text-lg mb-2">
-                Have a project in mind?
+                {dict.ctaTitle}
               </h4>
               <p className="text-white/80 dark:text-black/80 text-sm mb-4">
-                Tell me about it and I’ll get back to you.
+                {dict.ctaBody}
               </p>
               <a
-                href="mailto:me@stanleyowen.com?subject=Project%20Collaboration"
+                href={`mailto:me@stanleyowen.com?subject=${encodeURIComponent(dict.ctaSubject)}`}
                 className="inline-flex items-center gap-2 px-4 py-2 bg-white/20 dark:bg-black/20 rounded-lg text-sm font-medium transition-all hover:scale-105"
               >
                 <EmailIcon />
-                Email me
+                {dict.ctaButton}
               </a>
             </div>
           </div>

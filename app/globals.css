@@ -3,7 +3,10 @@
 @variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --font-sans: var(--font-geist-sans);
+  /* Geist has no CJK glyphs, so Chinese text falls through to a Traditional
+   * Chinese system font. */
+  --font-sans: var(--font-geist-sans), "PingFang TC", "Noto Sans TC",
+    "Microsoft JhengHei", sans-serif;
   --font-mono: var(--font-geist-mono);
 }
 

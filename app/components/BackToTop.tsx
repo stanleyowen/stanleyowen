@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-export default function BackToTop() {
+export default function BackToTop({ label }: { label: string }) {
   const [isVisible, setIsVisible] = useState(false);
 
   // Show button when scrolled down
@@ -37,7 +37,7 @@ export default function BackToTop() {
           ? "opacity-100 pointer-events-auto"
           : "opacity-0 pointer-events-none"
       }`}
-      aria-label="Back to top"
+      aria-label={label}
     >
       <svg
         className="w-5 h-5"

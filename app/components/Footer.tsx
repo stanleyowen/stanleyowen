@@ -1,6 +1,6 @@
 "use client";
 
-export default function Footer() {
+export default function Footer({ copyright }: { copyright: string }) {
   const currentYear = new Date().getFullYear();
 
   return (
@@ -8,7 +8,9 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto px-8 py-8">
         <div className="flex flex-col items-center justify-center gap-4">
           <div className="text-sm text-zinc-600 dark:text-zinc-400 text-center">
-            <p>&copy; {currentYear} Stanley Owen. All rights reserved.</p>
+            <p>
+              &copy; {currentYear} {copyright}
+            </p>
           </div>
         </div>
       </div>

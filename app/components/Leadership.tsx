@@ -1,11 +1,18 @@
-import { leadership } from "../data/profile";
+import type { LeadershipItem } from "../data/profile";
+import type { Dictionary } from "../i18n";
 import SectionHeading from "./SectionHeading";
 
-export default function Leadership() {
+export default function Leadership({
+  dict,
+  leadership,
+}: {
+  dict: Dictionary;
+  leadership: LeadershipItem[];
+}) {
   return (
     <section id="activities" className="relative z-10 w-full px-6 py-20 md:px-24">
       <div className="mx-auto max-w-5xl">
-        <SectionHeading eyebrow="Beyond code" title="Leadership & Activities" />
+        <SectionHeading {...dict.sections.leadership} />
 
         <ul
           data-reveal="fade"

@@ -1,11 +1,18 @@
-import { education } from "../data/profile";
+import type { EducationItem } from "../data/profile";
+import type { Dictionary } from "../i18n";
 import SectionHeading from "./SectionHeading";
 
-export default function Education() {
+export default function Education({
+  dict,
+  education,
+}: {
+  dict: Dictionary;
+  education: EducationItem[];
+}) {
   return (
     <section id="education" className="relative z-10 w-full px-6 py-20 md:px-24">
       <div className="mx-auto max-w-5xl">
-        <SectionHeading eyebrow="Academics" title="Education" />
+        <SectionHeading {...dict.sections.education} />
 
         <div className="grid gap-6">
           {education.map((e) => (

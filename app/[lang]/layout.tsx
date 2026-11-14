@@ -1,9 +1,19 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import { ThemeProvider } from "./components/providers/ThemeProvider";
-import StructuredData from "./components/StructuredData";
-import BackToTop from "./components/BackToTop";
+import "../globals.css";
+import { ThemeProvider } from "../components/providers/ThemeProvider";
+import StructuredData from "../components/StructuredData";
+import BackToTop from "../components/BackToTop";
+import {
+  hasLocale,
+  languageTag,
+  locales,
+  openGraphLocale,
+} from "../i18n/config";
+import { getDictionary } from "../i18n";
+
+const SITE_URL = "https://stanleyowen.com";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,91 +25,121 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: {
-    default: "Stanley Owen",
-    template: "%s | Stanley Owen",
-  },
-  description:
-    "Computer Science student at NTUST in Taipei, building mobile and cross-platform apps, AI systems, and open-source software.",
-  keywords: [
-    "Stanley Owen",
-    "Software Engineer",
-    "Full Stack Developer",
-    "Computer Science",
-    "NTUST",
-    "Electron",
-    "React",
-    "TypeScript",
-    "Python",
-    "Natural Language Processing",
-    "Software Development",
-  ],
-  authors: [{ name: "Stanley Owen" }],
-  creator: "Stanley Owen",
-  publisher: "Stanley Owen",
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
-  metadataBase: new URL("https://stanleyowen.com"),
-  alternates: {
-    canonical: "/",
-  },
-  openGraph: {
-    title: "Stanley Owen",
-    description:
-      "Computer Science student at NTUST in Taipei, building mobile and cross-platform apps, AI systems, and open-source software.",
-    url: "https://stanleyowen.com",
-    siteName: "Stanley Owen Portfolio",
-    images: [
-      {
-        url: "/profile.jpg",
-        width: 460,
-        height: 460,
-        alt: "Stanley Owen Profile Picture",
-      },
+type Params = Promise<{ lang: string }>;
+
+export function generateStaticParams() {
+  return locales.map((lang) => ({ lang }));
+}
+
+// Only the locales above exist; anything else under /<segment> is a 404.
+export const dynamicParams = false;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Params;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  if (!hasLocale(lang)) return {};
+  const { meta } = getDictionary(lang);
+
+  return {
+    title: {
+      default: meta.title,
+      template: `%s | ${meta.title}`,
+    },
+    description: meta.description,
+    keywords: [
+      "Stanley Owen",
+      "張銘元",
+      "Software Engineer",
+      "Full Stack Developer",
+      "Computer Science",
+      "NTUST",
+      "Electron",
+      "React",
+      "TypeScript",
+      "Python",
+      "Natural Language Processing",
+      "Software Development",
     ],
-    locale: "en_US",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Stanley Owen",
-    description:
-      "Computer Science student at NTUST in Taipei, building mobile and cross-platform apps, AI systems, and open-source software.",
-    images: ["/profile.jpg"],
-    creator: "@stanleyowen",
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
+    authors: [{ name: "Stanley Owen" }],
+    creator: "Stanley Owen",
+    publisher: "Stanley Owen",
+    formatDetection: {
+      email: false,
+      address: false,
+      telephone: false,
+    },
+    metadataBase: new URL(SITE_URL),
+    // Both languages are served from the same URL (chosen by cookie).
+    alternates: {
+      canonical: "/",
+    },
+    openGraph: {
+      title: meta.title,
+      description: meta.description,
+      url: SITE_URL,
+      siteName: meta.siteName,
+      images: [
+        {
+          url: "/profile.jpg",
+          width: 460,
+          height: 460,
+          alt: meta.imageAlt,
+        },
+      ],
+      locale: openGraphLocale[lang],
+      alternateLocale: locales
+        .filter((l) => l !== lang)
+        .map((l) => openGraphLocale[l]),
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: meta.title,
+      description: meta.description,
+      images: ["/profile.jpg"],
+      creator: "@stanleyowen",
+    },
+    robots: {
       index: true,
       follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
     },
-  },
-  icons: {
-    icon: "/profile.jpg",
-    shortcut: "/profile.jpg",
-    apple: "/profile.jpg",
-  },
-  manifest: "/manifest.json",
-};
+    icons: {
+      icon: "/profile.jpg",
+      shortcut: "/profile.jpg",
+      apple: "/profile.jpg",
+    },
+    manifest: "/manifest.json",
+  };
+}
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode;
+  params: Params;
 }>) {
+  const { lang } = await params;
+  if (!hasLocale(lang)) notFound();
+  const dict = getDictionary(lang);
+
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={languageTag[lang]} suppressHydrationWarning>
       <head>
-        <StructuredData />
+        <StructuredData
+          description={dict.meta.description}
+          url={SITE_URL}
+        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
@@ -111,7 +151,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
-          <BackToTop />
+          <BackToTop label={dict.backToTop} />
         </ThemeProvider>
       </body>
     </html>

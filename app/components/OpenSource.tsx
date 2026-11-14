@@ -1,11 +1,18 @@
-import { openSource } from "../data/profile";
+import type { OpenSourceItem } from "../data/profile";
+import type { Dictionary } from "../i18n";
 import SectionHeading from "./SectionHeading";
 
-export default function OpenSource() {
+export default function OpenSource({
+  dict,
+  openSource,
+}: {
+  dict: Dictionary;
+  openSource: OpenSourceItem[];
+}) {
   return (
     <section id="open-source" className="relative z-10 w-full px-6 py-20 md:px-24">
       <div className="mx-auto max-w-5xl">
-        <SectionHeading eyebrow="Community" title="Open Source" />
+        <SectionHeading {...dict.sections.openSource} />
 
         <div className="space-y-6">
           {openSource.map((p) => (
