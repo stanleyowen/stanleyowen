@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { headers } from "next/headers";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import { ThemeProvider } from "../components/providers/ThemeProvider";
@@ -132,6 +133,9 @@ export default async function RootLayout({
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
   const dict = getDictionary(lang);
+  // Set by proxy.ts. Reading request headers also makes the page render per
+  // request, which a per-request nonce requires.
+  const nonce = (await headers()).get("x-nonce") ?? undefined;
 
   return (
     <html lang={languageTag[lang]} suppressHydrationWarning>
@@ -149,6 +153,7 @@ export default async function RootLayout({
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
+          nonce={nonce}
         >
           {children}
           <BackToTop label={dict.backToTop} />
