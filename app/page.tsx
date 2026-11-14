@@ -92,6 +92,28 @@ export default function Home() {
             </a>
           </div>
         </div>
+
+        {/* Scroll cue */}
+        <a
+          href="#education"
+          aria-label="Scroll down"
+          className="intro absolute bottom-8 left-1/2 -translate-x-1/2 rounded-full p-2 text-zinc-400 transition-colors hover:text-zinc-900 dark:text-zinc-500 dark:hover:text-white [--delay:600ms]"
+        >
+          <svg
+            className="scroll-cue h-7 w-7"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={1.5}
+              d="M6 9l6 6 6-6"
+            />
+          </svg>
+        </a>
       </section>
 
       <Nav />

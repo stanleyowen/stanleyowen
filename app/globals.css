@@ -75,7 +75,21 @@ body {
   }
 }
 
+@keyframes scroll-cue {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
+  .scroll-cue {
+    animation: scroll-cue 1.8s ease-in-out infinite;
+  }
+
   .intro {
     animation: rise 0.9s var(--ease-out-expo) var(--delay, 0ms) backwards;
   }
@@ -108,7 +122,29 @@ body {
   }
 }
 
-/* The fill line needs scroll-driven animations; elsewhere the static border
+/* Experience timeline track. It starts at the centre of the first dot
+ * (top-2 + half of h-2.5 = 13px) so nothing pokes out above it. The list is
+ * `isolate`, so z-index -1 keeps the lines under the dots' rings. */
+.timeline {
+  --timeline-start: 13px;
+}
+
+.timeline::after {
+  content: "";
+  position: absolute;
+  z-index: -2; /* under the fill line */
+  top: var(--timeline-start);
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  background: var(--color-zinc-300, oklch(87.1% 0.006 286.286));
+}
+
+.dark .timeline::after {
+  background: rgb(255 255 255 / 0.15);
+}
+
+/* The fill line needs scroll-driven animations; elsewhere the static track
  * is all that shows. */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
@@ -122,9 +158,10 @@ body {
     .timeline::before {
       content: "";
       position: absolute;
-      top: 0;
+      z-index: -1;
+      top: var(--timeline-start);
       bottom: 0;
-      left: -1px;
+      left: 0;
       width: 1px;
       background: var(--color-zinc-900);
       transform-origin: top;
