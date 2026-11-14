@@ -30,60 +30,65 @@ export default function Home() {
       {/* Hero Section */}
       <section
         id="about"
-        className="relative z-10 flex min-h-screen flex-col items-center justify-center px-8 py-20"
+        className="relative z-10 flex min-h-screen items-center px-6 py-24 md:px-24"
       >
-        {/* Profile Photo */}
-        <div className="mb-8">
-          <Image
-            src="/profile.jpg"
-            alt="Stanley Owen"
-            width={160}
-            height={160}
-            className="rounded-full border-4 border-white/20 dark:border-white/10 shadow-2xl"
-            priority
-          />
-        </div>
+        <div className="mx-auto w-full max-w-5xl">
+          <div className="flex flex-col-reverse gap-8 md:flex-row md:items-center md:justify-between md:gap-12">
+            {/* Name & Title */}
+            <div className="max-w-2xl">
+              <p className="mb-4 font-mono text-xs uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">
+                Taipei, Taiwan · CSIE @ NTUST &apos;28
+              </p>
+              <h1 className="text-5xl font-bold tracking-tight text-black md:text-7xl dark:text-white">
+                Stanley Owen
+              </h1>
+              <p className="mt-5 text-xl font-light text-zinc-600 md:text-2xl dark:text-zinc-400">
+                Building mobile and cross-platform apps, AI systems, and
+                open-source software.
+              </p>
+            </div>
 
-        {/* Name & Title */}
-        <div className="text-center mb-6">
-          <h1 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-3">
-            Stanley Owen
-          </h1>
-          <p className="text-xl md:text-2xl text-zinc-600 dark:text-zinc-400 font-light">
-            Computer Science Student, NTUST (Class of 2028)
+            {/* Profile Photo */}
+            <Image
+              src="/profile.jpg"
+              alt="Stanley Owen"
+              width={176}
+              height={176}
+              className="h-28 w-28 shrink-0 rounded-full border-4 border-white/20 shadow-2xl md:h-44 md:w-44 dark:border-white/10"
+              priority
+            />
+          </div>
+
+          {/* About Me */}
+          <p className="mt-8 max-w-2xl text-lg leading-relaxed text-zinc-700 dark:text-zinc-300">
+            I developed and maintained a company&apos;s sales and invoicing
+            system for nearly four years, and built the research tools for an
+            NSTC-funded NLP project, running on Windows, macOS and Linux. These
+            days I&apos;m focused on AI systems, and I also enjoy self-hosting
+            and infrastructure work, from running my own servers to connecting
+            them through the cloud.
           </p>
-        </div>
 
-        {/* About Me */}
-        <div className="max-w-2xl text-center mb-10">
-          <p className="text-lg text-zinc-700 dark:text-zinc-300 leading-relaxed">
-            I&apos;m an undergraduate in Computer Science at National Taiwan
-            University of Science and Technology (NTUST). My work spans NLP
-            research on mental health, full-stack software development,
-            cross-platform application development, production desktop
-            software, and open-source contributions.
-          </p>
-        </div>
+          {/* Social Links */}
+          <div className="mt-10 flex flex-wrap gap-4">
+            <a
+              href="https://github.com/stanleyowen"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-6 py-3 bg-black dark:bg-white text-white dark:text-black rounded-full font-medium transition-all hover:scale-105 hover:shadow-lg"
+            >
+              <GitHubIcon />
+              GitHub
+            </a>
 
-        {/* Social Links */}
-        <div className="flex gap-4 flex-wrap justify-center">
-          <a
-            href="https://github.com/stanleyowen"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 px-6 py-3 bg-black dark:bg-white text-white dark:text-black rounded-full font-medium transition-all hover:scale-105 hover:shadow-lg"
-          >
-            <GitHubIcon />
-            GitHub
-          </a>
-
-          <a
-            href="#contact"
-            className="flex items-center gap-2 px-6 py-3 bg-zinc-200 dark:bg-zinc-800 text-black dark:text-white rounded-full font-medium transition-all hover:scale-105 hover:shadow-lg"
-          >
-            <EmailIcon />
-            Contact
-          </a>
+            <a
+              href="#contact"
+              className="flex items-center gap-2 px-6 py-3 bg-zinc-200 dark:bg-zinc-800 text-black dark:text-white rounded-full font-medium transition-all hover:scale-105 hover:shadow-lg"
+            >
+              <EmailIcon />
+              Contact
+            </a>
+          </div>
         </div>
       </section>
 
