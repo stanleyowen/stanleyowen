@@ -12,28 +12,35 @@ import CppIcon from "./icons/CppIcon";
 import HtmlIcon from "./icons/HtmlIcon";
 import CssIcon from "./icons/CssIcon";
 import SassIcon from "./icons/SassIcon";
-import JavaIcon from "./icons/JavaIcon";
-import BootstrapIcon from "./icons/BootstrapIcon";
 import MaterialUiIcon from "./icons/MaterialUiIcon";
-import PostmanIcon from "./icons/PostmanIcon";
 import CIcon from "./icons/CIcon";
-import CSharpIcon from "./icons/CSharpIcon";
 import PhpIcon from "./icons/PhpIcon";
 import AssemblyIcon from "./icons/AssemblyIcon";
+import SwiftIcon from "./icons/SwiftIcon";
+import KotlinIcon from "./icons/KotlinIcon";
+import NextIcon from "./icons/NextIcon";
+import ExpressIcon from "./icons/ExpressIcon";
+import TauriIcon from "./icons/TauriIcon";
+import FirebaseIcon from "./icons/FirebaseIcon";
+import SqliteIcon from "./icons/SqliteIcon";
+import DockerIcon from "./icons/DockerIcon";
+import OpenCvIcon from "./icons/OpenCvIcon";
+import MediaPipeIcon from "./icons/MediaPipeIcon";
+import InsomniaIcon from "./icons/InsomniaIcon";
 
 import SectionHeading from "./SectionHeading";
 
 const groups = [
   {
-    title: "Languages",
+    title: "Programming",
     items: [
       { name: "Python", Icon: PythonIcon },
       { name: "TypeScript", Icon: TypeScriptIcon },
       { name: "JavaScript", Icon: JavaScriptIcon },
       { name: "C", Icon: CIcon },
       { name: "C++", Icon: CppIcon },
-      { name: "C#", Icon: CSharpIcon },
-      { name: "Java", Icon: JavaIcon },
+      { name: "Swift", Icon: SwiftIcon },
+      { name: "Kotlin", Icon: KotlinIcon },
       { name: "Rust", Icon: RustIcon },
       { name: "PHP", Icon: PhpIcon },
       { name: "Assembly", Icon: AssemblyIcon },
@@ -43,27 +50,39 @@ const groups = [
     title: "Frontend",
     items: [
       { name: "React", Icon: ReactIcon },
+      { name: "Next.js", Icon: NextIcon },
       { name: "HTML", Icon: HtmlIcon },
       { name: "CSS", Icon: CssIcon },
       { name: "Sass", Icon: SassIcon },
       { name: "Tailwind CSS", Icon: TailwindIcon },
-      { name: "Bootstrap", Icon: BootstrapIcon },
       { name: "Material UI", Icon: MaterialUiIcon },
     ],
   },
   {
-    title: "Backend & Platforms",
+    title: "Backend & Desktop",
     items: [
       { name: "Node.js", Icon: NodeIcon },
+      { name: "Express", Icon: ExpressIcon },
       { name: "Electron", Icon: ElectronIcon },
-      { name: "MongoDB", Icon: MongoDBIcon },
+      { name: "Tauri", Icon: TauriIcon },
     ],
   },
   {
-    title: "Tooling",
+    title: "Databases & Cloud",
+    items: [
+      { name: "MongoDB", Icon: MongoDBIcon },
+      { name: "Firebase", Icon: FirebaseIcon },
+      { name: "SQLite", Icon: SqliteIcon },
+    ],
+  },
+  {
+    title: "Tools & Libraries",
     items: [
       { name: "Git", Icon: GitIcon },
-      { name: "Postman", Icon: PostmanIcon },
+      { name: "Docker", Icon: DockerIcon },
+      { name: "Insomnia", Icon: InsomniaIcon },
+      { name: "OpenCV", Icon: OpenCvIcon },
+      { name: "MediaPipe", Icon: MediaPipeIcon },
     ],
   },
 ];
@@ -96,25 +115,13 @@ export default function Skills() {
                     data-reveal="scale"
                     className="flex items-center gap-2 rounded-md border border-zinc-200 bg-zinc-50 px-3 py-1.5 text-sm text-zinc-800 dark:border-white/10 dark:bg-white/5 dark:text-zinc-200"
                   >
-                    <Icon size={18} />
+                    <Icon size={18} aria-hidden="true" />
                     {name}
                   </li>
                 ))}
               </ul>
             </div>
           ))}
-
-          <div className="grid gap-4 p-6 md:grid-cols-[180px_1fr] md:gap-8">
-            <h3
-              data-reveal
-              className="font-mono text-xs uppercase tracking-[0.15em] text-zinc-500 md:pt-0 dark:text-zinc-400"
-            >
-              Spoken Languages
-            </h3>
-            <p data-reveal className="text-sm text-zinc-700 dark:text-zinc-300">
-              Indonesian (native) · English (IELTS 7.0) · Chinese (TOCFL B2)
-            </p>
-          </div>
         </div>
       </div>
     </section>
