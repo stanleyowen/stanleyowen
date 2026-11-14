@@ -102,7 +102,7 @@ export default function Skills() {
               Spoken Languages
             </h3>
             <p className="text-sm text-zinc-700 dark:text-zinc-300">
-              Indonesian (native) · English (IELTS 7.0) · Chinese (HSK 5, TOCFL B2)
+              Indonesian (native) · English (IELTS 7.0) · Chinese (TOCFL B2)
             </p>
           </div>
         </div>

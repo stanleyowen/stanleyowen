@@ -60,7 +60,7 @@ export const experience: ExperienceItem[] = [
     location: "Taipei, Taiwan · Hybrid",
     period: "Sep 2026 – Present",
     summary:
-      "Contributing to a joint project between National Taiwan University of Science and Technology and IGS, bridging academic research and industry practice.",
+      "Contributing to a joint project between National Taiwan University of Science and Technology and IGS (International Games System), bridging academic research and industry practice.",
     highlights: [],
     stack: [],
   },
@@ -86,7 +86,9 @@ export const experience: ExperienceItem[] = [
       "Researched an AI-assisted system that combines NLP and emotion recognition to analyze text related to mental health and psychological distress.",
     highlights: [
       "Built annotated linguistic datasets and emotion-aware classification models for mental health risk assessment.",
-      "Developed a desktop application that runs the research pipeline and visualizes linguistic patterns for researchers and clinicians.",
+      "Developed Analyzer, a cross-platform desktop application that runs the research pipeline and visualizes linguistic patterns for researchers and clinicians.",
+      "Rewrote the Windows-only word-segmentation engine into a cross-platform command-line tool for Windows, Linux and macOS.",
+      "Added result caching that reduced repeat analysis time by about 70%.",
     ],
     stack: ["Python", "NLP", "Deep Learning", "Electron", "React"],
   },
@@ -105,14 +107,15 @@ export const experience: ExperienceItem[] = [
     stack: ["Electron", "React", "TypeScript", "Team Leadership"],
   },
   {
-    role: "Web Developer (Freelance)",
-    organization: "Beasiswa Indonesia Maju – Taman Sains",
+    role: "Web Developer",
+    organization: "Nusantara Youth Foundation · Beasiswa Indonesia Maju (MoECRT Indonesia)",
     location: "Indonesia · Hybrid",
     period: "Oct 2023 – Nov 2023",
     summary:
-      "Led a small team in delivering a scholarship management platform under a tight timeline.",
+      "Built the website for Nusantara Youth Foundation, a youth development organization under the Beasiswa Indonesia Maju program of Indonesia’s Ministry of Education, Culture, Research, and Technology.",
     highlights: [
-      "Delivered a full-stack MERN application within the project deadline.",
+      "Built the platform to manage the foundation’s curriculum data, organization profile and educational content.",
+      "Led a small team to deliver the full-stack MERN application within a tight deadline.",
       "Designed the platform with scalability and performance in mind.",
     ],
     stack: ["MongoDB", "Express.js", "React", "Node.js"],
@@ -122,12 +125,13 @@ export const experience: ExperienceItem[] = [
 export const education: EducationItem[] = [
   {
     school: "National Taiwan University of Science and Technology",
-    degree: "B.S. Computer Science",
+    degree: "B.S. Computer Science and Information Engineering",
     period: "Aug 2024 – Jun 2028",
-    note: "GPA 4.22",
+    note: "CGPA 4.21 / 4.30",
     highlights: [
+      "Ranked 2nd in the department (top 2.38%); Spring 2026 semester GPA 4.30 / 4.30",
       "Dean’s List in Academic Year 2024/25 (both semesters) and Semester 2 of 2025/26",
-      "Officer of the Overseas Chinese Students Association: Secretary (2024–25), President (2025–26), Secretary (2026–27)",
+      "Officer of the Overseas Chinese Students Association: Secretary (2024–25), President (2025–26), Advisor and Secretary (2026–27)",
     ],
   },
   {
@@ -136,13 +140,18 @@ export const education: EducationItem[] = [
     period: "Aug 2020 – Apr 2024",
     note: "Grade 96.16 / 100",
     highlights: [
-      "Student Council: Chairman I (2022–23), Advisor (2023–24)",
+      "Student Council: Chairman I (2022–23), Advisor (2023–24); led the Sutomo World Education Expo (1,000+ attendees)",
       "President of the Southeast Asian Service Leadership Network (SEALNet), 2023–24",
     ],
   },
 ];
 
 export const awards: AwardItem[] = [
+  {
+    title: "PERPITA Scholarship",
+    issuer: "CPC Corporation, Taiwan & Sino-Indonesia Cultural and Economic Association",
+    date: "Oct 2026",
+  },
   {
     title: "Dean’s List, AY25/26 Semester 2",
     issuer: "NTUST",
@@ -159,7 +168,7 @@ export const awards: AwardItem[] = [
     date: "Mar 2026",
   },
   {
-    title: "National Taiwan University System President’s Award",
+    title: "NTU System President’s Award for International Degree Students",
     issuer: "NTU System",
     date: "Jan 2026",
   },
@@ -174,7 +183,7 @@ export const awards: AwardItem[] = [
     date: "Nov 2025",
   },
   {
-    title: "Zhang Fei-Wu Full Ride Scholarship",
+    title: "Zhang Fei-Wu Renewable Full-Tuition Scholarship",
     issuer: "Y.M. Chen Foundation",
     date: "Nov 2025",
   },
@@ -192,15 +201,22 @@ export const awards: AwardItem[] = [
 
 export const leadership: LeadershipItem[] = [
   {
-    role: "Secretary",
+    role: "Advisor and Secretary",
     organization: "Overseas Chinese Students Association, NTUST",
     period: "Sep 2026 – Present",
     summary:
-      "Serving a second term as Secretary, following a term as President of the association.",
+      "Serving as advisor and a second-term Secretary, following a term as President of the association.",
+  },
+  {
+    role: "On-site Interpreter, Wonderful Indonesia Sales Mission 2026 to Taiwan",
+    organization: "Indonesian Economic and Trade Office to Taipei (IETO Taipei)",
+    period: "Sep 2026",
+    summary:
+      "Interpreted at a B2B tourism business-matching event between Indonesian tourism operators and Taiwanese travel agencies.",
   },
   {
     role: "Staff and Interpreter, Food Taipei Mega Shows 2026",
-    organization: "Indonesian Economic and Trade Office to Taipei (KDEI Taipei)",
+    organization: "Indonesian Economic and Trade Office to Taipei (IETO Taipei)",
     period: "Jun 2026",
     summary:
       "Assisted Indonesian small and medium enterprises in presenting their products to international buyers, and interpreted between Chinese, English and Indonesian.",
@@ -210,7 +226,7 @@ export const leadership: LeadershipItem[] = [
     organization: "NTUST",
     period: "May 2026 – Sep 2026",
     summary:
-      "Coordinated the exchange program between NTUST and Nagoya University of Commerce & Business (NUCB).",
+      "Coordinated the exchange program between NTUST and Nagoya University of Commerce & Business (NUCB), including a short-term exchange in Taiwan (Aug 3–7, 2026) with corporate visits to ASUS and Trend Micro and tours of popular Taiwanese destinations.",
   },
   {
     role: "Teaching Assistant",
@@ -221,10 +237,10 @@ export const leadership: LeadershipItem[] = [
   },
   {
     role: "Financial Director and Committee Member",
-    organization: "2026 International Conference on Production Research (ICPR)",
+    organization: "2026 International Conference on Production Research – Asia Pacific Region (ICPR-APR)",
     period: "Mar 2026 – Jun 2026",
     summary:
-      "Responsible for the financial management of the international conference held in Taipei.",
+      "Tracked all conference expenses for the international conference held in Taipei, and worked as on-site staff during the event, assisting participants from many countries.",
   },
   {
     role: "Dormitory Floor Leader",
@@ -238,14 +254,14 @@ export const leadership: LeadershipItem[] = [
     organization: "Overseas Chinese Students Association, NTUST",
     period: "Sep 2025 – Sep 2026",
     summary:
-      "Led the association and coordinated cultural and academic events with university administration, including the Spring Festival Gala 2026.",
+      "Led the association and coordinated cultural and academic events with university administration, including the Spring Festival Gala 2026, a graduation gala for 100+ students from 10+ countries.",
   },
   {
     role: "Secretary",
     organization: "Overseas Chinese Students Association, NTUST",
     period: "Sep 2024 – Aug 2025",
     summary:
-      "Managed administration and documentation, and served as chief coordinator of the Christmas, Mid-Autumn and Freshman Welcome events.",
+      "Managed administration and documentation, led the Spring Festival Gala 2025, and served as chief coordinator of the Christmas, Mid-Autumn and Freshman Welcome events.",
   },
   {
     role: "Teaching Assistant",
@@ -266,6 +282,6 @@ export const leadership: LeadershipItem[] = [
     organization: "SMA Sutomo 1",
     period: "Oct 2022 – Sep 2023",
     summary:
-      "Planned competitions, leadership training and an education expo; subsequently served as an advisor to the council.",
+      "Planned competitions and leadership training, and led the Sutomo World Education Expo (1,000+ attendees); subsequently served as an advisor to the council.",
   },
 ];
