@@ -11,6 +11,7 @@ export default function OpenSource() {
           {openSource.map((p) => (
             <article
               key={p.name}
+              data-reveal
               className="rounded-xl border border-zinc-200 bg-white/70 p-6 backdrop-blur-sm dark:border-white/10 dark:bg-zinc-950/60"
             >
               <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">

@@ -7,10 +7,14 @@ export default function Leadership() {
       <div className="mx-auto max-w-5xl">
         <SectionHeading eyebrow="Beyond code" title="Leadership & Activities" />
 
-        <ul className="divide-y divide-zinc-200 overflow-hidden rounded-xl border border-zinc-200 bg-white/70 backdrop-blur-sm dark:divide-white/10 dark:border-white/10 dark:bg-zinc-950/60">
+        <ul
+          data-reveal="fade"
+          className="divide-y divide-zinc-200 overflow-hidden rounded-xl border border-zinc-200 bg-white/70 backdrop-blur-sm dark:divide-white/10 dark:border-white/10 dark:bg-zinc-950/60"
+        >
           {leadership.map((l) => (
             <li
               key={`${l.role}-${l.organization}-${l.period}`}
+              data-reveal
               className="grid gap-2 p-5 md:grid-cols-[180px_1fr] md:gap-8"
             >
               <span className="font-mono text-xs text-zinc-500 md:pt-1 dark:text-zinc-400">

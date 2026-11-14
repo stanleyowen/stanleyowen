@@ -7,10 +7,16 @@ export default function Experience() {
       <div className="mx-auto max-w-5xl">
         <SectionHeading eyebrow="Career" title="Professional Experience" />
 
-        <ol className="relative space-y-12 border-l border-zinc-300 pl-8 dark:border-white/15">
+        <ol className="timeline relative space-y-12 border-l border-zinc-300 pl-8 dark:border-white/15">
           {experience.map((job) => (
-            <li key={`${job.role}-${job.period}`} className="relative">
-              <span className="absolute -left-[37px] top-2 h-2.5 w-2.5 rounded-full bg-zinc-900 ring-4 ring-zinc-50 dark:bg-white dark:ring-black" />
+            <li
+              key={`${job.role}-${job.period}`}
+              data-reveal
+              className="relative"
+            >
+              <span
+                data-reveal="pop"
+                className="absolute -left-[37px] top-2 h-2.5 w-2.5 rounded-full bg-zinc-900 ring-4 ring-zinc-50 dark:bg-white dark:ring-black" />
 
               <div className="rounded-xl border border-zinc-200 bg-white/70 p-6 backdrop-blur-sm dark:border-white/10 dark:bg-zinc-950/60">
                 <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">

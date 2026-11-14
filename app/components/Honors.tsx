@@ -7,10 +7,14 @@ export default function Honors() {
       <div className="mx-auto max-w-5xl">
         <SectionHeading eyebrow="Recognition" title="Honors & Awards" />
 
-        <ul className="divide-y divide-zinc-200 overflow-hidden rounded-xl border border-zinc-200 bg-white/70 backdrop-blur-sm dark:divide-white/10 dark:border-white/10 dark:bg-zinc-950/60">
+        <ul
+          data-reveal="fade"
+          className="divide-y divide-zinc-200 overflow-hidden rounded-xl border border-zinc-200 bg-white/70 backdrop-blur-sm dark:divide-white/10 dark:border-white/10 dark:bg-zinc-950/60"
+        >
           {awards.map((a) => (
             <li
               key={`${a.title}-${a.date}`}
+              data-reveal
               className="grid gap-1 p-4 text-sm md:grid-cols-[110px_1fr_auto] md:gap-6"
             >
               <span className="font-mono text-xs text-zinc-500 md:pt-0.5 dark:text-zinc-400">

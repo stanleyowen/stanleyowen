@@ -11,6 +11,7 @@ export default function Education() {
           {education.map((e) => (
             <article
               key={e.school}
+              data-reveal
               className="flex flex-col rounded-xl border border-zinc-200 bg-white/70 p-6 backdrop-blur-sm dark:border-white/10 dark:bg-zinc-950/60"
             >
               <span className="font-mono text-xs text-zinc-500 dark:text-zinc-400">

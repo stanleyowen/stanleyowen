@@ -108,7 +108,7 @@ export default function Contact() {
   return (
     <section className="relative z-10 w-full py-20 px-8">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
+        <div data-reveal className="text-center mb-16">
           <h2 className="text-3xl font-bold text-black dark:text-white mb-4">
             Get in Touch
           </h2>
@@ -116,7 +116,10 @@ export default function Contact() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Contact Form */}
-          <div className="bg-white/60 dark:bg-white/5 backdrop-blur-sm border-2 border-zinc-300 dark:border-white/10 rounded-lg p-8">
+          <div
+            data-reveal
+            className="bg-white/60 dark:bg-white/5 backdrop-blur-sm border-2 border-zinc-300 dark:border-white/10 rounded-lg p-8"
+          >
             <h3 className="text-xl font-bold text-black dark:text-white mb-6">
               Send me a message
             </h3>
@@ -264,7 +267,7 @@ export default function Contact() {
 
           {/* Contact Information */}
           <div className="space-y-8">
-            <div>
+            <div data-reveal>
               <h3 className="text-xl font-bold text-black dark:text-white mb-6">
                 Let’s talk
               </h3>
@@ -276,7 +279,7 @@ export default function Contact() {
             </div>
 
             {/* Contact Methods */}
-            <div className="space-y-4">
+            <div data-reveal className="space-y-4">
               {contactInfo.map((contact) => {
                 const IconComponent = contact.icon;
                 return (
@@ -321,7 +324,10 @@ export default function Contact() {
             </div>
 
             {/* Call to Action */}
-            <div className="bg-gradient-to-r from-black to-zinc-700 dark:from-white dark:to-zinc-300 text-white dark:text-black rounded-lg p-6">
+            <div
+              data-reveal
+              className="bg-gradient-to-r from-black to-zinc-700 dark:from-white dark:to-zinc-300 text-white dark:text-black rounded-lg p-6"
+            >
               <h4 className="font-bold text-lg mb-2">
                 Have a project in mind?
               </h4>

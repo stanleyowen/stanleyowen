@@ -74,19 +74,26 @@ export default function Skills() {
       <div className="mx-auto max-w-5xl">
         <SectionHeading eyebrow="Toolkit" title="Technical Skills" />
 
-        <div className="divide-y divide-zinc-200 overflow-hidden rounded-xl border border-zinc-200 bg-white/70 backdrop-blur-sm dark:divide-white/10 dark:border-white/10 dark:bg-zinc-950/60">
+        <div
+          data-reveal="fade"
+          className="divide-y divide-zinc-200 overflow-hidden rounded-xl border border-zinc-200 bg-white/70 backdrop-blur-sm dark:divide-white/10 dark:border-white/10 dark:bg-zinc-950/60"
+        >
           {groups.map((g) => (
             <div
               key={g.title}
               className="grid gap-4 p-6 md:grid-cols-[180px_1fr] md:gap-8"
             >
-              <h3 className="font-mono text-xs uppercase tracking-[0.15em] text-zinc-500 md:pt-2 dark:text-zinc-400">
+              <h3
+                data-reveal
+                className="font-mono text-xs uppercase tracking-[0.15em] text-zinc-500 md:pt-2 dark:text-zinc-400"
+              >
                 {g.title}
               </h3>
               <ul className="flex flex-wrap gap-2">
                 {g.items.map(({ name, Icon }) => (
                   <li
                     key={name}
+                    data-reveal="scale"
                     className="flex items-center gap-2 rounded-md border border-zinc-200 bg-zinc-50 px-3 py-1.5 text-sm text-zinc-800 dark:border-white/10 dark:bg-white/5 dark:text-zinc-200"
                   >
                     <Icon size={18} />
@@ -98,10 +105,13 @@ export default function Skills() {
           ))}
 
           <div className="grid gap-4 p-6 md:grid-cols-[180px_1fr] md:gap-8">
-            <h3 className="font-mono text-xs uppercase tracking-[0.15em] text-zinc-500 md:pt-0 dark:text-zinc-400">
+            <h3
+              data-reveal
+              className="font-mono text-xs uppercase tracking-[0.15em] text-zinc-500 md:pt-0 dark:text-zinc-400"
+            >
               Spoken Languages
             </h3>
-            <p className="text-sm text-zinc-700 dark:text-zinc-300">
+            <p data-reveal className="text-sm text-zinc-700 dark:text-zinc-300">
               Indonesian (native) · English (IELTS 7.0) · Chinese (TOCFL B2)
             </p>
           </div>
